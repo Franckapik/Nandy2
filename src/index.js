@@ -1,12 +1,20 @@
 import ReactDOM from 'react-dom'
 import React, { Suspense } from "react";
-import {Loader, Sky } from "drei";
+import {Loader, Sky, useGLTF, useMatcapTexture } from "@react-three/drei";
 import { Canvas } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
 import useStore from './store';
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
+import { useLoader } from 'react-three-fiber'
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+function Asset({ url }) {
+  const gltf = useLoader(GLTFLoader, url)
+  return <primitive object={gltf.scene} />
+}
 
 
 function Plane(props) {
@@ -29,6 +37,8 @@ function Cube(props) {
   )
 }
 
+
+
 ReactDOM.render(
   <>
   <FPSStats />
@@ -39,16 +49,8 @@ ReactDOM.render(
     <hemisphereLight intensity={0.35} />
     <fogExp2 attach="fog" args={['black', 0.03]} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
-    <Sky
-        distance={3000} 
-        turbidity={2} 
-        rayleigh={4} 
-        mieCoefficient={0.038} 
-        mieDirectionalG={0.85} 
-        sunPosition={[Math.PI, -10, 0]}
-        exposure = {5}
-        azimuth={0.5}
-        />
+    <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
+    <Asset url="/all.gltf" />
     <Physics>
       <Plane />
       <Cube />
