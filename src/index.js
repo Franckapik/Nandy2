@@ -33,10 +33,11 @@ ReactDOM.render(
   <>
   <FPSStats />
   <Canvas shadowMap gl={{ alpha: false }} >
-    <CameraTarget />
+  <CameraTarget />
   <Suspense fallback={null}>
     <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
+    <fogExp2 attach="fog" args={['black', 0.03]} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky
         distance={3000} 
