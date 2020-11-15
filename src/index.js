@@ -11,6 +11,7 @@ import * as THREE from 'three'
 
 //const preloaded = useGLTF.preload('/pilar.glb')
 //console.log(preloaded);
+//or maybe useLoader.preload(GLTFLoader, url)
 
 function Asset({ url }) {
   const gltf = useGLTF(url)
@@ -23,10 +24,12 @@ function AssettoMesh({ url }) {
     18, // index of the matcap texture https://github.com/emmelleppi/matcaps/blob/master/matcap-list.json
     1024 // size of the texture ( 64, 128, 256, 512, 1024 )
    )
+  //const material = useResource()
+  const m1 = new THREE.MeshMatcapMaterial({matcap : matcap})
    
   return (
     <group>
-    <mesh material={new THREE.MeshMatcapMaterial({matcap : matcap})} geometry={nodes.Pilar.geometry} position={[0,3,0]} />
+    <mesh material={m1} geometry={nodes.Pilar.geometry} position={[0,3,0]} />
     <mesh material={materials.Mat} geometry={nodes.PIlar2.geometry}  position={[-8,0,0]} />
     <mesh material={materials.Mat} geometry={nodes.Pilar1.geometry} position={[8,0,0]} />
     </group>
