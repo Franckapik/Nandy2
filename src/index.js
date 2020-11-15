@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React, { Suspense } from "react";
-import {Loader, Sky, useGLTF, useMatcapTexture } from "@react-three/drei";
+import { Html, Sky, useGLTF, useMatcapTexture, useProgress } from "@react-three/drei";
 import { Canvas } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
@@ -9,6 +9,7 @@ import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
 function Asset({ url }) {
   const gltf = useGLTF(url)
+  console.log(gltf);
   return <primitive object={gltf.scene} />
 }
 
@@ -33,14 +34,17 @@ function Cube(props) {
   )
 }
 
-
+function Loader() {
+  const { active, progress, errors, item, loaded, total } = useProgress()
+  return <Html center>{progress} % loaded</Html>
+}
 
 ReactDOM.render(
   <>
   <FPSStats />
   <Canvas shadowMap gl={{ alpha: false }} >
   <CameraTarget />
-  <Suspense fallback={null}>
+  <Suspense fallback={  <Loader />}>
     <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
     <fogExp2 attach="fog" args={['black', 0.03]} />
@@ -55,7 +59,7 @@ ReactDOM.render(
     </Physics>
     </Suspense>
   </Canvas>
-  <Loader />
+
   </>,
   document.getElementById('root')
 )
