@@ -7,12 +7,8 @@ import { Physics, usePlane, useBox } from 'use-cannon'
 import useStore from './store';
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
-import { useLoader } from 'react-three-fiber'
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-
 function Asset({ url }) {
-  const gltf = useLoader(GLTFLoader, url)
+  const gltf = useGLTF(url)
   return <primitive object={gltf.scene} />
 }
 
