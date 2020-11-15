@@ -31,6 +31,7 @@ export default function CameraTarget() {
       enableDamping
       dampingFactor={0.1}
       enableKeys={false}
+      enablePan
       enableZoom
       minDistance={10}
       maxDistance={100}
