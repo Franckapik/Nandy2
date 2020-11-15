@@ -7,6 +7,7 @@ import { Physics, usePlane, useBox } from '@react-three/cannon'
 import useStore from './store';
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
+import Vehicle from './Tools/Vehicle';
 
 
 function Plane(props) {
@@ -29,6 +30,11 @@ function Cube(props) {
   )
 }
 
+const defaultContactMaterial = {
+  contactEquationRelaxation: 4,
+  friction: 1e-3,
+}
+
 ReactDOM.render(
   <>
   <FPSStats />
@@ -49,8 +55,13 @@ ReactDOM.render(
         exposure = {5}
         azimuth={0.5}
         />
-    <Physics>
+      <Physics
+        gravity={[0, -10, 0]}
+        allowSleep={true}
+        broadphase="SAP"
+        defaultContactMaterial={defaultContactMaterial}>
       <Plane />
+      <Vehicle position={[0, 5, 0]} rotation={[0, -Math.PI / 4, 0]} angularVelocity={[0, 0.5, 0]} />
       <Cube />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
