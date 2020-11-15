@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "drei": "^1.5.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-fps-stats": "^0.1.3",

@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
+import {Sky } from "drei";
 import { Canvas } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
@@ -32,6 +33,16 @@ ReactDOM.render(
     <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
+    <Sky
+        distance={3000} 
+        turbidity={2} 
+        rayleigh={4} 
+        mieCoefficient={0.038} 
+        mieDirectionalG={0.85} 
+        sunPosition={[Math.PI, -10, 0]}
+        exposure = {5}
+        azimuth={0.5}
+        />
     <Physics>
       <Plane />
       <Cube />
