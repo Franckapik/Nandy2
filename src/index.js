@@ -5,6 +5,7 @@ import { Canvas } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
 import useStore from './store';
+import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
 
 
@@ -31,7 +32,8 @@ function Cube(props) {
 ReactDOM.render(
   <>
   <FPSStats />
-  <Canvas shadowMap gl={{ alpha: false }} camera={{ position: [-1, 2, 5], fov: 50 }}>
+  <Canvas shadowMap gl={{ alpha: false }} >
+    <CameraTarget />
   <Suspense fallback={null}>
     <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
