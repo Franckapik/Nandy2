@@ -1,8 +1,8 @@
+import { useBox, useCylinder, useRaycastVehicle } from '@react-three/cannon'
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
-import { Canvas, extend, useFrame, useThree } from 'react-three-fiber'
-import { useCylinder } from '@react-three/cannon'
-import { Physics, useBox, usePlane, useRaycastVehicle } from '@react-three/cannon'
+import { useFrame } from 'react-three-fiber'
 import useKeyPress from '../hooks/useKeyPress'
+
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
   const boxSize = [1.2, 1, 4]
@@ -23,7 +23,7 @@ const Chassis = forwardRef((props, ref) => {
     <mesh ref={ref} api={api} castShadow>
       <boxBufferGeometry attach="geometry" args={boxSize} />
       <meshNormalMaterial attach="material" />
-      <axesHelper scale={[5, 5, 5]} />
+      {/*<axesHelper scale={[5, 5, 5]} />*/}
     </mesh>
   )
 })
@@ -37,7 +37,6 @@ const Wheel = forwardRef((props, ref) => {
       type: 'Kinematic',
       material: 'wheel',
       collisionFilterGroup: 0, // turn off collisions !!
-      // rotation: [0,0,Math.PI/2], // useless -> the rotation should be applied to the shape (not the body)
       args: wheelSize,
       ...props,
     }),
@@ -133,10 +132,10 @@ function Vehicle(props) {
     indexUpAxis: 1,
   }))
 
-  const forward = useKeyPress('w')
+  const forward = useKeyPress('z')
   // const forward = useKeyPress('z')
   const backward = useKeyPress('s')
-  const left = useKeyPress('a')
+  const left = useKeyPress('q')
   // const left = useKeyPress('q')
   const right = useKeyPress('d')
   const brake = useKeyPress(' ') // space bar
