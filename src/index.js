@@ -4,7 +4,9 @@ import {Loader, Sky } from "drei";
 import { Canvas } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
+import useStore from './store/zstore';
 import './styles.css'
+
 
 function Plane(props) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
