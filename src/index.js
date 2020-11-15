@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
-import React from 'react'
-import {Sky } from "drei";
+import React, { Suspense } from "react";
+import {Loader, Sky } from "drei";
 import { Canvas } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
@@ -30,6 +30,7 @@ ReactDOM.render(
   <>
   <FPSStats />
   <Canvas shadowMap gl={{ alpha: false }} camera={{ position: [-1, 2, 5], fov: 50 }}>
+  <Suspense fallback={null}>
     <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
@@ -49,7 +50,9 @@ ReactDOM.render(
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
     </Physics>
+    </Suspense>
   </Canvas>
+  <Loader />
   </>,
   document.getElementById('root')
 )
