@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom'
-import React, { Suspense } from "react";
+import React, { Suspense, useRef } from "react";
 import {Loader, Sky, useGLTF, useMatcapTexture } from "@react-three/drei";
-import { Canvas } from 'react-three-fiber'
+import { Canvas, useFrame } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
 import CameraTarget from './Tools/CameraTarget'
@@ -25,18 +25,26 @@ function AssettoMesh({ url }) {
     1024 // size of the texture ( 64, 128, 256, 512, 1024 )
    )
   //const material = useResource()
+  const ref = useRef()
   const m1 = new THREE.MeshMatcapMaterial({matcap : matcap})
+  const pos1 = useEmpty('originMsg')
+  console.log(pos1);
+
+
    
   return (
     <group>
-    <mesh material={m1} geometry={nodes.Pilar.geometry} position={[0,3,0]} />
+    <mesh material={m1} geometry={nodes.Pilar.geometry} position={pos1} />
     <mesh material={materials.Mat} geometry={nodes.PIlar2.geometry}  position={[-8,0,0]} />
     <mesh material={materials.Mat} geometry={nodes.Pilar1.geometry} position={[8,0,0]} />
     </group>
     )
 }
 
-
+function useEmpty(name) {
+  const { nodes, materials } = useGLTF('/empty.glb')
+  return [nodes[name].position.x,nodes[name].position.y,nodes[name].position.z];
+}
 
 
 function Plane(props) {
