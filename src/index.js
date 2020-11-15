@@ -14,33 +14,6 @@ import Vehicle from './Tools/Vehicle'
 //console.log(preloaded);
 //or maybe useLoader.preload(GLTFLoader, url)
 
-function Asset({ url }) {
-  const gltf = useGLTF(url)
-  return <primitive object={gltf.scene} />
-}
-
-function AssettoMesh({ url }) {
-  const { nodes, materials } = useGLTF(url)
-  const [matcap, url2] = useMatcapTexture(
-    18, // index of the matcap texture https://github.com/emmelleppi/matcaps/blob/master/matcap-list.json
-    1024 // size of the texture ( 64, 128, 256, 512, 1024 )
-   )
-  //const material = useResource()
-  const ref = useRef()
-  const m1 = new THREE.MeshMatcapMaterial({matcap : matcap})
-  const pos1 = useEmpty('originMsg')
-  console.log(pos1);
-
-
-   
-  return (
-    <group>
-    <mesh material={m1} geometry={nodes.Pilar.geometry} position={pos1} />
-    <mesh material={materials.Mat} geometry={nodes.PIlar2.geometry}  position={[-8,0,0]} />
-    <mesh material={materials.Mat} geometry={nodes.Pilar1.geometry} position={[8,0,0]} />
-    </group>
-    )
-}
 
 function useEmpty(name) {
   const { nodes, materials } = useGLTF('/empty.glb')
@@ -81,10 +54,6 @@ ReactDOM.render(
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     
-    <Suspense fallback={null}>
-      <Asset url="/passive_z1_draco.gltf" />
-      <AssettoMesh url="/pilar.glb" />
-    </Suspense>
     <Physics>
       <Plane />
       <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI / 4, 0]} angularVelocity={[0, 0.5, 0]} />

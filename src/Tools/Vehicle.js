@@ -2,6 +2,7 @@ import { useBox, useCylinder, useRaycastVehicle } from '@react-three/cannon'
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import useKeyPress from '../hooks/useKeyPress'
+import useEmpty from '../hooks/useEmpty'
 
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
@@ -192,12 +193,14 @@ function Vehicle(props) {
     api.setBrake(brakeForce, 3)
   }, [brakeForce])
 
+  const emptyVehiclePos = useEmpty('originMsg') //name to change to originVehicle
+
   return (
     <group ref={vehicle}>
       <Chassis
         ref={chassis}
         rotation={props.rotation}
-        position={props.position}
+        position={emptyVehiclePos}
         angularVelocity={props.angularVelocity}></Chassis>
       <Wheel ref={wheel_1}></Wheel>
       <Wheel ref={wheel_2}></Wheel>
