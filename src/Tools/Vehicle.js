@@ -3,6 +3,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import useKeyPress from '../hooks/useKeyPress'
 import useEmpty from '../hooks/useEmpty'
+import useStore from '../store'
 
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
@@ -24,7 +25,7 @@ const Chassis = forwardRef((props, ref) => {
     <mesh ref={ref} api={api} castShadow>
       <boxBufferGeometry attach="geometry" args={boxSize} />
       <meshNormalMaterial attach="material" />
-      {/*<axesHelper scale={[5, 5, 5]} />*/}
+      <axesHelper scale={[5, 5, 5]} />
     </mesh>
   )
 })
@@ -83,6 +84,9 @@ const wheelInfo = {
 }
 
 function Vehicle(props) {
+
+  let changePosition = useStore(state => state.changePosition)
+
   // chassisBody
   const chassis = useRef()
   // wheels
@@ -171,11 +175,12 @@ function Vehicle(props) {
       setBrakeForce(maxBrakeForce)
     }
     if (reset) {
-      chassis.current.api.position.set(0, 5, 0)
+      //chassis.current.api.position.set(0, 5, 0)
       chassis.current.api.velocity.set(0, 0, 0)
       chassis.current.api.angularVelocity.set(0, 0.5, 0)
       chassis.current.api.rotation.set(0, -Math.PI / 4, 0)
     }
+    
   })
 
   useEffect(() => {
@@ -193,7 +198,15 @@ function Vehicle(props) {
     api.setBrake(brakeForce, 3)
   }, [brakeForce])
 
-  const emptyVehiclePos = useEmpty('originMsg') //name to change to originVehicle
+  useEffect(
+    () =>
+    chassis.current.api.position.subscribe((position) =>
+      changePosition(position)
+      ),
+    [chassis]
+  );
+
+  const emptyVehiclePos = useEmpty('originCharacter') //name to change to originVehicle
 
   return (
     <group ref={vehicle}>
