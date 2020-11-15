@@ -3,7 +3,7 @@ import React, { Suspense, useRef } from "react";
 import {Loader, Sky, useGLTF, useMatcapTexture } from "@react-three/drei";
 import { Canvas, useFrame } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
-import { Physics, usePlane, useBox } from 'use-cannon'
+import { Physics, usePlane, useBox } from '@react-three/cannon'
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
 import * as THREE from 'three'
