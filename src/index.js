@@ -61,7 +61,7 @@ ReactDOM.render(
         broadphase="SAP"
         defaultContactMaterial={defaultContactMaterial}>
       <Plane />
-      <Vehicle position={[0, 5, 0]} rotation={[0, -Math.PI / 4, 0]} angularVelocity={[0, 0.5, 0]} />
+      <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI / 4, 0]} angularVelocity={[0, 0.5, 0]} />
       <Cube />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />

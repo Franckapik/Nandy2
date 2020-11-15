@@ -2,8 +2,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { Canvas, extend, useFrame, useThree } from 'react-three-fiber'
 import { useCylinder } from '@react-three/cannon'
 import { Physics, useBox, usePlane, useRaycastVehicle } from '@react-three/cannon'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-
+import useKeyPress from '../hooks/useKeyPress'
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
   const boxSize = [1.2, 1, 4]
@@ -210,39 +209,5 @@ function Vehicle(props) {
 }
 
 
-
-
-// useKeyPress Hook (credit: https://usehooks.com/useKeyPress/)
-function useKeyPress(targetKey) {
-  // State for keeping track of whether key is pressed
-  const [keyPressed, setKeyPressed] = useState(false)
-
-  // If pressed key is our target key then set to true
-  function downHandler({ key }) {
-    if (key === targetKey) {
-      setKeyPressed(true)
-    }
-  }
-
-  // If released key is our target key then set to false
-  const upHandler = ({ key }) => {
-    if (key === targetKey) {
-      setKeyPressed(false)
-    }
-  }
-
-  // Add event listeners
-  useEffect(() => {
-    window.addEventListener('keydown', downHandler)
-    window.addEventListener('keyup', upHandler)
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener('keydown', downHandler)
-      window.removeEventListener('keyup', upHandler)
-    }
-  }, []) // Empty array ensures that effect is only run on mount and unmount
-
-  return keyPressed
-}
 
 export default Vehicle
