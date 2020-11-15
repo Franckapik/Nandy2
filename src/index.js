@@ -44,20 +44,22 @@ ReactDOM.render(
   <FPSStats />
   <Canvas shadowMap gl={{ alpha: false }} >
   <CameraTarget />
-  <Suspense fallback={  <Loader />}>
     <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
     <fogExp2 attach="fog" args={['black', 0.03]} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
+    <Suspense fallback={  <Loader />}>
+
     <Asset url="/all.gltf" />
+    </Suspense>
     <Physics>
       <Plane />
       <Cube />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
     </Physics>
-    </Suspense>
+
   </Canvas>
 
   </>,
