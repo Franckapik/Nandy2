@@ -48,7 +48,7 @@ ReactDOM.render(
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     
     <Suspense fallback={null}>
-      <Asset url="/all.gltf" />
+      <Asset url="/passive_z1_draco.gltf" />
       </Suspense>
     <Physics>
       <Plane />
