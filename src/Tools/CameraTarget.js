@@ -15,7 +15,7 @@ export default function CameraTarget() {
 
   useFrame(({camera}) => {
     if(cameraTarget) {
-      const posTarget = new Vector3(cameraTarget[0],cameraTarget[1],cameraTarget[2])
+      const posTarget= new Vector3(...cameraTarget)
       offset.copy(camera.position).sub(ref.current.target)
       ref.current.target.copy(posTarget) //look at the target
       camera.position.copy(posTarget).add(offset) //set camera position + offset
