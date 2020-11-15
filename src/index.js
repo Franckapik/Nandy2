@@ -4,7 +4,7 @@ import {Loader, Sky } from "drei";
 import { Canvas } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
-import useStore from './store/zstore';
+import useStore from './store';
 import './styles.css'
 
 
