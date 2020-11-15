@@ -15,12 +15,6 @@ import Vehicle from './Tools/Vehicle'
 //or maybe useLoader.preload(GLTFLoader, url)
 
 
-function useEmpty(name) {
-  const { nodes, materials } = useGLTF('/empty.glb')
-  return [nodes[name].position.x,nodes[name].position.y,nodes[name].position.z];
-}
-
-
 function Plane(props) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
   return (
