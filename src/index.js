@@ -4,12 +4,27 @@ import {Loader, Sky, useGLTF, useMatcapTexture } from "@react-three/drei";
 import { Canvas } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
-import useStore from './store';
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
+
+//const preloaded = useGLTF.preload('/grid.gltf')
+//console.log(preloaded);
+
 function Asset({ url }) {
   const gltf = useGLTF(url)
   return <primitive object={gltf.scene} />
+}
+
+function AssettoMesh({ url }) {
+  const { nodes, materials } = useGLTF(url)
+  console.log(nodes, materials);
+  return (
+    <group>
+    <mesh material={materials.Mat} geometry={nodes.Pilar.geometry} position={[0,3,0]} />
+    <mesh material={materials.Mat} geometry={nodes.PIlar2.geometry}  position={[-8,0,0]} />
+    <mesh material={materials.Mat} geometry={nodes.Pilar1.geometry} position={[8,0,0]} />
+    </group>
+    )
 }
 
 
@@ -49,6 +64,7 @@ ReactDOM.render(
     
     <Suspense fallback={null}>
       <Asset url="/passive_z1_draco.gltf" />
+      <AssettoMesh url="/pilar.glb" />
       </Suspense>
     <Physics>
       <Plane />
