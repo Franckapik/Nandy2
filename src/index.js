@@ -6,8 +6,10 @@ import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from 'use-cannon'
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
+import * as THREE from 'three'
 
-//const preloaded = useGLTF.preload('/grid.gltf')
+
+//const preloaded = useGLTF.preload('/pilar.glb')
 //console.log(preloaded);
 
 function Asset({ url }) {
@@ -17,15 +19,21 @@ function Asset({ url }) {
 
 function AssettoMesh({ url }) {
   const { nodes, materials } = useGLTF(url)
-  console.log(nodes, materials);
+  const [matcap, url2] = useMatcapTexture(
+    18, // index of the matcap texture https://github.com/emmelleppi/matcaps/blob/master/matcap-list.json
+    1024 // size of the texture ( 64, 128, 256, 512, 1024 )
+   )
+   
   return (
     <group>
-    <mesh material={materials.Mat} geometry={nodes.Pilar.geometry} position={[0,3,0]} />
+    <mesh material={new THREE.MeshMatcapMaterial({matcap : matcap})} geometry={nodes.Pilar.geometry} position={[0,3,0]} />
     <mesh material={materials.Mat} geometry={nodes.PIlar2.geometry}  position={[-8,0,0]} />
     <mesh material={materials.Mat} geometry={nodes.Pilar1.geometry} position={[8,0,0]} />
     </group>
     )
 }
+
+
 
 
 function Plane(props) {
@@ -65,7 +73,7 @@ ReactDOM.render(
     <Suspense fallback={null}>
       <Asset url="/passive_z1_draco.gltf" />
       <AssettoMesh url="/pilar.glb" />
-      </Suspense>
+    </Suspense>
     <Physics>
       <Plane />
       <Cube />
