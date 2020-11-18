@@ -55,7 +55,7 @@ export function Passive({url}) {
 
         else if(obj.type==='Mesh') { //Mesh seul
           if(obj.parent.name===first[0]) {
-            //obj.geometry.computeBoundingBox()
+            obj.geometry.computeBoundingBox()
             const b = obj.geometry.boundingBox;
             bound = [b.max.x, b.max.y, b.max.z]
             return <ObjMesh mass={0} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
@@ -79,7 +79,7 @@ const ObjMesh = ({position,bound,display,mass,...props}) => {
     mass: mass,
     args: bound,
     position: [v.x,v.y,v.z],
-  }));
+  }), true);
 
   
   return (
@@ -95,7 +95,7 @@ const [cube] = useBox(() => ({
   mass: mass,
   args: [1,1,1], //trouver le moyen de regler le bound
   position: [v.x,v.y,v.z],
-}));
+}), true);
 
   return (
     <group ref={cube} >
