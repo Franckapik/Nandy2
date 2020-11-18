@@ -22,7 +22,7 @@ const useStore = create((set) => ({
     changeContent: (newContent) => set(() => ({content: newContent})),
     changeForce: (newForce) => set(() => ({force: newForce})),
     changeRotation: (newRotation) => set(() => ({rotation: newRotation})),
-    changePosition: (newPosition) => set(() => ({position: newPosition})),
+    changePosition: (newPosition) => set(() => ({cameraTarget: newPosition})),
     changeVelocity: (newVelocity) => set(() => ({velocity: newVelocity})),
     changeId: (newId) => set(() => ({popid: newId})),
     addMsg: (newMsg) => set((state) => ({message: [...state.message, newMsg]})),

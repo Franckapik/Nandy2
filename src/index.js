@@ -7,6 +7,7 @@ import { Physics, usePlane, useBox } from '@react-three/cannon'
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
 import * as THREE from 'three'
+import Vehicle from './Tools/Vehicle'
 
 
 //const preloaded = useGLTF.preload('/pilar.glb')
@@ -138,7 +139,6 @@ function Cube(props) {
 }
 
 
-
 ReactDOM.render(
   <>
   <FPSStats />
@@ -151,13 +151,10 @@ ReactDOM.render(
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     
-    <Suspense fallback={null}>
-      {/*<Asset url="/passive.glb" />*/}
-      {/*<AssettoMesh url="/pilar.glb" />*/}
-    </Suspense>
     <Physics>
     <Passive url={'/passive.gltf'}  />
       <Plane />
+      <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI*1.2 , 0]} angularVelocity={[0, 0.5, 0]} />
       <Cube />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
