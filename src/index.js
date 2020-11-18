@@ -28,9 +28,6 @@ function AssettoMesh({ url }) {
   const ref = useRef()
   const m1 = new THREE.MeshMatcapMaterial({matcap : matcap})
   const pos1 = useEmpty('originMsg')
-  console.log(pos1);
-
-
    
   return (
     <group>
@@ -39,6 +36,79 @@ function AssettoMesh({ url }) {
     <mesh material={materials.Mat} geometry={nodes.Pilar1.geometry} position={[8,0,0]} />
     </group>
     )
+}
+
+
+
+export function Passive({url}) {
+  const { nodes, materials } = useGLTF(url)
+  console.log('Reading glb file : ',url);
+  const first = Object.keys(nodes)
+  return (
+    Object.entries(nodes).map(
+      ([name, obj]) => {
+        let bound = [2,2,2];
+        if(obj.type==='Group' && obj.name !== first[0]) {
+          return (<GroupMesh mass={0} key={name} position={obj.getWorldPosition()} {...obj} />)
+        }
+
+        else if(obj.type==='Mesh') { //Mesh seul
+          if(obj.parent.name===first[0]) {
+            //obj.geometry.computeBoundingBox()
+            const b = obj.geometry.boundingBox;
+            bound = [b.max.x, b.max.y, b.max.z]
+            return <ObjMesh mass={0} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
+          }
+        }
+        else {
+//do nothing
+        }  
+        return null       //a verifier si erreur
+    }
+  )
+  )
+}
+
+
+const ObjMesh = ({position,bound,display,mass,...props}) => {
+
+  const v = position;
+
+  const [cube] = useBox(() => ({
+    mass: mass,
+    args: bound,
+    position: [v.x,v.y,v.z],
+  }));
+
+  
+  return (
+      <mesh ref={cube} material={props.material} geometry={props.geometry} onClick={()=> console.log(props.name)} />
+  )
+}
+
+const GroupMesh = ({position,children,mass,...props}) => {
+
+  const v = position;
+  
+const [cube] = useBox(() => ({
+  mass: mass,
+  args: [1,1,1], //trouver le moyen de regler le bound
+  position: [v.x,v.y,v.z],
+}));
+
+  return (
+    <group ref={cube} >
+{          Object.entries(children).map(
+      ([name, obj]) => {
+        return (
+          <mesh key={name} material={obj.material} geometry={obj.geometry} />
+      )
+    }
+  )}
+    </group>
+
+  )
+
 }
 
 function useEmpty(name) {
@@ -82,10 +152,11 @@ ReactDOM.render(
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     
     <Suspense fallback={null}>
-      <Asset url="/passive_z1_draco.gltf" />
-      <AssettoMesh url="/pilar.glb" />
+      {/*<Asset url="/passive.glb" />*/}
+      {/*<AssettoMesh url="/pilar.glb" />*/}
     </Suspense>
     <Physics>
+    <Passive url={'/passive.glb'}  />
       <Plane />
       <Cube />
       <Cube position={[0, 10, -2]} />
