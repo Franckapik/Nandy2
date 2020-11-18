@@ -38,17 +38,10 @@ Creation de useYukaFollowRegion (mais sans la function getRandomRegion qui ne se
 
 v1.0.3
 Attention aux updates de react-hotkeys-hooks et r3f
+Mise à jour de toutes les dépendances
+use-cannon forké
 
-
-
-
-Travail à faire :
-changer de version jusqu'à la v5!!
-
-Comment avoir un use-cannon avec les bonding box, le master et le raycast vehicle ?
-Forker un use-cannon pour l'utiliser spécifiquement pour le jeu? Difficile de connaitre les pratiques de git pour les diffs de fichiers à gerer.
-Essayer d'ajouter le raycast vehicle sur la v5.
-
+v1.0.4
 
 
 -Choisir le bon comportement des budies.
