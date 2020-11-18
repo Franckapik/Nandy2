@@ -19,6 +19,7 @@ const Chassis = forwardRef((props, ref) => {
       args: boxSize,
       ...props,
     }),
+    true, //new bounding option debug
     ref
   )
   return (
@@ -42,6 +43,7 @@ const Wheel = forwardRef((props, ref) => {
       args: wheelSize,
       ...props,
     }),
+    true, //new bounding option debug
     ref
   )
   // useCompoundBody(
