@@ -156,7 +156,7 @@ ReactDOM.render(
       {/*<AssettoMesh url="/pilar.glb" />*/}
     </Suspense>
     <Physics>
-    <Passive url={'/passive.glb'}  />
+    <Passive url={'/passive.gltf'}  />
       <Plane />
       <Cube />
       <Cube position={[0, 10, -2]} />
