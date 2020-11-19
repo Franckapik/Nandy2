@@ -74,7 +74,7 @@ export function Passive({url}) {
 
 const FlowerGen = (props) => {
 
-  function getFlowerPos(min, max) {
+  function setFlowerPos(min, max) {
     let plusOrMinus = Math.random() < 0.5 ? -1 : 1
     let distance = (Math.random() * (max - min) + min).toFixed(2) * plusOrMinus
     return distance
@@ -90,7 +90,7 @@ const FlowerGen = (props) => {
   useFrame(({ clock }, delta) => {
     if (elapsed >= randomTime) {
       setTime(Math.random() * (max - min) + min);
-      let randomPos = [getFlowerPos(2, 5), 0, getFlowerPos(2, 5)]
+      let randomPos = [setFlowerPos(2, 5), 0, setFlowerPos(2, 5)]
       const chassisPos = useStore.getState().cameraTarget //get Store once
       let offset = new Vector3(...randomPos);
       let flowerPos = new Vector3();
