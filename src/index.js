@@ -1,13 +1,12 @@
-import ReactDOM from 'react-dom'
-import React, { Suspense, useRef } from "react";
-import {Loader, Sky, useGLTF, useMatcapTexture } from "@react-three/drei";
-import { Canvas, useFrame } from 'react-three-fiber'
-import FPSStats from "react-fps-stats";
-import { Physics, usePlane, useBox } from '@react-three/cannon'
-import CameraTarget from './Tools/CameraTarget'
-import './styles.css'
-import * as THREE from 'three'
-import Vehicle from './Tools/Vehicle'
+import { Physics, useBox, usePlane } from '@react-three/cannon';
+import { Loader, Sky, Stats, useGLTF, useMatcapTexture } from "@react-three/drei";
+import React, { useRef } from "react";
+import ReactDOM from 'react-dom';
+import { Canvas } from 'react-three-fiber';
+import * as THREE from 'three';
+import './styles.css';
+import CameraTarget from './Tools/CameraTarget';
+import Vehicle from './Tools/Vehicle';
 
 
 //const preloaded = useGLTF.preload('/pilar.glb')
@@ -141,7 +140,6 @@ function Cube(props) {
 
 ReactDOM.render(
   <>
-  <FPSStats />
   <Canvas shadowMap gl={{ alpha: false }} >
   <CameraTarget />
   
@@ -159,7 +157,7 @@ ReactDOM.render(
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
     </Physics>
-    
+    <Stats />
   </Canvas>
   <Loader />
   </>,
