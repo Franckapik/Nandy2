@@ -76,6 +76,38 @@ console.log(pos)
     }
   });
 
+--lebon
+function Box(props) {
+  function getFlowerPos(min, max) {
+    let plusOrMinus = Math.random() < 0.5 ? -1 : 1
+    let distance = (Math.random() * (max - min) + min).toFixed(2) * plusOrMinus
+    return distance
+  }
+
+  const [count, setCount] = useState([0, 0, 0])
+
+  const min = 5
+  const max = 10
+  const random = Math.random() * 1
+  let random2 = 0
+  let flowerArr = [[2, -2, 0]]
+
+  let elapsed = 0
+  useFrame(({ clock }, delta) => {
+    if (elapsed >= random2) {
+      random2 = Math.random() * (max - min) + min
+      let pos = [getFlowerPos(2, 5), getFlowerPos(2, 5), 0]
+      setCount((oldArr) => [...oldArr, pos])
+      elapsed = 0
+    } else {
+      elapsed += delta
+    }
+  })
+
+  return count.map((a, i) => {
+    return <Cube key={i} position={a} />
+  })
+}
 
 -Choisir le bon comportement des budies.
 Est-ce qu'il court après une cible changeante (empty) ou bien ils se déplacent sur un navmesh de manière aléatoire.
