@@ -44,6 +44,11 @@ use-cannon forké
 v1.0.4
 
 
+utiliser les stats de drei
+utilise matcap texture pour passive 
+l'interaction avec les mehs via raycast est implémentée automatiquement avec les events. (peut-etre pour ca qu'il  y a pas plus d'info sur le raycaster)
+
+
 -Choisir le bon comportement des budies.
 Est-ce qu'il court après une cible changeante (empty) ou bien ils se déplacent sur un navmesh de manière aléatoire.
 Aparemment, il faut accorder un comportement à l'entité puis ensuite ajouter dans le update(delta) des logiques de collisions selon le navmesh.
