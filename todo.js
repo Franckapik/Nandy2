@@ -58,6 +58,24 @@ function getFlowerPos(min, max) {
 let pos = [ getFlowerPos(2, 5), getFlowerPos(2, 5), 0]
 console.log(pos)
 
+---
+	
+	  const min = 5;
+  const max = 10;
+  const random = Math.random() * 1;
+  let random2 = 0;
+
+  let elapsed = 0;
+  useFrame(({ clock }, delta) => {
+    if (elapsed >= random2) {
+      random2 = Math.random() * (max - min) + min;
+      console.log(random2);
+      elapsed = 0;
+    } else {
+      elapsed += delta;
+    }
+  });
+
 
 -Choisir le bon comportement des budies.
 Est-ce qu'il court après une cible changeante (empty) ou bien ils se déplacent sur un navmesh de manière aléatoire.
