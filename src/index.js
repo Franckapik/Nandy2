@@ -9,6 +9,7 @@ import './styles.css'
 import * as THREE from 'three'
 import Vehicle from './Tools/Vehicle'
 import useStore from './store';
+import { Vector3 } from 'three';
 
 
 //const preloaded = useGLTF.preload('/pilar.glb')
@@ -71,10 +72,7 @@ export function Passive({url}) {
   )
 }
 
-function Box(props) {
-  
-  const targetCamera = useStore(state => state.cameraTarget)
-
+const FlowerGen = (props) => {
 
   function getFlowerPos(min, max) {
     let plusOrMinus = Math.random() < 0.5 ? -1 : 1
@@ -83,17 +81,22 @@ function Box(props) {
   }
 
   const [count, setCount] = useState([0, 0, 0])
+  const [randomTime, setTime] = useState(5)
 
   const min = 5
-  const max = 10
-  let random2 = 5
+  const max = 20
 
   let elapsed = 0
   useFrame(({ clock }, delta) => {
-    if (elapsed >= random2) {
-      random2 = Math.random() * (max - min) + min
-      let pos = [getFlowerPos(2, 5), 5, getFlowerPos(2, 5)]
-      setCount((oldArr) => [...oldArr, pos])
+    if (elapsed >= randomTime) {
+      setTime(Math.random() * (max - min) + min);
+      let randomPos = [getFlowerPos(2, 5), 0, getFlowerPos(2, 5)]
+      const chassisPos = useStore.getState().cameraTarget //get Store once
+      let offset = new Vector3(...randomPos);
+      let flowerPos = new Vector3();
+      let chassisV = new Vector3(...chassisPos)
+      flowerPos.copy(chassisV).add(offset)
+      setCount((oldArr) => [...oldArr, [flowerPos.x,flowerPos.y,flowerPos.z]])
       elapsed = 0
     } else {
       elapsed += delta
@@ -101,7 +104,6 @@ function Box(props) {
   })
 
   return count.map((a, i) => {
-    console.log(a);
     return <Cube key={i} position={a} />
   })
 }
@@ -194,7 +196,7 @@ ReactDOM.render(
       <Cube />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
-      <Box />
+      <FlowerGen />
     </Physics>
     
   </Canvas>
