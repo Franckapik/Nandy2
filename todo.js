@@ -47,6 +47,16 @@ v1.0.4
 utiliser les stats de drei
 utilise matcap texture pour passive 
 l'interaction avec les mehs via raycast est implémentée automatiquement avec les events. (peut-etre pour ca qu'il  y a pas plus d'info sur le raycaster)
+----
+position aléatoire pour les fleurs : 
+function getFlowerPos(min, max) {
+	let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+  let distance =(Math.random() * (max - min) + min).toFixed(2) * plusOrMinus;
+  return distance
+}
+
+let pos = [ getFlowerPos(2, 5), getFlowerPos(2, 5), 0]
+console.log(pos)
 
 
 -Choisir le bon comportement des budies.
