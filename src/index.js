@@ -8,6 +8,7 @@ import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
 import * as THREE from 'three'
 import Vehicle from './Tools/Vehicle'
+import useStore from './store';
 
 
 //const preloaded = useGLTF.preload('/pilar.glb')
@@ -71,6 +72,10 @@ export function Passive({url}) {
 }
 
 function Box(props) {
+  
+  const targetCamera = useStore(state => state.cameraTarget)
+
+
   function getFlowerPos(min, max) {
     let plusOrMinus = Math.random() < 0.5 ? -1 : 1
     let distance = (Math.random() * (max - min) + min).toFixed(2) * plusOrMinus
@@ -81,9 +86,7 @@ function Box(props) {
 
   const min = 5
   const max = 10
-  const random = Math.random() * 1
   let random2 = 5
-  let flowerArr = [[2, -2, 0]]
 
   let elapsed = 0
   useFrame(({ clock }, delta) => {
