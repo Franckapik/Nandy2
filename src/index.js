@@ -137,13 +137,15 @@ function Cube(props) {
   )
 }
 
+const  Hud = ({name}) => (<div className="hud"> Vous voici sur la page <span onClick={()=> console.log("coucou")}>{name}</span></div>)
+
 
 ReactDOM.render(
   <>
+  <Hud name={"coucou"} />
   <Canvas shadowMap gl={{ alpha: false }} >
   <CameraTarget />
   
-    <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
     <fogExp2 attach="fog" args={['black', 0.03]} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
