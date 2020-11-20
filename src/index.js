@@ -44,12 +44,15 @@ export function Passive({url}) {
   const { nodes, materials } = useGLTF(url)
   console.log('Reading glb file : ',url);
   const first = Object.keys(nodes)
+  const [matcap, url2] = useMatcapTexture(25,1024)
+  const m1 = new THREE.MeshMatcapMaterial({matcap : matcap, name : "bleu"})
+
   return (
     Object.entries(nodes).map(
       ([name, obj]) => {
         let bound = [2,2,2];
         if(obj.type==='Group' && obj.name !== first[0]) {
-          return (<GroupMesh mass={0} key={name} position={obj.getWorldPosition()} {...obj} />)
+          return (<GroupMesh mat={m1} mass={0} key={name} position={obj.getWorldPosition()} {...obj} />)
         }
 
         else if(obj.type==='Mesh') { //Mesh seul
@@ -57,7 +60,7 @@ export function Passive({url}) {
             //obj.geometry.computeBoundingBox()
             const b = obj.geometry.boundingBox;
             bound = [b.max.x, b.max.y, b.max.z]
-            return <ObjMesh mass={0} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
+            return <ObjMesh mat={m1} mass={0} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
           }
         }
         else {
@@ -80,9 +83,12 @@ const ObjMesh = ({position,bound,display,mass,...props}) => {
     position: [v.x,v.y,v.z],
   }));
 
+  console.log(props.mat);
+
+
   
   return (
-      <mesh ref={cube} material={props.material} geometry={props.geometry} onClick={()=> console.log(props.name)} />
+      <mesh ref={cube} material={props.mat} geometry={props.geometry} onClick={()=> console.log(props.name)} />
   )
 }
 
@@ -96,17 +102,18 @@ const [cube] = useBox(() => ({
   position: [v.x,v.y,v.z],
 }));
 
+
+
   return (
     <group ref={cube} >
 {          Object.entries(children).map(
       ([name, obj]) => {
         return (
-          <mesh key={name} material={obj.material} geometry={obj.geometry} />
+          <mesh key={name} material={props.mat} geometry={obj.geometry} />
       )
     }
   )}
     </group>
-
   )
 
 }
@@ -147,7 +154,6 @@ ReactDOM.render(
   
     <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
-    <fogExp2 attach="fog" args={['black', 0.03]} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     
