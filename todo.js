@@ -64,5 +64,7 @@ Differents comportements disponibles qui permetent le mouvement de cubes sur un 
 -Répartition aléatoire d'éléments ordinaires.
 -evolution du paysage au fur et à mesure du parcours. défoncé -> jardin.
 -commencer a concevoir le joueur
+-faire un hook pour le portal
+
 
 shift alt o pour retirer les imports non used

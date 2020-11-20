@@ -184,7 +184,6 @@ function Vehicle(props) {
       chassis.current.api.rotation.set(0, -Math.PI / 4, 0)
     }
     if (portal) {
-      console.log(portal);
       chassis.current.api.position.set(portal[0], portal[1], portal[2])
     }
     

@@ -117,10 +117,10 @@ function useEmpty(name) {
   return [nodes[name].position.x,nodes[name].position.y,nodes[name].position.z];
 }
 
-
 function Plane(props) {
   const changeVehiclePos = useStore(state => state.changeVehiclePos)
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+
   return (
     <mesh ref={ref} receiveShadow 
     onPointerDown={ () => {
