@@ -43,11 +43,11 @@ use-cannon forké
 
 v1.0.4
 Stats de drei
+Portal
 
 A faire :
 utilise matcap texture pour passive 
-l'interaction avec les mehs via raycast est implémentée automatiquement avec les events. (peut-etre pour ca qu'il  y a pas plus d'info sur le raycaster)
-déplacer le vehicle sur un empty sur un clic/collision(portal hook)
+
 
 -Choisir le bon comportement des budies.
 Est-ce qu'il court après une cible changeante (empty) ou bien ils se déplacent sur un navmesh de manière aléatoire.
