@@ -42,72 +42,12 @@ Mise à jour de toutes les dépendances
 use-cannon forké
 
 v1.0.4
+Stats de drei
 
-
-utiliser les stats de drei
+A faire :
 utilise matcap texture pour passive 
 l'interaction avec les mehs via raycast est implémentée automatiquement avec les events. (peut-etre pour ca qu'il  y a pas plus d'info sur le raycaster)
-----
-position aléatoire pour les fleurs : 
-function getFlowerPos(min, max) {
-	let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-  let distance =(Math.random() * (max - min) + min).toFixed(2) * plusOrMinus;
-  return distance
-}
-
-let pos = [ getFlowerPos(2, 5), getFlowerPos(2, 5), 0]
-console.log(pos)
-
----
-	
-	  const min = 5;
-  const max = 10;
-  const random = Math.random() * 1;
-  let random2 = 0;
-
-  let elapsed = 0;
-  useFrame(({ clock }, delta) => {
-    if (elapsed >= random2) {
-      random2 = Math.random() * (max - min) + min;
-      console.log(random2);
-      elapsed = 0;
-    } else {
-      elapsed += delta;
-    }
-  });
-
---lebon
-function Box(props) {
-  function getFlowerPos(min, max) {
-    let plusOrMinus = Math.random() < 0.5 ? -1 : 1
-    let distance = (Math.random() * (max - min) + min).toFixed(2) * plusOrMinus
-    return distance
-  }
-
-  const [count, setCount] = useState([0, 0, 0])
-
-  const min = 5
-  const max = 10
-  const random = Math.random() * 1
-  let random2 = 0
-  let flowerArr = [[2, -2, 0]]
-
-  let elapsed = 0
-  useFrame(({ clock }, delta) => {
-    if (elapsed >= random2) {
-      random2 = Math.random() * (max - min) + min
-      let pos = [getFlowerPos(2, 5), getFlowerPos(2, 5), 0]
-      setCount((oldArr) => [...oldArr, pos])
-      elapsed = 0
-    } else {
-      elapsed += delta
-    }
-  })
-
-  return count.map((a, i) => {
-    return <Cube key={i} position={a} />
-  })
-}
+déplacer le vehicle sur un empty sur un clic/collision(portal hook)
 
 -Choisir le bon comportement des budies.
 Est-ce qu'il court après une cible changeante (empty) ou bien ils se déplacent sur un navmesh de manière aléatoire.
