@@ -530,7 +530,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap orange",
+            "name" : "orange",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.9046609997749329,
@@ -566,7 +566,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap rouge",
+            "name" : "rouge",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.7991030216217041,
@@ -619,7 +619,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap marron",
+            "name" : "marron",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.41788527369499207,
@@ -638,7 +638,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap bleu",
+            "name" : "bleuC",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.019382361322641373,
@@ -657,7 +657,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap blanc",
+            "name" : "blanc",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.5382258296012878,
@@ -676,7 +676,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap jaune",
+            "name" : "jaune",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.8148465752601624,
@@ -710,7 +710,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap bleu fonce",
+            "name" : "bleuF",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.003536469768732786,
@@ -735,7 +735,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap turquoise",
+            "name" : "turquoise",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.02315327525138855,
@@ -759,7 +759,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap beige",
+            "name" : "beige",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.8549798727035522,
@@ -778,7 +778,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap vert",
+            "name" : "vert",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.09084171056747437,
@@ -869,7 +869,7 @@
                 0,
                 0
             ],
-            "name" : "Matcap gris",
+            "name" : "gris",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.195988267660141,

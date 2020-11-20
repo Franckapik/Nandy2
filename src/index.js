@@ -21,7 +21,7 @@ function Asset({ url }) {
 function AssettoMesh({ url }) {
   const { nodes, materials } = useGLTF(url)
   const [matcap, url2] = useMatcapTexture(
-    18, // index of the matcap texture https://github.com/emmelleppi/matcaps/blob/master/matcap-list.json
+    42, // index of the matcap texture https://github.com/emmelleppi/matcaps/blob/master/matcap-list.json
     1024 // size of the texture ( 64, 128, 256, 512, 1024 )
    )
   //const material = useResource()
@@ -41,32 +41,52 @@ function AssettoMesh({ url }) {
 
 
 export function Passive({url}) {
-  const { nodes, materials } = useGLTF(url)
-  console.log('Reading glb file : ',url);
+  const { nodes } = useGLTF(url)
   const first = Object.keys(nodes)
-  const [matcap, url2] = useMatcapTexture(25,1024)
-  const m1 = new THREE.MeshMatcapMaterial({matcap : matcap, name : "bleu"})
+  const [marron] = useMatcapTexture('6D3B1C_895638_502A0D_844C31')
+  const [beige] = useMatcapTexture('796D6B_DED3CB_C6BAB1_ADA09B')
+  const [blanc] = useMatcapTexture('686464_CCCAC7_A4A19F_BCB4B4')
+  const [bleuF] = useMatcapTexture('2A4BA7_1B2D44_1F3768_233C81')
+  const [bleuC] = useMatcapTexture('425F84_1C2939_2A3F57_24344C')
+  const [gris] = useMatcapTexture('4F4F4F_9C9C9C_121212_7C7C7C')
+  const [jaune] = useMatcapTexture('855D08_DAC31B_BF9B0C_AF860C')
+  const [orange] = useMatcapTexture('C35C04_F9C30C_EE9F04_E08304')
+  const [vert] = useMatcapTexture('9CC338_4E671A_799F27_8CAC2C')
+  const [rouge] = useMatcapTexture('872F2D_AB403E_682421_581F1C')
+  const [turquoise] = useMatcapTexture('2EAC9E_61EBE3_4DDDD1_43D1C6')
+
+  const matcaps = {
+    "marron" : marron, 
+    "beige" : beige,
+    "blanc" : blanc,
+    "bleuF" : bleuF,
+    "bleuC" : bleuC,
+    "gris" : gris,
+    "jaune" : jaune,
+    "orange" : orange,
+    "vert" : vert,
+    "rouge" : rouge ,
+    "turquoise" : turquoise,
+    }
 
   return (
     Object.entries(nodes).map(
       ([name, obj]) => {
         let bound = [2,2,2];
         if(obj.type==='Group' && obj.name !== first[0]) {
-          return (<GroupMesh mat={m1} mass={0} key={name} position={obj.getWorldPosition()} {...obj} />)
+          return (<GroupMesh mat={matcaps} mass={0} key={name} position={obj.getWorldPosition()} {...obj} />)
         }
 
         else if(obj.type==='Mesh') { //Mesh seul
           if(obj.parent.name===first[0]) {
-            //obj.geometry.computeBoundingBox()
             const b = obj.geometry.boundingBox;
             bound = [b.max.x, b.max.y, b.max.z]
-            return <ObjMesh mat={m1} mass={0} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
+            return <ObjMesh mat={matcaps} mass={0} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
           }
         }
         else {
-//do nothing
         }  
-        return null       //a verifier si erreur
+        return null       
     }
   )
   )
@@ -83,12 +103,15 @@ const ObjMesh = ({position,bound,display,mass,...props}) => {
     position: [v.x,v.y,v.z],
   }));
 
-  console.log(props.mat);
-
 
   
   return (
-      <mesh ref={cube} material={props.mat} geometry={props.geometry} onClick={()=> console.log(props.name)} />
+    <mesh key={props.name} ref={cube} geometry={props.geometry} onClick={()=> console.log(props.name)} >
+    <meshMatcapMaterial
+  attach="material"
+  matcap={props.mat[props.material.name]}
+  />
+</mesh>
   )
 }
 
@@ -102,14 +125,17 @@ const [cube] = useBox(() => ({
   position: [v.x,v.y,v.z],
 }));
 
-
-
   return (
     <group ref={cube} >
 {          Object.entries(children).map(
       ([name, obj]) => {
         return (
-          <mesh key={name} material={props.mat} geometry={obj.geometry} />
+          <mesh key={name} geometry={obj.geometry} >
+              <meshMatcapMaterial
+            attach="material"
+            matcap={props.mat[obj.material.name]}
+        />
+         </mesh>
       )
     }
   )}
