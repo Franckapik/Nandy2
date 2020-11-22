@@ -1,4 +1,4 @@
-import { OrbitControls } from 'drei'
+import {OrbitControls } from "@react-three/drei";
 import React, {useRef} from 'react'
 import {useFrame, useThree} from 'react-three-fiber'
 import useStore from "../store";
