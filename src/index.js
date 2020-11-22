@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom'
 import React, { Suspense, useRef } from "react";
 import {Loader, Sky, useGLTF, useMatcapTexture } from "@react-three/drei";
-import { Canvas, useFrame } from 'react-three-fiber'
+import { Canvas, useFrame, useLoader } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from '@react-three/cannon'
 import CameraTarget from './Tools/CameraTarget'
@@ -43,6 +43,11 @@ function AssettoMesh({ url }) {
 export function Passive({url}) {
   const { nodes } = useGLTF(url)
   const first = Object.keys(nodes)
+  const urlMat = './matcaps/512/'
+  const [beige, blanc, bleuC, gris, jaune, marron, noir, orange, rouge, turquoise, vert] = useLoader(THREE.TextureLoader, [`${urlMat}beige.png`,`${urlMat}blanc.png`,`${urlMat}bleu.png`,`${urlMat}gris.png`,`${urlMat}jaune.png`,`${urlMat}marron.png`,`${urlMat}noir.png`,`${urlMat}orange.png`,`${urlMat}rouge.png`,`${urlMat}turquoise.png`,`${urlMat}vert.png`])
+
+  console.log(beige);
+/*
   const [marron] = useMatcapTexture('6D3B1C_895638_502A0D_844C31')
   const [beige] = useMatcapTexture('796D6B_DED3CB_C6BAB1_ADA09B')
   const [blanc] = useMatcapTexture('686464_CCCAC7_A4A19F_BCB4B4')
@@ -53,9 +58,9 @@ export function Passive({url}) {
   const [orange] = useMatcapTexture('C35C04_F9C30C_EE9F04_E08304')
   const [vert] = useMatcapTexture('9CC338_4E671A_799F27_8CAC2C')
   const [rouge] = useMatcapTexture('872F2D_AB403E_682421_581F1C')
-  const [turquoise] = useMatcapTexture('2EAC9E_61EBE3_4DDDD1_43D1C6')
+  const [turquoise] = useMatcapTexture('2EAC9E_61EBE3_4DDDD1_43D1C6')*/
 
-  const matcaps = {
+  /*const matcaps = {
     "marron" : marron, 
     "beige" : beige,
     "blanc" : blanc,
@@ -67,7 +72,22 @@ export function Passive({url}) {
     "vert" : vert,
     "rouge" : rouge ,
     "turquoise" : turquoise,
-    }
+    }*/
+
+    const matcaps = {
+      "marron" :marron, 
+      "beige" :beige,
+      "blanc" :blanc,
+      "bleuF" :noir,
+      "bleuC" :bleuC,
+      "gris" :gris,
+      "jaune" :jaune,
+      "orange" :orange,
+      "vert" :vert,
+      "rouge" :rouge ,
+      "turquoise" :turquoise,
+      }
+
 
   return (
     Object.entries(nodes).map(
@@ -103,7 +123,7 @@ const ObjMesh = ({position,bound,display,mass,...props}) => {
     position: [v.x,v.y,v.z],
   }));
 
-
+console.log(props.mat);
   
   return (
     <mesh key={props.name} ref={cube} geometry={props.geometry} onClick={()=> console.log(props.name)} >
