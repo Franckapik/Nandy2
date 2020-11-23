@@ -122,7 +122,7 @@ const ObjMesh = ({position,bound,display,mass,...props}) => {
     mass: mass,
     args: bound,
     position: [v.x,v.y,v.z],
-  }), true);
+  }), false);
 
 console.log(props.mat);
   
@@ -144,7 +144,7 @@ const [cube] = useBox(() => ({
   mass: mass,
   args: [1,1,1], //trouver le moyen de regler le bound
   position: [v.x,v.y,v.z],
-}), true);
+}), false);
 
   return (
     <group ref={cube} >
