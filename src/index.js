@@ -1,38 +1,46 @@
 import ReactDOM from 'react-dom'
 import React, { Suspense, useRef } from "react";
-import {Loader, Sky, useGLTF, useMatcapTexture, shaderMaterial } from "@react-three/drei";
-import { Canvas, useFrame, extend } from 'react-three-fiber'
+import {Loader, Sky, useGLTF, useMatcapTexture, useTexture } from "@react-three/drei";
+import { Canvas, useFrame } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from '@react-three/cannon'
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
-import { ParallaxShader } from 'three/examples/jsm/shaders/ParallaxShader'
-import * as THREE from 'three'
+import { ParallaxMapMaterial } from './Tools/parallaxMap'
 
 
-function parallax(props) {
-  const shader = ParallaxShader
-  const uniforms = THREE.UniformsUtils.clone(shader.uniforms)
-  const parameters = {
-    fragmentShader: shader.fragmentShader,
-    vertexShader: shader.vertexShader,
-    uniforms: uniforms
-  }
-  
-  console.log(shader, parameters);
-  
-  const textureLoader = new THREE.TextureLoader();
-  let material = new THREE.ShaderMaterial(parameters)
-  material.map = textureLoader.load('textures/brick_diffuse.jpg')
-  material.bumpMap = textureLoader.load('textures/brick_bump.jpg')
-  material.map.anisotropy = 4
-  material.bumpMap.anisotropy = 4
-  uniforms['map'].value = material.map
-  uniforms['bumpMap'].value = material.bumpMap
-  
+function Box({minLayers, maxLayers, parallaxFactor, mode, scale}) {
+  const mesh = useRef()
+  /* 
+  ParallaxMap ordered from fastest to best quality.
+  const modes = {
+    none
+    basic
+    steep
+    occlusion // a.k.a. POM
+    relief
+  } */
+
+  const [map, bumpMap] = useTexture(['/textures/brick_diffuse.jpg', '/textures/brick_bump.jpg'])
+
+  useFrame(() => {
+    mesh.current.rotation.x = mesh.current.rotation.y += 0.0025
+  })
+  return (
+    <mesh ref={mesh} scale={[scale, scale, scale]}>
+      <boxBufferGeometry args={[4.25, 4.25, 4.25]} />
+      <ParallaxMapMaterial
+        map={map}
+        bumpMap={bumpMap}
+        mode={mode}
+        parallaxScale={parallaxFactor}
+        parallaxMinLayers={minLayers}
+        parallaxMaxLayers={maxLayers}
+      />
+    </mesh>
+  )
 }
 
-parallax();
 
 //threejs : https://threejs.org/examples/?q=map#webgl_materials_parallaxmap
 //imagefader drei slmt : https://codesandbox.io/s/t9-react-three-fiber-shadermaterial-1g4qq?from-embed=&file=/src/ImageFadeMaterial.js
@@ -110,10 +118,11 @@ ReactDOM.render(
     <fogExp2 attach="fog" args={['black', 0.03]} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
-    
     <Suspense fallback={null}>
       <Asset url="/passive_z1_draco.gltf" />
       <AssettoMesh url="/pilar.glb" />
+      <Box mode='relief' scale={2} parallaxFactor={-0.12} minLayers={8} maxLayers={30} />
+
     </Suspense>
     <Physics>
       <Plane />
