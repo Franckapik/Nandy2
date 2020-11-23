@@ -42,7 +42,7 @@ function useEmpty(name) {
 
 function Plane({minLayers, maxLayers, parallaxFactor, mode, scale}) {
 
-  const [map, bumpMap] = useTexture(['/textures/brick_diffuse.jpg', '/textures/brick_bump.jpg'])
+  const [map, bumpMap] = useTexture(['/textures/floor1.jpg', '/textures/floorbump.jpg'])
 
   map.wrapS = THREE.RepeatWrapping;
 map.wrapT = THREE.RepeatWrapping;
@@ -53,7 +53,7 @@ console.log(map);
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0]}))
   return (
     <mesh ref={ref} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[100,100]} />
+      <planeBufferGeometry attach="geometry" args={[50,50]} />
       <ParallaxMapMaterial
         map={map}
         bumpMap={bumpMap}
@@ -94,7 +94,7 @@ ReactDOM.render(
       <AssettoMesh url="/pilar.glb" />
     </Suspense>
     <Physics>
-      <Plane mode='basic' scale={0.01} parallaxFactor={-0.12} minLayers={8} maxLayers={30} />
+      <Plane mode='basic' scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
       <Cube />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
