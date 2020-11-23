@@ -53,7 +53,7 @@ console.log(map);
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0]}))
   return (
     <mesh ref={ref} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[50,50]} />
+      <planeBufferGeometry attach="geometry" args={[10,10]} />
       <ParallaxMapMaterial
         map={map}
         bumpMap={bumpMap}
