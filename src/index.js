@@ -7,6 +7,7 @@ import { Physics, usePlane, useBox } from '@react-three/cannon'
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
 import { ParallaxMapMaterial } from './Tools/parallaxMap'
+import * as THREE from 'three'
 
 
 function Asset({ url }) {
@@ -43,10 +44,16 @@ function Plane({minLayers, maxLayers, parallaxFactor, mode, scale}) {
 
   const [map, bumpMap] = useTexture(['/textures/brick_diffuse.jpg', '/textures/brick_bump.jpg'])
 
+  map.wrapS = THREE.RepeatWrapping;
+map.wrapT = THREE.RepeatWrapping;
+map.offset.set(0, 0);
+map.repeat.set( 1500,1500);
+
+console.log(map);
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0]}))
   return (
-    <mesh ref={ref} scale={[scale, scale, scale]} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[1009, 1000]} />
+    <mesh ref={ref} receiveShadow>
+      <planeBufferGeometry attach="geometry" args={[100,100]} />
       <ParallaxMapMaterial
         map={map}
         bumpMap={bumpMap}

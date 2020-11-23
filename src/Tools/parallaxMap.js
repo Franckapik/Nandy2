@@ -156,7 +156,7 @@ export const ParallaxMapMaterial = forwardRef(
     }
 
     const [parallaxMapMaterial] = useState(() => new ParallaxMap())
-
+    
     useLayoutEffect(() => {
       parallaxMapMaterial.defines = {}
       parallaxMapMaterial.defines[modes[mode]] = ''
