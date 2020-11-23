@@ -9,49 +9,6 @@ import './styles.css'
 import { ParallaxMapMaterial } from './Tools/parallaxMap'
 
 
-function Box({minLayers, maxLayers, parallaxFactor, mode, scale}) {
-  const mesh = useRef()
-  /* 
-  ParallaxMap ordered from fastest to best quality.
-  const modes = {
-    none
-    basic
-    steep
-    occlusion // a.k.a. POM
-    relief
-  } */
-
-  const [map, bumpMap] = useTexture(['/textures/brick_diffuse.jpg', '/textures/brick_bump.jpg'])
-
-  useFrame(() => {
-    mesh.current.rotation.x = mesh.current.rotation.y += 0.0025
-  })
-  return (
-    <mesh ref={mesh} scale={[scale, scale, scale]}>
-      <boxBufferGeometry args={[4.25, 4.25, 4.25]} />
-      <ParallaxMapMaterial
-        map={map}
-        bumpMap={bumpMap}
-        mode={mode}
-        parallaxScale={parallaxFactor}
-        parallaxMinLayers={minLayers}
-        parallaxMaxLayers={maxLayers}
-      />
-    </mesh>
-  )
-}
-
-
-//threejs : https://threejs.org/examples/?q=map#webgl_materials_parallaxmap
-//imagefader drei slmt : https://codesandbox.io/s/t9-react-three-fiber-shadermaterial-1g4qq?from-embed=&file=/src/ImageFadeMaterial.js
-//glsl babel + drei: https://codesandbox.io/s/r3f-shader-material-yltgr?file=/src/App.js
-//codesandbox pour test : https://codesandbox.io/s/r3f-basic-demo-forked-cegg8?file=/src/App.js
-
-
- //const preloaded = useGLTF.preload('/pilar.glb')
-//console.log(preloaded);
-//or maybe useLoader.preload(GLTFLoader, url)
-
 function Asset({ url }) {
   const gltf = useGLTF(url)
   return <primitive object={gltf.scene} />
@@ -66,10 +23,7 @@ function AssettoMesh({ url }) {
   //const material = useResource()
   const ref = useRef()
   const pos1 = useEmpty('originMsg')
-  console.log(pos1);
 
-
-   
   return (
     <group>
     <mesh geometry={nodes.Pilar.geometry} position={pos1} />
@@ -85,12 +39,22 @@ function useEmpty(name) {
 }
 
 
-function Plane(props) {
-  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+function Plane({minLayers, maxLayers, parallaxFactor, mode, scale}) {
+
+  const [map, bumpMap] = useTexture(['/textures/brick_diffuse.jpg', '/textures/brick_bump.jpg'])
+
+  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0]}))
   return (
-    <mesh ref={ref} receiveShadow>
+    <mesh ref={ref} scale={[scale, scale, scale]} receiveShadow>
       <planeBufferGeometry attach="geometry" args={[1009, 1000]} />
-      <meshLambertMaterial attach="material" color="hotpink" />
+      <ParallaxMapMaterial
+        map={map}
+        bumpMap={bumpMap}
+        mode={mode}
+        parallaxScale={parallaxFactor}
+        parallaxMinLayers={minLayers}
+        parallaxMaxLayers={maxLayers}
+      />
     </mesh>
   )
 }
@@ -121,11 +85,9 @@ ReactDOM.render(
     <Suspense fallback={null}>
       <Asset url="/passive_z1_draco.gltf" />
       <AssettoMesh url="/pilar.glb" />
-      <Box mode='relief' scale={2} parallaxFactor={-0.12} minLayers={8} maxLayers={30} />
-
     </Suspense>
     <Physics>
-      <Plane />
+      <Plane mode='basic' scale={0.01} parallaxFactor={-0.12} minLayers={8} maxLayers={30} />
       <Cube />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
