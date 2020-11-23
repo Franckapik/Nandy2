@@ -14,13 +14,9 @@ import { GroupMesh, ObjMesh } from './Tools/MapMesh';
 //console.log(preloaded);
 //or maybe useLoader.preload(GLTFLoader, url)
 
-
-export function Passive({url}) {
-  const { nodes } = useGLTF(url)
-  const first = Object.keys(nodes)
-  const urlMat = './matcaps/512/'
+const useMatcaps = (urlMat) => {
   const [beige, blanc, bleuC, gris, jaune, marron, noir, orange, rouge, turquoise, vert] = useLoader(THREE.TextureLoader, [`${urlMat}beige.png`,`${urlMat}blanc.png`,`${urlMat}bleu.png`,`${urlMat}gris.png`,`${urlMat}jaune.png`,`${urlMat}marron.png`,`${urlMat}noir.png`,`${urlMat}orange.png`,`${urlMat}rouge.png`,`${urlMat}turquoise.png`,`${urlMat}vert.png`])
-
+  
     const matcaps = {
       "marron" :marron, 
       "beige" :beige,
@@ -35,20 +31,29 @@ export function Passive({url}) {
       "turquoise" :turquoise,
       }
 
+      return matcaps
+}
+
+
+
+const Passive = ({url, mass}) => {
+  const { nodes } = useGLTF(url)
+  const first = Object.keys(nodes)
+  const matcaps = useMatcaps('./matcaps/512/')
 
   return (
     Object.entries(nodes).map(
       ([name, obj]) => {
         let bound = [2,2,2];
         if(obj.type==='Group' && obj.name !== first[0]) {
-          return (<GroupMesh mat={matcaps} mass={0} key={name} position={obj.getWorldPosition()} {...obj} />)
+          return (<GroupMesh mat={matcaps} mass={mass} key={name} position={obj.getWorldPosition()} {...obj} />)
         }
 
         else if(obj.type==='Mesh') { //Mesh seul
           if(obj.parent.name===first[0]) {
             const b = obj.geometry.boundingBox;
             bound = [b.max.x, b.max.y, b.max.z]
-            return <ObjMesh mat={matcaps} mass={0} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
+            return <ObjMesh mat={matcaps} mass={mass} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
           }
         }
         else {
@@ -100,11 +105,11 @@ ReactDOM.render(
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     
     <Suspense fallback={null}>
-      {/*<Asset url="/passive.glb" />*/}
-      {/*<AssettoMesh url="/pilar.glb" />*/}
+
     </Suspense>
     <Physics>
-    <Passive url={'/passive.gltf'}  />
+    <Passive url={'/passive.gltf'} mass={10}  />
+    <Passive url={'/active.gltf'} mass={10}  />
       <Plane />
       <Cube />
       <Cube position={[0, 10, -2]} />
