@@ -7,37 +7,12 @@ import { Physics, usePlane, useBox } from '@react-three/cannon'
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
 import * as THREE from 'three'
+import { GroupMesh, ObjMesh } from './Tools/MapMesh';
 
 
 //const preloaded = useGLTF.preload('/pilar.glb')
 //console.log(preloaded);
 //or maybe useLoader.preload(GLTFLoader, url)
-
-function Asset({ url }) {
-  const gltf = useGLTF(url)
-  return <primitive object={gltf.scene} />
-}
-
-function AssettoMesh({ url }) {
-  const { nodes, materials } = useGLTF(url)
-  const [matcap, url2] = useMatcapTexture(
-    42, // index of the matcap texture https://github.com/emmelleppi/matcaps/blob/master/matcap-list.json
-    1024 // size of the texture ( 64, 128, 256, 512, 1024 )
-   )
-  //const material = useResource()
-  const ref = useRef()
-  const m1 = new THREE.MeshMatcapMaterial({matcap : matcap})
-  const pos1 = useEmpty('originMsg')
-   
-  return (
-    <group>
-    <mesh material={m1} geometry={nodes.Pilar.geometry} position={pos1} />
-    <mesh material={materials.Mat} geometry={nodes.PIlar2.geometry}  position={[-8,0,0]} />
-    <mesh material={materials.Mat} geometry={nodes.Pilar1.geometry} position={[8,0,0]} />
-    </group>
-    )
-}
-
 
 
 export function Passive({url}) {
@@ -45,34 +20,6 @@ export function Passive({url}) {
   const first = Object.keys(nodes)
   const urlMat = './matcaps/512/'
   const [beige, blanc, bleuC, gris, jaune, marron, noir, orange, rouge, turquoise, vert] = useLoader(THREE.TextureLoader, [`${urlMat}beige.png`,`${urlMat}blanc.png`,`${urlMat}bleu.png`,`${urlMat}gris.png`,`${urlMat}jaune.png`,`${urlMat}marron.png`,`${urlMat}noir.png`,`${urlMat}orange.png`,`${urlMat}rouge.png`,`${urlMat}turquoise.png`,`${urlMat}vert.png`])
-
-  console.log(beige);
-/*
-  const [marron] = useMatcapTexture('6D3B1C_895638_502A0D_844C31')
-  const [beige] = useMatcapTexture('796D6B_DED3CB_C6BAB1_ADA09B')
-  const [blanc] = useMatcapTexture('686464_CCCAC7_A4A19F_BCB4B4')
-  const [bleuF] = useMatcapTexture('2A4BA7_1B2D44_1F3768_233C81')
-  const [bleuC] = useMatcapTexture('425F84_1C2939_2A3F57_24344C')
-  const [gris] = useMatcapTexture('4F4F4F_9C9C9C_121212_7C7C7C')
-  const [jaune] = useMatcapTexture('855D08_DAC31B_BF9B0C_AF860C')
-  const [orange] = useMatcapTexture('C35C04_F9C30C_EE9F04_E08304')
-  const [vert] = useMatcapTexture('9CC338_4E671A_799F27_8CAC2C')
-  const [rouge] = useMatcapTexture('872F2D_AB403E_682421_581F1C')
-  const [turquoise] = useMatcapTexture('2EAC9E_61EBE3_4DDDD1_43D1C6')*/
-
-  /*const matcaps = {
-    "marron" : marron, 
-    "beige" : beige,
-    "blanc" : blanc,
-    "bleuF" : bleuF,
-    "bleuC" : bleuC,
-    "gris" : gris,
-    "jaune" : jaune,
-    "orange" : orange,
-    "vert" : vert,
-    "rouge" : rouge ,
-    "turquoise" : turquoise,
-    }*/
 
     const matcaps = {
       "marron" :marron, 
@@ -112,57 +59,6 @@ export function Passive({url}) {
   )
 }
 
-
-const ObjMesh = ({position,bound,display,mass,...props}) => {
-
-  const v = position;
-
-  const [cube] = useBox(() => ({
-    mass: mass,
-    args: bound,
-    position: [v.x,v.y,v.z],
-  }));
-
-console.log(props.mat);
-  
-  return (
-    <mesh key={props.name} ref={cube} geometry={props.geometry} onClick={()=> console.log(props.name)} >
-    <meshMatcapMaterial
-  attach="material"
-  matcap={props.mat[props.material.name]}
-  />
-</mesh>
-  )
-}
-
-const GroupMesh = ({position,children,mass,...props}) => {
-
-  const v = position;
-  
-const [cube] = useBox(() => ({
-  mass: mass,
-  args: [1,1,1], //trouver le moyen de regler le bound
-  position: [v.x,v.y,v.z],
-}));
-
-  return (
-    <group ref={cube} >
-{          Object.entries(children).map(
-      ([name, obj]) => {
-        return (
-          <mesh key={name} geometry={obj.geometry} >
-              <meshMatcapMaterial
-            attach="material"
-            matcap={props.mat[obj.material.name]}
-        />
-         </mesh>
-      )
-    }
-  )}
-    </group>
-  )
-
-}
 
 function useEmpty(name) {
   const { nodes, materials } = useGLTF('/empty.glb')
