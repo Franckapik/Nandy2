@@ -42,7 +42,7 @@ function useEmpty(name) {
 
 function Plane({minLayers, maxLayers, parallaxFactor, mode, scale}) {
 
-  const [map, bumpMap] = useTexture(['/textures/floor1.jpg', '/textures/floorbump.jpg'])
+  const [map, bumpMap] = useTexture(['/textures/floor3.png', '/textures/floorbump.jpg'])
 
   map.wrapS = THREE.RepeatWrapping;
 map.wrapT = THREE.RepeatWrapping;
@@ -53,7 +53,7 @@ console.log(map);
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0]}))
   return (
     <mesh ref={ref} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[10,10]} />
+      <planeBufferGeometry attach="geometry" args={[200,200]} />
       <ParallaxMapMaterial
         map={map}
         bumpMap={bumpMap}
