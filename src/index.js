@@ -10,6 +10,37 @@ import { ParallaxMapMaterial } from './Tools/parallaxMap'
 import * as THREE from 'three'
 
 
+
+function Pave({xa, ya, za, position, number}) {
+  const tempObject = new THREE.Object3D()
+
+  const ref = useRef()
+
+  useFrame((state) => {
+    let i = 0
+    for (let x = 0; x < xa; x++)
+      for (let y = 0; y < ya; y++)
+        for (let z = 0; z < za; z++) {
+          const id = i++
+          tempObject.position.set(- x, - y, - z)
+          const scale = 1
+          tempObject.scale.set(scale, scale, scale)
+          tempObject.updateMatrix()
+          ref.current.setMatrixAt(id, tempObject.matrix)
+        }
+    ref.current.instanceMatrix.needsUpdate = true
+  })
+
+
+  return (
+    <instancedMesh position={position} ref={ref} args={[null, null, number]}>
+      <boxBufferGeometry attach="geometry" args={[0.7, 0.7, 0.7]}>
+      </boxBufferGeometry>
+      <meshPhongMaterial attach="material" vertexColors={THREE.VertexColors} />
+    </instancedMesh>
+  )
+}
+
 function Asset({ url }) {
   const gltf = useGLTF(url)
   return <primitive object={gltf.scene} />
@@ -42,7 +73,7 @@ function useEmpty(name) {
 
 function Plane({minLayers, maxLayers, parallaxFactor, mode, scale}) {
 
-  const [map, bumpMap] = useTexture(['/textures/floor3.png', '/textures/floorbump.jpg'])
+  const [map, bumpMap] = useTexture(['/textures/floor1.jpg', '/textures/floorbump.jpg'])
 
   map.wrapS = THREE.RepeatWrapping;
 map.wrapT = THREE.RepeatWrapping;
@@ -90,11 +121,9 @@ ReactDOM.render(
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     <Suspense fallback={null}>
-      <Asset url="/passive_z1_draco.gltf" />
-      <AssettoMesh url="/pilar.glb" />
+     <Pave xa={10} ya={1} za={10} position={[5,0,5]} number={1000} />
     </Suspense>
     <Physics>
-      <Plane mode='basic' scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
       <Cube />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
