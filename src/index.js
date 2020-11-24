@@ -31,6 +31,7 @@ function Pave({xa, ya, za, position, number}) {
     ref.current.instanceMatrix.needsUpdate = true
   })
 
+  //how is it possible to instance a iport gltf ?
 
   return (
     <instancedMesh position={position} ref={ref} args={[null, null, number]}>
