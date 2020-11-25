@@ -20,7 +20,6 @@ export default function CameraTarget() {
       const posTarget= new Vector3(...cameraTarget) //position of vehicle (=target lookAT)
       offset.copy(camera.position).sub(ref.current.target) 
       //distance camera-vehicle setted by OrbitControls.
-      console.log(offset);
       posTarget.add(offset3)
       ref.current.target.copy(posTarget) //look at the target = vehicle
       camera.position.copy(posTarget).add(offset) //set camera position + offset
