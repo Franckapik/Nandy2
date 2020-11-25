@@ -14,9 +14,8 @@ import Suzanne from './Suzanne'
 
 function Pave({xa, ya, za, position, number}) {
   const tempObject = new THREE.Object3D()
-  const geometry = useLoader(THREE.BufferGeometryLoader, 'blabla')
-  // When we're here it's loaded, now compute vertex normals
-  // Isn't useEffect is better in this case?
+  const gltf = useGLTF('./pave.glb')
+  const geometry = gltf.nodes.pave.geometry
 
   console.log(geometry);
   React.useMemo(() => {
@@ -34,6 +33,7 @@ function Pave({xa, ya, za, position, number}) {
           const id = i++
           tempObject.position.set(- x, - y, - z)
           const scale = 1
+          tempObject.rotation.x = -Math.PI/2;
           tempObject.scale.set(scale, scale, scale)
           tempObject.updateMatrix()
           ref.current.setMatrixAt(id, tempObject.matrix)
@@ -41,12 +41,12 @@ function Pave({xa, ya, za, position, number}) {
     ref.current.instanceMatrix.needsUpdate = true
   })
   
-  const args = React.useMemo(() => [geometry, null, 1000], [geometry])
+  const args = React.useMemo(() => [geometry, null, number], [geometry])
 
   //how is it possible to instance a iport gltf ?
 
   return (
-    <instancedMesh position={position} ref={ref} args={args}>
+    <instancedMesh position={position} ref={ref} args={args} rotation= {[0, 0, 0]} >
       <meshNormalMaterial attach="material" />
     </instancedMesh>
   )
@@ -132,7 +132,7 @@ ReactDOM.render(
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     <Suspense fallback={null}>
-      <Suzanne />
+      <Pave xa={50} ya={1} za={50} number={1000} position={[0,0,20]} />
     </Suspense>
     <Physics>
       <Cube />
