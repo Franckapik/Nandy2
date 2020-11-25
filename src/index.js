@@ -1,18 +1,28 @@
 import ReactDOM from 'react-dom'
 import React, { Suspense, useRef } from "react";
 import {Loader, Sky, useGLTF, useMatcapTexture, useTexture } from "@react-three/drei";
-import { Canvas, useFrame } from 'react-three-fiber'
+import { Canvas, useFrame, useLoader } from 'react-three-fiber'
 import FPSStats from "react-fps-stats";
 import { Physics, usePlane, useBox } from '@react-three/cannon'
 import CameraTarget from './Tools/CameraTarget'
 import './styles.css'
 import { ParallaxMapMaterial } from './Tools/parallaxMap'
 import * as THREE from 'three'
+import Suzanne from './Suzanne'
 
 
 
 function Pave({xa, ya, za, position, number}) {
   const tempObject = new THREE.Object3D()
+  const geometry = useLoader(THREE.BufferGeometryLoader, 'blabla')
+  // When we're here it's loaded, now compute vertex normals
+  // Isn't useEffect is better in this case?
+
+  console.log(geometry);
+  React.useMemo(() => {
+    geometry.computeVertexNormals()
+    geometry.scale(0.5, 0.5, 0.5)
+  }, [geometry])
 
   const ref = useRef()
 
@@ -30,14 +40,14 @@ function Pave({xa, ya, za, position, number}) {
         }
     ref.current.instanceMatrix.needsUpdate = true
   })
+  
+  const args = React.useMemo(() => [geometry, null, 1000], [geometry])
 
   //how is it possible to instance a iport gltf ?
 
   return (
-    <instancedMesh position={position} ref={ref} args={[null, null, number]}>
-      <boxBufferGeometry attach="geometry" args={[0.7, 0.7, 0.7]}>
-      </boxBufferGeometry>
-      <meshPhongMaterial attach="material" vertexColors={THREE.VertexColors} />
+    <instancedMesh position={position} ref={ref} args={args}>
+      <meshNormalMaterial attach="material" />
     </instancedMesh>
   )
 }
@@ -122,7 +132,7 @@ ReactDOM.render(
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     <Suspense fallback={null}>
-     <Pave xa={10} ya={1} za={10} position={[5,0,5]} number={1000} />
+      <Suzanne />
     </Suspense>
     <Physics>
       <Cube />
