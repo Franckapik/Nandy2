@@ -107,13 +107,24 @@ function Cube(props) {
   )
 }
 
+const  Hud = ({name}) => (
+<div className="hud"> 
+<ul>
+  <li> Actualité </li>
+  <li> Journal </li>
+  <li> Galleries </li>
+  <li> Rencontre </li>
+  <li> Boite à mots </li>
+</ul>
+</div>)
+
 
 ReactDOM.render(
   <>
+  <Hud name={"coucou"} />
   <Canvas shadowMap gl={{ alpha: false }} >
   <CameraTarget />
   
-    <color attach="background" args={['lightblue']} />
     <hemisphereLight intensity={0.35} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
