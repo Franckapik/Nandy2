@@ -2,6 +2,7 @@ import { Physics, useBox, usePlane } from '@react-three/cannon';
 import { Loader, Sky, Stats, useGLTF, useMatcapTexture, useTexture } from "@react-three/drei";
 import ReactDOM from 'react-dom';
 import * as THREE from 'three';
+import useStore from './store';
 import './styles.css';
 import CameraTarget from './Tools/CameraTarget';
 import Vehicle from './Tools/Vehicle';
@@ -81,9 +82,18 @@ map.offset.set(0, 0);
 map.repeat.set( 1500,1500);
 
 console.log(map);
-  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0]}))
+  const changeVehiclePos = useStore(state => state.changeVehiclePos)
+  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0] }))
+
   return (
-    <mesh ref={ref} receiveShadow>
+    <mesh ref={ref} receiveShadow 
+    onPointerDown={ () => {
+      changeVehiclePos([0,10,10])
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}
+    ref={ref} receiveShadow>
       <planeBufferGeometry attach="geometry" args={[200,200]} />
       <ParallaxMapMaterial
         map={map}
@@ -93,9 +103,10 @@ console.log(map);
         parallaxMinLayers={minLayers}
         parallaxMaxLayers={maxLayers}
       />
-    </mesh>
+      </mesh>
   )
 }
+
 
 function Cube(props) {
   const [ref] = useBox(() => ({ mass: 1, position: [0, 5, 0], rotation: [0.4, 0.2, 0.5], ...props }))

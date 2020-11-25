@@ -87,7 +87,8 @@ const wheelInfo = {
 
 function Vehicle(props) {
 
-  let changePosition = useStore(state => state.changePosition)
+  let changeTarget = useStore(state => state.changeTarget)
+  let portal = useStore(state => state.portal)
 
   // chassisBody
   const chassis = useRef()
@@ -182,6 +183,9 @@ function Vehicle(props) {
       chassis.current.api.angularVelocity.set(0, 0.5, 0)
       chassis.current.api.rotation.set(0, -Math.PI / 4, 0)
     }
+    if (portal) {
+      chassis.current.api.position.set(portal[0], portal[1], portal[2])
+    }
     
   })
 
@@ -202,11 +206,16 @@ function Vehicle(props) {
 
   useEffect(
     () =>
-    chassis.current.api.position.subscribe((position) =>
-      changePosition(position)
+    chassis.current.api.position.subscribe((position) => //https://github.com/pmndrs/zustand#transient-updates-for-often-occuring-state-changes
+      changeTarget(position)
       ),
     [chassis]
   );
+
+  useEffect(() => {
+    console.log('mounted');
+    return () => console.log('unmounting...');
+  }, [])
 
   const emptyVehiclePos = useEmpty('originCharacter') //name to change to originVehicle
 
