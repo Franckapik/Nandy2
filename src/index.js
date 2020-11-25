@@ -137,7 +137,16 @@ function Cube(props) {
   )
 }
 
-const  Hud = ({name}) => (<div className="hud"> Vous voici sur la page <span onClick={()=> console.log("coucou")}>{name}</span></div>)
+const  Hud = ({name}) => (
+<div className="hud"> 
+<ul>
+  <li> Actualité </li>
+  <li> Journal </li>
+  <li> Galleries </li>
+  <li> Rencontre </li>
+  <li> Boite à mots </li>
+</ul>
+</div>)
 
 
 ReactDOM.render(
