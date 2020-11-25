@@ -1,13 +1,15 @@
 import * as THREE from 'three'
 import * as React from 'react'
 import { Canvas, useFrame, useLoader } from 'react-three-fiber'
-import suzanne from './suzanne.blob'
+import suzanne from './suzanne.glb'
+import { useGLTF } from '@react-three/drei'
 
 const dummy = new THREE.Object3D()
 function Suzanne() {
   // Load async model
-  const geometry = useLoader(THREE.BufferGeometryLoader, suzanne)
-  console.log(geometry);
+  const gltf = useGLTF(suzanne)
+  const geometry = gltf.nodes.Suzanne.geometry
+
   // When we're here it's loaded, now compute vertex normals
   // Isn't useEffect is better in this case?
   React.useMemo(() => {
