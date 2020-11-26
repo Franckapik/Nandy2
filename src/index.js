@@ -1,6 +1,6 @@
 import { Physics, useBox, usePlane } from '@react-three/cannon';
 import { Loader, Sky, Stats, useGLTF, useMatcapTexture } from "@react-three/drei";
-import React, { useRef } from "react";
+import React, { Suspense, useRef } from "react";
 import ReactDOM from 'react-dom';
 import { Canvas } from 'react-three-fiber';
 import * as THREE from 'three';
@@ -141,31 +141,79 @@ function Cube(props) {
 
 const  Hud = ({name}) => {
   const changeVehiclePos = useStore(state => state.changeVehiclePos)
+  const pos2 = useEmpty('origin2Game') 
+  const pos3 = useEmpty('origin3Cinema') 
+  const pos4 = useEmpty('origin4Garden') 
+  const pos5 = useEmpty('origin5Foodtruck') 
+  const pos6 = useEmpty('origin6Techno') 
+  const pos7 = useEmpty('origin7Inconnu') 
+  const pos8 = useEmpty('origin8Idea') 
+  const pos9 = useEmpty('origin9Ecology') 
+
 
   return (
     <div className="hud"> 
 <ul>
-  <li > Actualité </li>
-  <li> Journal </li>
-  <li> Galleries </li>
-  <li> Rencontre </li>
   <li     onPointerDown={ () => {
-      changeVehiclePos([0,10,10])
+      changeVehiclePos(pos2)
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }} > Actualité </li>
+  <li     onPointerDown={ () => {
+      changeVehiclePos(pos3)
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}> Journal </li>
+  <li     onPointerDown={ () => {
+      changeVehiclePos(pos4)
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}> Galleries </li>
+  <li     onPointerDown={ () => {
+      changeVehiclePos(pos5)
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}> Rencontre </li>
+  <li     onPointerDown={ () => {
+      changeVehiclePos(pos6)
     }}
     onPointerUp={ () => {
       changeVehiclePos(0)
     }}> Boite à mots </li>
+  <li     onPointerDown={ () => {
+      changeVehiclePos(pos7)
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}> Un autre lien </li>
+  <li     onPointerDown={ () => {
+      changeVehiclePos(pos8)
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}> Et encore un autre </li>
+  <li     onPointerDown={ () => {
+      changeVehiclePos(pos9)
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}> et le dernier </li>
+
 </ul>
 </div>
   )
 
 }
 
-
-
 ReactDOM.render(
   <>
+  <Suspense fallback="null"> 
   <Hud name={"coucou"} />
+  </Suspense>
   <Canvas shadowMap gl={{ alpha: false }} >
   <CameraTarget />
   
