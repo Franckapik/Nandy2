@@ -117,11 +117,19 @@ function useEmpty(name) {
   return [nodes[name].position.x,nodes[name].position.y,nodes[name].position.z];
 }
 
-
 function Plane(props) {
+  const changeVehiclePos = useStore(state => state.changeVehiclePos)
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+
   return (
-    <mesh ref={ref} receiveShadow>
+    <mesh ref={ref} receiveShadow 
+    onPointerDown={ () => {
+      changeVehiclePos([0,10,10])
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}
+    >
       <planeBufferGeometry attach="geometry" args={[1009, 1000]} />
       <shadowMaterial attach="material" color="#171717" />
     </mesh>
