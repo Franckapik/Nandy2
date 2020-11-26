@@ -122,14 +122,7 @@ function Plane(props) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
 
   return (
-    <mesh ref={ref} receiveShadow 
-    onPointerDown={ () => {
-      changeVehiclePos([0,10,10])
-    }}
-    onPointerUp={ () => {
-      changeVehiclePos(0)
-    }}
-    >
+    <mesh ref={ref} receiveShadow >
       <planeBufferGeometry attach="geometry" args={[1009, 1000]} />
       <shadowMaterial attach="material" color="#171717" />
     </mesh>
@@ -147,7 +140,7 @@ function Cube(props) {
 }
 
 const  Hud = ({name}) => {
-  const changeVehiclePos = useStore(state => state.changePosition)
+  const changeVehiclePos = useStore(state => state.changeVehiclePos)
 
   return (
     <div className="hud"> 
