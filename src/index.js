@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import ReactDOM from 'react-dom';
 import { Canvas } from 'react-three-fiber';
 import * as THREE from 'three';
+import useStore from './store';
 import './styles.css';
 import CameraTarget from './Tools/CameraTarget';
 import Vehicle from './Tools/Vehicle';
@@ -137,16 +138,28 @@ function Cube(props) {
   )
 }
 
-const  Hud = ({name}) => (
-<div className="hud"> 
+const  Hud = ({name}) => {
+  const changeVehiclePos = useStore(state => state.changePosition)
+
+  return (
+    <div className="hud"> 
 <ul>
-  <li> Actualité </li>
+  <li > Actualité </li>
   <li> Journal </li>
   <li> Galleries </li>
   <li> Rencontre </li>
-  <li> Boite à mots </li>
+  <li     onPointerDown={ () => {
+      changeVehiclePos([0,10,10])
+    }}
+    onPointerUp={ () => {
+      changeVehiclePos(0)
+    }}> Boite à mots </li>
 </ul>
-</div>)
+</div>
+  )
+
+}
+
 
 
 ReactDOM.render(
