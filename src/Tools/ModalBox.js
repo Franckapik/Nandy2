@@ -1,49 +1,56 @@
-import React from "react";
-import Modal from "react-modal";
-import useStore from "../store.js";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 
 const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    overflow: 'hidden',
-    minWidth: '300px',
-    minHeight: '300px',
-  },
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)',            
+  }
 };
-Modal.setAppElement("#root");
 
-export default function ModalBox({ children, title }) {
-  const isModalOpen = useStore(state => state.isModalOpen)
-  const toggleModal = useStore(state => state.toggleModal)
+// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement('#root')
 
- /* function openModal() {
-  }*/
+export default function ModalBox(){
+  var subtitle;
+  const [modalIsOpen,setIsOpen] = React.useState(true);
+  function openModal() {
+    setIsOpen(true);
+  }
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
   }
 
-  function closeModal() {
-    toggleModal()  
+  function closeModal(){
+    setIsOpen(false);
   }
 
-  return (
-    <div className="modal">
-      <Modal
-        isOpen={isModalOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={toggleModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <h2>{title}</h2>
-        <div className="content"> {children}</div>
-      </Modal>
-    </div>
-  );
+    return (
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+
+          <h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2>
+          <button onClick={closeModal}>close</button>
+          <div>I am a modal</div>
+          <form>
+            <input />
+            <button>tab navigation</button>
+            <button>stays</button>
+            <button>inside</button>
+            <button>the modal</button>
+          </form>
+        </Modal>
+    );
 }

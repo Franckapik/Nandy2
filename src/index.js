@@ -88,12 +88,7 @@ console.log(map);
 
   return (
     <mesh ref={ref} receiveShadow 
-    onPointerDown={ () => {
-      changeVehiclePos([0,10,10])
-    }}
-    onPointerUp={ () => {
-      changeVehiclePos(0)
-    }}
+
     ref={ref} receiveShadow>
       <planeBufferGeometry attach="geometry" args={[200,200]} />
       <ParallaxMapMaterial
@@ -191,18 +186,19 @@ const  Hud = ({name}) => {
 
 ReactDOM.render(
   <>
+  
   <Suspense fallback="null"> 
   <Hud />
-  <ModalBox />
+  <ModalBox title={'Bienvenue sur Nature&You'} />
   </Suspense>
-  <Canvas shadowMap gl={{ alpha: false }} >
+  <Canvas id='canvas' shadowMap gl={{ alpha: false }} >
+    
   <CameraTarget />
   
     <hemisphereLight intensity={0.35} />
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     <Suspense fallback={null}>
-    
     </Suspense>
     <Physics>
     <Passive url={'/passive.gltf'} mass={0}  />
@@ -213,8 +209,8 @@ ReactDOM.render(
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
     </Physics>
-    <Stats />
   </Canvas>
+
   <Loader />
   </>,
   document.getElementById('root')
