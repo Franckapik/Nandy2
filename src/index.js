@@ -9,7 +9,8 @@ import CameraTarget from './Tools/CameraTarget';
 import Vehicle from './Tools/Vehicle';
 import { Canvas, useLoader } from 'react-three-fiber'
 import { GroupMesh, ObjMesh } from './Tools/MapMesh';
-import ParallaxMapMaterial from './Tools/parallaxMap'
+import ParallaxMapMaterial from './Tools/parallaxMap';
+import ModalBox from './Tools/ModalBox'
 
 //const preloaded = useGLTF.preload('/pilar.glb')
 //console.log(preloaded);
@@ -191,7 +192,8 @@ const  Hud = ({name}) => {
 ReactDOM.render(
   <>
   <Suspense fallback="null"> 
-  <Hud name={"coucou"} />
+  <Hud />
+  <ModalBox />
   </Suspense>
   <Canvas shadowMap gl={{ alpha: false }} >
   <CameraTarget />
@@ -200,7 +202,7 @@ ReactDOM.render(
     <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
     <Sky distance={3000} turbidity={2} rayleigh={4} mieCoefficient={0.038} mieDirectionalG={0.85} sunPosition={[Math.PI, -10, 0]} exposure = {5} azimuth={0.5} />
     <Suspense fallback={null}>
-
+    
     </Suspense>
     <Physics>
     <Passive url={'/passive.gltf'} mass={0}  />
