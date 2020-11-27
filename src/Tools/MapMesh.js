@@ -11,8 +11,6 @@ export const ObjMesh = ({ position, bound, display, mass, ...props }) => {
     position: [v.x, v.y, v.z],
   }));
 
-  console.log(props.mat);
-
   return (
     <mesh key={props.name} ref={cube} geometry={props.geometry} onClick={() => console.log(props.name)}>
       <meshMatcapMaterial
