@@ -10,6 +10,8 @@ import * as THREE from 'three'
 import Vehicle from './Tools/Vehicle'
 import useStore from './store';
 import { Vector3 } from 'three';
+import Remorque, { Remorque2 } from './Tools/Remorque'
+import BoxAndBall from './Tools/Remorque';
 
 
 //const preloaded = useGLTF.preload('/pilar.glb')
@@ -194,6 +196,8 @@ ReactDOM.render(
       <Plane />
       <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI*1.2 , 0]} angularVelocity={[0, 0.5, 0]} />
       <Cube />
+      <BoxAndBall />
+      <Remorque2 />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
       <FlowerGen />
