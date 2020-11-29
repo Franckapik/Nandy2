@@ -196,8 +196,6 @@ ReactDOM.render(
       <Plane />
       <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI*1.2 , 0]} angularVelocity={[0, 0.5, 0]} />
       <Cube />
-      <BoxAndBall />
-      <Remorque2 />
       <Cube position={[0, 10, -2]} />
       <Cube position={[0, 20, -2]} />
       <FlowerGen />
