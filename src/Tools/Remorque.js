@@ -22,6 +22,17 @@ const Remorque2 = React.forwardRef((props, ref) => {
   )
 })
 
+//existing constraints (https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2016/ENU/Maya/files/GUID-CDB3638D-23AF-49EF-8EF6-53081EE4D39D-htm.html)
+
+//usePointToPointConstraint (?)
+//useConeTwistConstraint (point to point avec des limites : bras /lampe )
+//useDistanceConstraint (distance)
+//useHingeConstraint (charnière)
+//useLockConstraint 
+//useSpring (ressort))
+
+
+
 const BoxAndBall = () => {
     const box = useRef()
     const ball = useRef()
