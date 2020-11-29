@@ -1,4 +1,4 @@
-import { useBox, useConeTwistConstraint, useCylinder, useRaycastVehicle } from '@react-three/cannon'
+import { useBox, useConeTwistConstraint, useCylinder, usePointToPointConstraint, useRaycastVehicle } from '@react-three/cannon'
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import useKeyPress from '../hooks/useKeyPress'
@@ -119,13 +119,9 @@ function Vehicle(props) {
   const chainSize = [0.15, 1, 0.15]
 
 
-  useConeTwistConstraint(chassis, remorque, {
+  usePointToPointConstraint(chassis, remorque, {
     pivotA: [0, 0, -5 ],
     pivotB: [0, 0, 0],
-    axisA: [0, 1, 0],
-    axisB: [0, 1, 0],
-    twistAngle: 0,
-    angle: Math.PI / 8,
   })
 
   // FrontLeft [-X,Y,Z]
