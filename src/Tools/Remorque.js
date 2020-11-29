@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Physics, usePlane, useBox } from '@react-three/cannon'
+import { Physics, usePlane, useBox, useConeTwistConstraint } from '@react-three/cannon'
 
 
 const Remorque = React.forwardRef((props, ref) => {
@@ -25,6 +25,16 @@ const Remorque2 = React.forwardRef((props, ref) => {
 const BoxAndBall = () => {
     const box = useRef()
     const ball = useRef()
+    const chainSize = [0.15, 1, 0.15]
+
+    useConeTwistConstraint(box, ball, {
+        pivotA: [0, -chainSize[1] / 2, 0],
+        pivotB: [0, chainSize[1] / 2, 0],
+        axisA: [0, 1, 0],
+        axisB: [0, 1, 0],
+        twistAngle: 0,
+        angle: Math.PI / 8,
+      })
 
     return (
       <>
