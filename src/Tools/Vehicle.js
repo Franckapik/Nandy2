@@ -4,7 +4,7 @@ import { useFrame } from 'react-three-fiber'
 import useKeyPress from '../hooks/useKeyPress'
 import useEmpty from '../hooks/useEmpty'
 import useStore from '../store'
-import { Remorque2 } from './Remorque'
+import { Remorque, Remorque2 } from './Remorque'
 
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
@@ -68,16 +68,6 @@ const Wheel = forwardRef((props, ref) => {
   )
 })
 
-const Remorque = React.forwardRef((props, ref) => {
-  useBox(() => ({ mass: 1, position: [-58,2,77], rotation: [0.4, 0.2, 0.5], ...props }),true, ref)
-  return (
-    <mesh receiveShadow castShadow ref={ref}>
-      <boxBufferGeometry attach="geometry" />
-      <meshLambertMaterial attach="material" color="orange" />
-    </mesh>
-  )
-})
-
 const wheelInfo = {
   radius: 0.7,
   directionLocal: [0, -1, 0], // same as Physics gravity
@@ -116,12 +106,15 @@ function Vehicle(props) {
   var chassisFront = 1
   var chassisBack = -1
 
-  const chainSize = [0.15, 1, 0.15]
 
 
-  usePointToPointConstraint(chassis, remorque, {
+  useConeTwistConstraint(chassis, remorque, {
     pivotA: [0, 0, -5 ],
-    pivotB: [0, 0, 0],
+    pivotB: [0, 0, 2],
+    axisA: [0, 1, 0],
+    axisB: [0, 1, 0],
+    twistAngle: 0,
+    angle: Math.PI / 8,
   })
 
   // FrontLeft [-X,Y,Z]

@@ -1,59 +1,45 @@
-import React, { useRef } from 'react'
-import { Physics, usePlane, useBox, useConeTwistConstraint } from '@react-three/cannon'
+import { useBox } from '@react-three/cannon';
+import { useGLTF, useHelper } from '@react-three/drei';
+import React, { useRef } from 'react';
+import { useFrame } from 'react-three-fiber';
+import { BoxBufferGeometry, BoxHelper, Mesh, MeshBasicMaterial } from 'three';
 
 
-const Remorque = React.forwardRef((props, ref) => {
-  useBox(() => ({ mass: 1, position: [-58,2,77], rotation: [0.4, 0.2, 0.5], ...props }),true, ref)
+export const Remorque = React.forwardRef((props, ref) => {
+  const boxSize = [15, 5, 5];
+  const {nodes, materials} = useGLTF('remorque.gltf')
+  console.log(nodes.Remorque.geometry.boundingBox);
+
+  const helperRef = useRef();
+
+  useBox(() => ({ mass: 1, position: [-58, 2, 77], args: boxSize, ...props }), true, ref);
+  console.log(ref);
+  
+  useFrame(()=> {
+    helperRef.current.position.copy(ref.current.position)
+    helperRef.current.rotation.copy(ref.current.rotation)
+  })
+  
   return (
-    <mesh receiveShadow castShadow ref={ref}>
-      <boxBufferGeometry attach="geometry" />
-      <meshLambertMaterial attach="material" color="yellow" />
-    </mesh>
-  )
-})
+    <>
+  <mesh ref={ref} geometry={nodes.Remorque.geometry} />
+  <mesh ref={helperRef}>
+  <boxBufferGeometry attach="geometry" args={boxSize} />
+  <lineBasicMaterial attach="material" color="orange" />
+</mesh>
+</>
+  );
+});
 
-const Remorque2 = React.forwardRef((props, ref) => {
-  useBox(() => ({ mass: 1, position: [-58,2,77], rotation: [0.4, 0.2, 0.5], ...props }),true, ref)
+export const Remorque2 = React.forwardRef((props, ref) => {
+  const boxSize = [3, 1, 3];
+
+  useBox(() => ({ mass: 1, position: [-58, 2, 77], args: boxSize, ...props }), true, ref);
+
   return (
-    <mesh receiveShadow castShadow ref={ref}>
-      <boxBufferGeometry attach="geometry" />
-      <meshLambertMaterial attach="material" color="yellow" />
+    <mesh ref={ref}>
+      <boxBufferGeometry attach="geometry" args={boxSize} />
+      <meshLambertMaterial attach="material" color="orange" />
     </mesh>
-  )
-})
-
-//existing constraints (https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2016/ENU/Maya/files/GUID-CDB3638D-23AF-49EF-8EF6-53081EE4D39D-htm.html)
-
-//usePointToPointConstraint (?)
-//useConeTwistConstraint (point to point avec des limites : bras /lampe )
-//useDistanceConstraint (distance)
-//useHingeConstraint (charnière)
-//useLockConstraint 
-//useSpring (ressort))
-
-
-
-const BoxAndBall = () => {
-    const box = useRef()
-    const ball = useRef()
-    const chainSize = [0.15, 1, 0.15]
-
-    useConeTwistConstraint(box, ball, {
-        pivotA: [0, -chainSize[1] / 2, 0],
-        pivotB: [0, chainSize[1] / 2, 0],
-        axisA: [0, 1, 0],
-        axisB: [0, 1, 0],
-        twistAngle: 0,
-        angle: Math.PI / 8,
-      })
-
-    return (
-      <>
-        <Remorque ref={box}  />
-        <Remorque2 ref={ball} />
-      </>
-    )
-  }
-
-export default BoxAndBall
-export {Remorque, Remorque2}
+  );
+});
