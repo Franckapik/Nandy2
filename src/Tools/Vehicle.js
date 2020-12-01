@@ -233,7 +233,7 @@ function Vehicle(props) {
         rotation={props.rotation}
         position={emptyVehiclePos}
         angularVelocity={props.angularVelocity}></Chassis>
-      <Remorque ref={remorque} />
+      <Remorque2 ref={remorque} />
       <Wheel ref={wheel_1}></Wheel>
       <Wheel ref={wheel_2}></Wheel>
       <Wheel ref={wheel_3}></Wheel>
