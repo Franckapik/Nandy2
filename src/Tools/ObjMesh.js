@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useFrame } from 'react-three-fiber'
 import { useBox } from '@react-three/cannon'
-import useBounds from './hooks/useBounds'
+import useBounds from '../hooks/useBounds'
 const Helper = React.forwardRef(({ bound, visible }, ref) => {
   return (
     <mesh ref={ref} visible={visible}>
@@ -34,7 +34,11 @@ export const ObjMesh = ({ position, display, mass, ...props }) => {
 
   return (
     <>
-      <mesh ref={cube} material={props.material} geometry={props.geometry} onClick={() => console.log(cube)} />
+    <mesh key={props.name} ref={cube} geometry={props.geometry} onClick={() => console.log(props.name)}>
+      <meshMatcapMaterial
+        attach="material"
+        matcap={props.mat[props.material.name]} />
+    </mesh>
       <Helper ref={helperRef} visible={false} bound={bound} />
     </>
   )

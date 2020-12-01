@@ -8,7 +8,7 @@ import './styles.css';
 import CameraTarget from './Tools/CameraTarget';
 import Vehicle from './Tools/Vehicle';
 import { Canvas, useLoader } from 'react-three-fiber'
-import { GroupMesh, ObjMesh } from './Tools/MapMesh';
+import {ObjMesh } from './Tools/ObjMesh';
 import ParallaxMapMaterial from './Tools/parallaxMap'
 
 //const preloaded = useGLTF.preload('/pilar.glb')
@@ -45,7 +45,7 @@ const Passive = ({url, mass}) => {
       return (
         <group>
           {Object.entries(obj.children).map(([name, obj]) => {
-            return <ObjMesh mat={matcaps} mass={0} display={true} key={name} {...obj} position={obj.getWorldPosition()} />
+            return <ObjMesh mat={matcaps} mass={mass} display={true} key={name} {...obj} position={obj.getWorldPosition()} />
           })}
         </group>
       )
@@ -55,7 +55,7 @@ const Passive = ({url, mass}) => {
         obj.geometry.computeBoundingBox()
         const b = obj.geometry.boundingBox.max
         let bound = [b.x * 2, b.y * 2, b.z * 2] //half extent ? And for mesh rotated?
-        return <ObjMesh mat={matcaps} mass={0} display={true} key={name} {...obj} position={obj.getWorldPosition()} />
+        return <ObjMesh mat={matcaps} mass={mass} display={true} key={name} {...obj} position={obj.getWorldPosition()} />
       }
     } else {
       //do nothing
