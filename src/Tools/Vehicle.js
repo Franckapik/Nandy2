@@ -1,9 +1,10 @@
-import { useBox, useCylinder, useRaycastVehicle } from '@react-three/cannon'
+import { useBox, useConeTwistConstraint, useCylinder, usePointToPointConstraint, useRaycastVehicle } from '@react-three/cannon'
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import useKeyPress from '../hooks/useKeyPress'
 import useEmpty from '../hooks/useEmpty'
 import useStore from '../store'
+import { Remorque, Remorque2 } from './Remorque'
 
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
@@ -90,6 +91,10 @@ function Vehicle(props) {
   let changeTarget = useStore(state => state.changeTarget)
   let portal = useStore(state => state.portal)
 
+
+  //remorque 
+  const remorque = useRef()
+
   // chassisBody
   const chassis = useRef()
   // wheels
@@ -101,6 +106,17 @@ function Vehicle(props) {
   var chassisHeight = 0
   var chassisFront = 1
   var chassisBack = -1
+
+
+
+  useConeTwistConstraint(chassis, remorque, {
+    pivotA: [0, 0, -5 ],
+    pivotB: [0, 0, 2],
+    axisA: [0, 1, 0],
+    axisB: [0, 1, 0],
+    twistAngle: 0,
+    angle: Math.PI / 8,
+  })
 
   // FrontLeft [-X,Y,Z]
   const wheel_1 = useRef()
@@ -226,6 +242,7 @@ function Vehicle(props) {
         rotation={props.rotation}
         position={emptyVehiclePos}
         angularVelocity={props.angularVelocity}></Chassis>
+      <Remorque2 ref={remorque} />
       <Wheel ref={wheel_1}></Wheel>
       <Wheel ref={wheel_2}></Wheel>
       <Wheel ref={wheel_3}></Wheel>

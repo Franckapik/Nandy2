@@ -48,6 +48,14 @@ Faire les liens Portal sur le Hud.
 
 A faire :
 utilise matcap texture pour passive 
+generateur de fleur autours du vehicle
+
+utiliser les stats de drei
+utilise matcap texture pour passive 
+l'interaction avec les mehs via raycast est implémentée automatiquement avec les events. (peut-etre pour ca qu'il  y a pas plus d'info sur le raycaster)
+----
+position aléatoire pour les fleurs : 
+
 
 Faire interaction entre hud et portal
 -Choisir le bon comportement des budies.

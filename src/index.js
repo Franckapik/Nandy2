@@ -35,34 +35,33 @@ const useMatcaps = (urlMat) => {
       return matcaps
 }
 
-
-
 const Passive = ({url, mass}) => {
   const { nodes } = useGLTF(url)
   const first = Object.keys(nodes)
   const matcaps = useMatcaps('./matcaps/512/')
 
-  return (
-    Object.entries(nodes).map(
-      ([name, obj]) => {
-        let bound = [2,2,2];
-        if(obj.type==='Group' && obj.name !== first[0]) {
-          return (<GroupMesh mat={matcaps} mass={mass} key={name} position={obj.getWorldPosition()} {...obj} />)
-        }
-
-        else if(obj.type==='Mesh') { //Mesh seul
-          if(obj.parent.name===first[0]) {
-            const b = obj.geometry.boundingBox;
-            bound = [b.max.x, b.max.y, b.max.z]
-            return <ObjMesh mat={matcaps} mass={mass} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
-          }
-        }
-        else {
-        }  
-        return null       
+  return Object.entries(nodes).map(([name, obj]) => {
+    if (obj.type === 'Group' && obj.name !== first[0]) {
+      return (
+        <group>
+          {Object.entries(obj.children).map(([name, obj]) => {
+            return <ObjMesh mat={matcaps} mass={0} display={true} key={name} {...obj} position={obj.getWorldPosition()} />
+          })}
+        </group>
+      )
+    } else if (obj.type === 'Mesh') {
+      //Mesh seul
+      if (obj.parent.name === first[0]) {
+        obj.geometry.computeBoundingBox()
+        const b = obj.geometry.boundingBox.max
+        let bound = [b.x * 2, b.y * 2, b.z * 2] //half extent ? And for mesh rotated?
+        return <ObjMesh mat={matcaps} mass={0} display={true} key={name} {...obj} position={obj.getWorldPosition()} />
+      }
+    } else {
+      //do nothing
     }
-  )
-  )
+    return null //a verifier si erreur
+  })
 }
 
 
