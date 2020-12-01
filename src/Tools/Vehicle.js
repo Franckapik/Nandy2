@@ -229,7 +229,6 @@ function Vehicle(props) {
   );
 
   useEffect(() => {
-    console.log('mounted');
     return () => console.log('unmounting...');
   }, [])
 
