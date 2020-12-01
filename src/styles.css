@@ -20,6 +20,11 @@ body,
   -ms-user-select: none;
   user-select: none;
   overflow: hidden;
+  position: absolute;
+  z-index: -5; /*modalBox click*/
+}
+
+#canvas {
 }
 
 body {
@@ -41,3 +46,4 @@ body {
   color: white;
   z-index : 2;
 }
+
