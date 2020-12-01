@@ -16,7 +16,7 @@ import { Hud } from './Tools/Hud'
 import { Cube } from './references/Cube'
 
 const Models = (props) => {
-  const matcaps = useMatcaps('./matcaps/512/') //load just once
+  const matcaps = useMatcaps('./matcaps/128/') //load just once
   return (
     <>
       <Model matcaps={matcaps} url={'/passive.gltf'} mass={0} />
@@ -24,6 +24,7 @@ const Models = (props) => {
     </>
   )
 }
+
 
 function Plane({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
   const [map, bumpMap] = useTexture(['/textures/floor3.jpg', '/textures/floorbump.jpg'])
@@ -62,7 +63,6 @@ ReactDOM.render(
         exposure={5}
         azimuth={0.5}
       />
-      <Suspense fallback={null}></Suspense>
       <Physics>
         <Models />
         <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
@@ -70,7 +70,6 @@ ReactDOM.render(
         <Cube />
       </Physics>
     </Canvas>
-
     <Loader />
   </>,
   document.getElementById('root')
