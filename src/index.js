@@ -10,8 +10,7 @@ import * as THREE from 'three'
 import Vehicle from './Tools/Vehicle'
 import useStore from './store';
 import { Vector3 } from 'three';
-import Remorque, { Remorque2 } from './Tools/Remorque'
-import BoxAndBall from './Tools/Remorque';
+import { GroupMesh, ObjMesh } from './ObjMesh';
 
 
 //const preloaded = useGLTF.preload('/pilar.glb')
@@ -52,16 +51,21 @@ export function Passive({url}) {
   return (
     Object.entries(nodes).map(
       ([name, obj]) => {
-        let bound = [2,2,2];
+        let bound = [1,1,1];
         if(obj.type==='Group' && obj.name !== first[0]) {
-          return (<GroupMesh mass={0} key={name} position={obj.getWorldPosition()} {...obj} />)
+          return (<GroupMesh mass={0} bound={bound} key={name} position={obj.getWorldPosition()} {...obj} />)
         }
 
         else if(obj.type==='Mesh') { //Mesh seul
           if(obj.parent.name===first[0]) {
-            obj.geometry.computeBoundingBox()
-            const b = obj.geometry.boundingBox;
-            bound = [b.max.x, b.max.y, b.max.z]
+            var boundingBox = new THREE.Box3();
+            var mesh = obj;
+            boundingBox.copy( mesh.geometry.boundingBox );
+            mesh.updateMatrixWorld( true ); // ensure world matrix is up to date
+            boundingBox.applyMatrix4( mesh.matrixWorld );
+            console.log( boundingBox );
+
+            bound = [boundingBox.min.x, boundingBox.min.y, boundingBox.min.z]
             return <ObjMesh mass={0} display={true} key={name} bound={bound} {...obj} position={obj.getWorldPosition()}  />  
           }
         }
@@ -110,47 +114,6 @@ const FlowerGen = (props) => {
   })
 }
 
-
-const ObjMesh = ({position,bound,display,mass,...props}) => {
-
-  const v = position;
-
-  const [cube] = useBox(() => ({
-    mass: mass,
-    args: bound,
-    position: [v.x,v.y,v.z],
-  }), true);
-
-  
-  return (
-      <mesh ref={cube} material={props.material} geometry={props.geometry} onClick={()=> console.log(props.name)} />
-  )
-}
-
-const GroupMesh = ({position,children,mass,...props}) => {
-
-  const v = position;
-  
-const [cube] = useBox(() => ({
-  mass: mass,
-  args: [1,1,1], //trouver le moyen de regler le bound
-  position: [v.x,v.y,v.z],
-}), true);
-
-  return (
-    <group ref={cube} >
-{          Object.entries(children).map(
-      ([name, obj]) => {
-        return (
-          <mesh key={name} material={obj.material} geometry={obj.geometry} />
-      )
-    }
-  )}
-    </group>
-
-  )
-
-}
 
 function useEmpty(name) {
   const { nodes, materials } = useGLTF('/empty.glb')

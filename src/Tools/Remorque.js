@@ -13,7 +13,6 @@ export const Remorque = React.forwardRef((props, ref) => {
   const helperRef = useRef();
 
   useBox(() => ({ mass: 1, position: [-58, 2, 77], args: boxSize, ...props }), true, ref);
-  console.log(ref);
   
   useFrame(()=> {
     helperRef.current.position.copy(ref.current.position)
