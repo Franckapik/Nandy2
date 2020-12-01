@@ -13,7 +13,6 @@ const customStyles = {
   }
 };
 
-// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root')
 
 export default function ModalBox(){
@@ -25,7 +24,7 @@ export default function ModalBox(){
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
+    subtitle.style.color = 'black';
   }
 
   function closeModal(){
@@ -41,16 +40,15 @@ export default function ModalBox(){
           contentLabel="Example Modal"
         >
 
-          <h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2>
-          <button onClick={closeModal}>close</button>
-          <div>I am a modal</div>
+          <h2 ref={_subtitle => (subtitle = _subtitle)}>Bienvenue sur Nature and You</h2>
+          <div>Texte de presentation  + Image à inserer</div>
+          <hr></hr>
           <form>
             <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
+            <button>Envoyer</button>
           </form>
+          <hr></hr>
+          <button onClick={closeModal}>Fermer l'intro</button>
         </Modal>
     );
 }
