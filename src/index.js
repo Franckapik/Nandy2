@@ -26,7 +26,7 @@ const Models = (props) => {
 }
 
 function Plane({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
-  const [map, bumpMap] = useTexture(['/textures/floor3.png', '/textures/floorbump.jpg'])
+  const [map, bumpMap] = useTexture(['/textures/floor3.jpg', '/textures/floorbump.jpg'])
 
   map.wrapS = THREE.RepeatWrapping
   map.wrapT = THREE.RepeatWrapping
