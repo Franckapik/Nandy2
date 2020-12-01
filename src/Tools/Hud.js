@@ -64,7 +64,7 @@ export const Hud = ({ name }) => {
         }}
           onPointerUp={() => {
             changeVehiclePos(0);
-          }}> et le dernier </li>
+          }}> et voici le dernier lien </li>
 
       </ul>
     </div>
