@@ -34,7 +34,9 @@ const App = (props) => {
           exposure={5}
           azimuth={0.5}
         />
-
+        <HTML>
+          <div>Hello</div>
+        </HTML>
         <Physics>
           <Models />
           <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
