@@ -3,7 +3,7 @@ import React from "react";
 import { ObjMesh } from './ObjMesh';
 
 export const Model = ({ url, mass, matcaps }) => {
-  const { nodes } = useGLTF(url);
+  const { nodes } = useGLTF(url, '/draco/');
   const first = Object.keys(nodes);
 
   return Object.entries(nodes).map(([name, obj]) => {
