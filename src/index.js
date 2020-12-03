@@ -14,6 +14,7 @@ import { Model } from './Tools/Model'
 import { useMatcaps } from './hooks/useMatcaps'
 import { Hud } from './Tools/Hud'
 import { Cube } from './references/Cube'
+import Budie from './references/Budie'
 
 const Models = (props) => {
   const matcaps = useMatcaps('./matcaps/128/') //load just once
@@ -43,6 +44,14 @@ function Plane({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
   )
 }
 
+const Budie2 = (props) => {
+  const { nodes, materials } = useGLTF('./budie.gltf');
+  console.log(nodes);
+  return (<mesh position={[-55,5,75]} geometry={nodes.BudieMesh.geometry} >
+    <meshStandardMaterial color={'orange'} />
+    </mesh>)
+}
+
 ReactDOM.render(
   <>
     <Suspense fallback="null">
@@ -63,11 +72,17 @@ ReactDOM.render(
         exposure={5}
         azimuth={0.5}
       />
+           <Suspense fallback="null">
+           <Budie position={[-58,5,75]} />
+             </Suspense> 
+
       <Physics>
         <Models />
-        <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
+        <Budie position={[-58,5,75]} />
+
+        <Vehicle rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
         <Plane mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
-        <Cube />
+        <Cube position={[-58,5,75]} />
       </Physics>
     </Canvas>
     <Loader />
