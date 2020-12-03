@@ -14,13 +14,23 @@ import { Ground } from './Tools/Ground'
 import { Models } from './Tools/Models'
 
 const App = (props) => {
+  const [events, setEvents] = useState()
+  const domContent = useRef()
+
   return (
     <>
       <Suspense fallback="null">
-        <Hud />
         <ModalBox title={'Bienvenue sur Nature&You'} />
       </Suspense>
-      <Canvas id="canvas" shadowMap gl={{ alpha: false }}>
+      <Canvas
+        id="canvas"
+        shadowMap
+        gl={{ alpha: false }}
+        onCreated={({ gl, events }) => {
+          // Export canvas events, we will put them onto the scroll area
+          setEvents(events)
+        }}>
+        >
         <CameraTarget />
         <hemisphereLight intensity={0.35} />
         <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
@@ -35,7 +45,7 @@ const App = (props) => {
           azimuth={0.5}
         />
         <HTML>
-          <div>Hello</div>
+          <div >Hello</div>
         </HTML>
         <Physics>
           <Models />
@@ -45,6 +55,10 @@ const App = (props) => {
         </Physics>
       </Canvas>
       <Loader />
+      <div className="scrollArea" {...events}> 
+        <div onClick={()=> console.log("oui")}>Ceci est un essai</div>
+        <div style={{ position: 'sticky', top: 0 }} ref={domContent} />
+      </div>
     </>
   )
 }
