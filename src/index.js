@@ -9,12 +9,11 @@ import './styles.css'
 import CameraTarget from './Tools/CameraTarget'
 import { Ground } from './Tools/Ground'
 import { Hud } from './Tools/Hud'
+import { IA } from './Tools/IA'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
-import {VehicleMesh, TargetMesh} from './Tools/IA'
-import {Manager} from './hooks/useYuka'
-
+  
 
 
 const App = (props) => {
@@ -32,7 +31,7 @@ const App = (props) => {
           // Export canvas events, we will put them onto the scroll area
           setEvents(events)
         }}>
-        >
+        
         <CameraTarget />
         <hemisphereLight intensity={0.35} />
         <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
@@ -49,10 +48,7 @@ const App = (props) => {
         <HTML center portal={domContent}>
           <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }} >Hello</div>
         </HTML>
-        <Manager>
-     <VehicleMesh name="Vehicle" />
-      <TargetMesh name="Target" position={[0,10,-12]} />
-     </Manager>
+<IA/>
 
         <Physics>
         <Budie position={[-62,0,72]} />

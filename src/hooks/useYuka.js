@@ -5,22 +5,20 @@ import useStore from '../store'
   
   const context = createContext()
     
-  export function Manager({ children }) {
-    const t = useStore(state => state.targetIA );
-    const targetIA = new Vector3(t[0],t[1], t[2]);
+  export function Manager({ children, behavior }) {
     const [mgr] = useState(() => new EntityManager(), [])
-    useStore.setState({ entitymanager: new EntityManager() })
+    useStore.setState({ IAManager: mgr })
+    const IAManager = useStore(state=> state.IAManager)
     useEffect(() => {
-      const vehicle = mgr.entities.find((item) => item.name === 'Vehicle')
-      const target = mgr.entities.find((item) => item.name === 'Target')
-      const seekBehavior = new SeekBehavior(targetIA)
-      vehicle.steering.add(seekBehavior)
+      const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
+      const target = IAManager.entities.find((item) => item.name === 'Target')
+      vehicle.steering.add(behavior)
+        console.log(IAManager);
+    }, [IAManager.entities])
   
-    }, [mgr.entities])
+    useFrame((state, delta) => IAManager.update(delta))
   
-    useFrame((state, delta) => mgr.update(delta))
-  
-    return <context.Provider value={mgr}>{children}</context.Provider>
+    return children
   }
   
   export function useYuka({
@@ -28,9 +26,8 @@ import useStore from '../store'
     position = [0, 0, 0],
     name = 'unnamed'
   }) {
-    // This hook makes set-up re-usable
     const ref = useRef()
-    const mgr = useContext(context)
+    const mgr = useStore(state => state.IAManager)
     const [entity] = useState(() => new type())
     useEffect(() => {
       entity.position.set(...position)
