@@ -15,9 +15,9 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
-export default function ModalBox(){
+export default function ModalBox({startup}){
   var subtitle;
-  const [modalIsOpen,setIsOpen] = React.useState(true);
+  const [modalIsOpen,setIsOpen] = React.useState(startup);
   function openModal() {
     setIsOpen(true);
   }
