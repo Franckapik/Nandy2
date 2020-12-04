@@ -7,7 +7,6 @@ import * as THREE from 'three'
 export default function Budie(props) {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF('./budie.gltf')
-  console.log(animations[0])
   const actions = useRef()
   const [mixer] = useState(() => new THREE.AnimationMixer())
   useFrame((state, delta) => mixer.update(delta))
@@ -22,8 +21,6 @@ export default function Budie(props) {
     actions.current.Marche.play()
     return null
   }, []) */
-
-  console.log(actions.current)
 
   return (
     <group ref={group} {...props} dispose={null}>

@@ -48,7 +48,7 @@ const App = (props) => {
           <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }} >Hello</div>
         </HTML>
         <Physics>
-        <Budie position={[-58,1,75]} />
+        <Budie position={[-62,0,72]} />
           <Models />
           <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
