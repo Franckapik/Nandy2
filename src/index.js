@@ -12,6 +12,8 @@ import { Hud } from './Tools/Hud'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
+import {VehicleMesh, TargetMesh} from './Tools/IA'
+import {Manager} from './hooks/useYuka'
 
 
 
@@ -47,6 +49,11 @@ const App = (props) => {
         <HTML center portal={domContent}>
           <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }} >Hello</div>
         </HTML>
+        <Manager>
+     <VehicleMesh name="Vehicle" />
+      <TargetMesh name="Target" position={[0,10,-12]} />
+     </Manager>
+
         <Physics>
         <Budie position={[-62,0,72]} />
           <Models />
