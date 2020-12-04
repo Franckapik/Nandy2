@@ -14,7 +14,7 @@ export function Ground({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0] }));
 
   return (
-    <mesh ref={ref} receiveShadow ref={ref} receiveShadow>
+    <mesh onClick={()=> console.log("gournd")} ref={ref} receiveShadow ref={ref} receiveShadow>
       <planeBufferGeometry attach="geometry" args={[200, 200]} />
       <ParallaxMapMaterial map={map} bumpMap={bumpMap} mode={mode} parallaxScale={parallaxFactor} parallaxMinLayers={minLayers} parallaxMaxLayers={maxLayers} />
     </mesh>

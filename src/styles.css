@@ -21,7 +21,6 @@ body,
   user-select: none;
   overflow: hidden;
   position: absolute;
-  z-index: -5; /*modalBox click*/
 }
 
 #canvas {
@@ -35,15 +34,20 @@ body {
   color: black;
 }
 
-.hud {
+.frontDiv {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+
+
+.hud {
   font-family: 'Love Ya Like A Sister', cursive;
   font-size: 1.2em;
   letter-spacing: 0.05em;
   line-height: 1em;
   color: white;
-  z-index : 2;
 }
-

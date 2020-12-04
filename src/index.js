@@ -13,14 +13,24 @@ import { Cube } from './references/Cube'
 import { Ground } from './Tools/Ground'
 import { Models } from './Tools/Models'
 
+
+
 const App = (props) => {
+  const [events, setEvents] = useState()
+  const domContent = useRef()
+
   return (
     <>
-      <Suspense fallback="null">
-        <Hud />
-        <ModalBox title={'Bienvenue sur Nature&You'} />
-      </Suspense>
-      <Canvas id="canvas" shadowMap gl={{ alpha: false }}>
+
+      <Canvas
+        id="canvas"
+        shadowMap
+        gl={{ alpha: false }}
+        onCreated={({ gl, events }) => {
+          // Export canvas events, we will put them onto the scroll area
+          setEvents(events)
+        }}>
+        >
         <CameraTarget />
         <hemisphereLight intensity={0.35} />
         <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
@@ -34,7 +44,9 @@ const App = (props) => {
           exposure={5}
           azimuth={0.5}
         />
-
+        <HTML center portal={domContent}>
+          <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }} >Hello</div>
+        </HTML>
         <Physics>
           <Models />
           <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
@@ -43,6 +55,13 @@ const App = (props) => {
         </Physics>
       </Canvas>
       <Loader />
+      <Suspense fallback="null">
+        <ModalBox title={'Bienvenue sur Nature&You'} />
+        <div className="frontDiv" {...events} ref={domContent}> 
+        <Hud />
+      </div>
+      </Suspense>
+
     </>
   )
 }
