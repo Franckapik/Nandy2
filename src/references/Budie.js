@@ -1,8 +1,8 @@
 import { useGLTF } from '@react-three/drei'
-import React, { useRef, useState, useEffect } from 'react'
-import { useLoader, useFrame } from 'react-three-fiber'
-
+import React, { useEffect, useRef, useState } from 'react'
+import { useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
+
 
 export default function Budie(props) {
   const group = useRef()
@@ -18,10 +18,10 @@ export default function Budie(props) {
     return () => animations.forEach((clip) => mixer.uncacheClip(clip))
   }, [])
 
-  useEffect(() => {
+  /*   useEffect(() => {
     actions.current.Marche.play()
     return null
-  }, [])
+  }, []) */
 
   console.log(actions.current)
 
@@ -30,10 +30,15 @@ export default function Budie(props) {
       <primitive object={nodes.Body} />
       <primitive object={nodes.HancheL} />
       <primitive object={nodes.HancheR} />
-      <skinnedMesh material={materials.beige} 
-      geometry={nodes.BudieMesh.geometry} 
-      skeleton={nodes.BudieMesh.skeleton} 
-      onClick={() => console.log('oui')} />
+      <skinnedMesh
+        onClick={() => {
+          actions.current.Marche.play()
+          console.log('Marche!')
+        }}
+        material={materials.beige}
+        geometry={nodes.BudieMesh.geometry}
+        skeleton={nodes.BudieMesh.skeleton}
+      />
     </group>
   )
 }
