@@ -13,15 +13,15 @@ import { Cube } from './references/Cube'
 import { Ground } from './Tools/Ground'
 import { Models } from './Tools/Models'
 
+
+
 const App = (props) => {
   const [events, setEvents] = useState()
   const domContent = useRef()
 
   return (
     <>
-      <Suspense fallback="null">
-        <ModalBox title={'Bienvenue sur Nature&You'} />
-      </Suspense>
+
       <Canvas
         id="canvas"
         shadowMap
@@ -44,8 +44,8 @@ const App = (props) => {
           exposure={5}
           azimuth={0.5}
         />
-        <HTML>
-          <div >Hello</div>
+        <HTML center portal={domContent}>
+          <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }} >Hello</div>
         </HTML>
         <Physics>
           <Models />
@@ -55,10 +55,13 @@ const App = (props) => {
         </Physics>
       </Canvas>
       <Loader />
-      <div className="scrollArea" {...events}> 
-        <div onClick={()=> console.log("oui")}>Ceci est un essai</div>
-        <div style={{ position: 'sticky', top: 0 }} ref={domContent} />
+      <Suspense fallback="null">
+        <ModalBox title={'Bienvenue sur Nature&You'} />
+        <div className="frontDiv" {...events} ref={domContent}> 
+        <Hud />
       </div>
+      </Suspense>
+
     </>
   )
 }
