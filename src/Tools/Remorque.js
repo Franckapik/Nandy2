@@ -4,7 +4,7 @@ import React, { useRef } from 'react'
 import useBounds from '../hooks/useBounds'
 
 export const Remorque = React.forwardRef((props, ref) => {
-  const { nodes, materials } = useGLTF('remorque.gltf')
+  const { nodes, materials } = useGLTF('remorque.gltf', '/draco/')
   const bound = useBounds(nodes.Remorque)
 
   useBox(() => ({ mass: 1, position: [-58, 2, 77], args: bound, ...props }), true, ref)

@@ -1,91 +1,72 @@
-import { Physics, usePlane } from '@react-three/cannon'
-import { Loader, Sky, Stats, useGLTF, useTexture } from '@react-three/drei'
-import React, { Suspense, useRef } from 'react'
+import { Physics } from '@react-three/cannon'
+import { HTML, Loader, Sky, Stats, useGLTF } from '@react-three/drei'
+import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import * as THREE from 'three'
 import useStore from './store'
 import './styles.css'
 import CameraTarget from './Tools/CameraTarget'
 import Vehicle from './Tools/Vehicle'
 import { Canvas } from 'react-three-fiber'
-import ParallaxMapMaterial from './Tools/parallaxMap'
 import ModalBox from './Tools/ModalBox'
-import { Model } from './Tools/Model'
-import { useMatcaps } from './hooks/useMatcaps'
 import { Hud } from './Tools/Hud'
 import { Cube } from './references/Cube'
 import Budie from './references/Budie'
+import { Ground } from './Tools/Ground'
+import { Models } from './Tools/Models'
 
-const Models = (props) => {
-  const matcaps = useMatcaps('./matcaps/128/') //load just once
+
+
+const App = (props) => {
+  const [events, setEvents] = useState()
+  const domContent = useRef()
+
   return (
     <>
-      <Model matcaps={matcaps} url={'/passive.gltf'} mass={0} />
-      <Model matcaps={matcaps} url={'/active.gltf'} mass={10} />
+
+      <Canvas
+        id="canvas"
+        shadowMap
+        gl={{ alpha: false }}
+        onCreated={({ gl, events }) => {
+          // Export canvas events, we will put them onto the scroll area
+          setEvents(events)
+        }}>
+        >
+        <CameraTarget />
+        <hemisphereLight intensity={0.35} />
+        <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
+        <Sky
+          distance={3000}
+          turbidity={2}
+          rayleigh={4}
+          mieCoefficient={0.038}
+          mieDirectionalG={0.85}
+          sunPosition={[Math.PI, -10, 0]}
+          exposure={5}
+          azimuth={0.5}
+        />
+        <HTML center portal={domContent}>
+          <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }} >Hello</div>
+        </HTML>
+        <Physics>
+        <Budie position={[-58,5,75]} />
+          <Models />
+          <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
+          <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
+          <Cube />
+        </Physics>
+      </Canvas>
+      <Loader />
+      <Suspense fallback="null">
+        <ModalBox title={'Bienvenue sur Nature&You'} />
+        <div className="frontDiv" {...events} ref={domContent}> 
+        <Hud />
+      </div>
+      </Suspense>
+
     </>
   )
 }
 
+ReactDOM.render(<App />, document.getElementById('root'))
 
-function Plane({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
-  const [map, bumpMap] = useTexture(['/textures/floor3.jpg', '/textures/floorbump.jpg'])
-
-  map.wrapS = THREE.RepeatWrapping
-  map.wrapT = THREE.RepeatWrapping
-  map.offset.set(0, 0)
-  map.repeat.set(1500, 1500)
-  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0] }))
-
-  return (
-    <mesh ref={ref} receiveShadow ref={ref} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[200, 200]} />
-      <ParallaxMapMaterial map={map} bumpMap={bumpMap} mode={mode} parallaxScale={parallaxFactor} parallaxMinLayers={minLayers} parallaxMaxLayers={maxLayers} />
-    </mesh>
-  )
-}
-
-const Budie2 = (props) => {
-  const { nodes, materials } = useGLTF('./budie.gltf');
-  console.log(nodes);
-  return (<mesh position={[-55,5,75]} geometry={nodes.BudieMesh.geometry} >
-    <meshStandardMaterial color={'orange'} />
-    </mesh>)
-}
-
-ReactDOM.render(
-  <>
-    <Suspense fallback="null">
-      <Hud />
-      <ModalBox title={'Bienvenue sur Nature&You'} />
-    </Suspense>
-    <Canvas id="canvas" shadowMap gl={{ alpha: false }}>
-      <CameraTarget />
-      <hemisphereLight intensity={0.35} />
-      <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
-      <Sky
-        distance={3000}
-        turbidity={2}
-        rayleigh={4}
-        mieCoefficient={0.038}
-        mieDirectionalG={0.85}
-        sunPosition={[Math.PI, -10, 0]}
-        exposure={5}
-        azimuth={0.5}
-      />
-           <Suspense fallback="null">
-           <Budie position={[-58,5,75]} />
-             </Suspense> 
-
-      <Physics>
-        <Models />
-        <Budie position={[-58,5,75]} />
-
-        <Vehicle rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
-        <Plane mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
-        <Cube position={[-58,5,75]} />
-      </Physics>
-    </Canvas>
-    <Loader />
-  </>,
-  document.getElementById('root')
-)
