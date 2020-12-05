@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { useUpdate } from 'react-three-fiber'
+import { useFrame, useUpdate } from 'react-three-fiber'
 import { GameEntity, SeekBehavior, Vector3, Vehicle } from 'yuka'
 import { useNavLoader } from '../hooks/useNavLoader'
 import { Manager, useYuka } from '../hooks/useYuka'
 import useStore from '../store'
+
+//steering behavior :
+/* ArriveBehavior
+FleeBehavior
+FlockingBehavior
+FollowPathBehavior
+InterposeBehavior
+ObstacleAvoidanceBehavior
+OffsetPursuitBehavior
+PursuitBehavior
+SeekBehavior
+WanderBehavior */
 
 function VehicleMesh(props) {
   const [ref] = useYuka({ type: Vehicle, name: 'Vehicle' })
@@ -18,7 +30,10 @@ function VehicleMesh(props) {
 
 function TargetMesh(props) {
   const [ref] = useYuka({ type: GameEntity, name: 'Target', position: [0, 10, 5] })
-
+  useFrame((state, delta) => {
+    console.log(state.clock);
+  }
+   )
   return (
     <mesh ref={ref}>
       <sphereBufferGeometry attach="geometry" args={[0.5]} />
@@ -35,7 +50,7 @@ export const IA = () => {
   const region = navMesh.getRandomRegion();
 
          useEffect(()=> {
-        if(typeof region !== "undefined") {
+        if(typeof region !== 'undefined') {
             setTarget(region.centroid)
     
         }
