@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useUpdate } from 'react-three-fiber'
-import { Vehicle, GameEntity, SeekBehavior } from 'yuka'
+import { GameEntity, SeekBehavior, Vector3, Vehicle } from 'yuka'
+import { useNavLoader } from '../hooks/useNavLoader'
 import { Manager, useYuka } from '../hooks/useYuka'
 import useStore from '../store'
-import { Vector3 } from 'three'
 
 function VehicleMesh(props) {
   const [ref] = useYuka({ type: Vehicle, name: 'Vehicle' })
@@ -30,7 +30,19 @@ function TargetMesh(props) {
 export const IA = () => {
   const t = useStore((state) => state.targetIA)
   const targetIA = new Vector3(...t)
+  const [target, setTarget] = useState([0,25,0])
+  const navMesh = useNavLoader('/navmesh_applied.glb');
+  const region = navMesh.getRandomRegion();
+
+         useEffect(()=> {
+        if(typeof region !== "undefined") {
+            setTarget(region.centroid)
+    
+        }
+    }, [region]) 
+
   const behavior = new SeekBehavior(targetIA)
+
   return (
     <Manager behavior={behavior}>
       <VehicleMesh />
@@ -38,3 +50,6 @@ export const IA = () => {
     </Manager>
   )
 }
+
+
+    
