@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useContext, createContext } from 'react'
 import { useFrame } from 'react-three-fiber'
-import { GameEntity, EntityManager, SeekBehavior, Vector3 } from 'yuka'
+import { GameEntity, EntityManager, SeekBehavior, Vector3, Vehicle } from 'yuka'
 import useStore from '../store'
 import { useNavLoader } from './useNavLoader'
 
@@ -53,6 +53,15 @@ function generateTarget(target) {
 
 export function useYuka({ type = GameEntity, position = [0, 0, 0], name = 'unnamed' }) {
   const ref = useRef({position : [0,0,0]})
+  switch (type) {
+    case 'Vehicle':
+      type = Vehicle 
+      break;
+  
+    default:
+      type = GameEntity
+      break;
+  }
   const mgr = useStore((state) => state.IAManager)
   const [entity] = useState(() => new type())
   useEffect(() => {

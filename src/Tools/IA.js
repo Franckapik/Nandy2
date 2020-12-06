@@ -1,8 +1,6 @@
 import { useGLTF } from '@react-three/drei'
-import React, { useEffect, useState } from 'react'
-import { useFrame, useUpdate } from 'react-three-fiber'
-import { GameEntity, SeekBehavior, Vector3, Vehicle } from 'yuka'
-import { useNavLoader } from '../hooks/useNavLoader'
+import React from 'react'
+import { SeekBehavior, Vector3 } from 'yuka'
 import { Manager, useYuka } from '../hooks/useYuka'
 import useStore from '../store'
 
@@ -19,7 +17,7 @@ SeekBehavior
 WanderBehavior */
 
 function VehicleMesh(props) {
-  const [ref] = useYuka({ type: Vehicle, name: 'Vehicle' })
+  const [ref] = useYuka({ type: 'Vehicle', name: 'Vehicle' })
   const { nodes, materials } = useGLTF('remorque.gltf', '/draco/')
 
   return <mesh ref={ref} geometry={nodes.Remorque.geometry} />
@@ -66,7 +64,7 @@ function VehicleMesh(props) {
 
 
 function TargetMesh(props) {
-  const [ref] = useYuka({ type: GameEntity, name: 'Target' })
+  const [ref] = useYuka({ type: 'GameEntity', name: 'Target' })
 
   return (
     <mesh ref={ref}>
