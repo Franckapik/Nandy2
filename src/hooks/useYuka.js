@@ -19,11 +19,10 @@ export function Manager({ children, behavior }) {
     const target = IAManager.entities.find((item) => item.name === 'Target')
     const behavior2 = new SeekBehavior(target.position)
     if(vehicle) {
-      console.log('here');
       vehicle.steering.add(behavior2)
     }
     target.position.set(random.x, random.y, random.z)
-  }, [])
+  }) //no dependencies
 
   useFrame((state, delta) => IAManager.update(delta))
 

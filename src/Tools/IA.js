@@ -22,12 +22,8 @@ function VehicleMesh(props) {
   const [ref] = useYuka({ type: Vehicle, name: 'Vehicle' })
   const { nodes, materials } = useGLTF('remorque.gltf', '/draco/')
 
-  return (
-    <mesh ref={ref}>
-      <coneBufferGeometry args={[2, 2, 8]} />
-      <meshNormalMaterial attach="material" />
-    </mesh>
-  )
+  return <mesh ref={ref} geometry={nodes.Remorque.geometry} />
+  
 }
 
 /* const FlowerGen = (props) => {
