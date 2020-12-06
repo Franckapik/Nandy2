@@ -75,19 +75,10 @@ function TargetMesh(props) {
   let elapsed = 0
   let time = 5
 
-  const navMesh = useNavLoader('/navmesh_applied.glb')
-  const region = navMesh.getRandomRegion()
-
-  useEffect(() => {
-    if (typeof region !== 'undefined') {
-      setTarget(region.centroid)
-    }
-  }, [region])
 
   useFrame((state, delta) => {
     if (elapsed >= time) {
       ref.current.position.x += 5
-      console.log(ref.current.position)
       elapsed = 0
     } else {
       elapsed += delta
