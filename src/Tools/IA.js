@@ -2,6 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import React from 'react'
 import { SeekBehavior, Vector3 } from 'yuka'
 import { Manager, useYuka } from '../hooks/useYuka'
+import Budie from '../references/Budie'
 import useStore from '../store'
 
 //steering behavior :
@@ -82,7 +83,7 @@ export const IA = () => {
 
   return (
     <Manager behavior={behavior}>
-      <VehicleMesh />
+<Budie position={[-55,0,77]} />
       <TargetMesh />
     </Manager>
   )
