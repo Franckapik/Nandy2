@@ -16,14 +16,18 @@ export const useNavLoader =(url) => {
         setNav(newNav);
         return newNav;  
       }
-      fetchData().then(r => {
-        setInterval(()=> {
-          const random = r.getRandomRegion().centroid;
-          setTarget(random);
-        }, 5000)
-      })
-
+      fetchData()
     }, [url]); //loader var deleted to not sync every frame
+
+
+      useEffect(()=> {
+        if(nav.regions.length) {
+          setInterval(()=> {
+            const random = nav.getRandomRegion().centroid;
+            setTarget(random);
+          }, 5000)
+        }
+      }, [nav.regions])
 
     return [nav, rtarget];
   }
