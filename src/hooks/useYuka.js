@@ -20,7 +20,17 @@ import useStore from '../store'
   
     return children
   }
-  
+
+  //le hook useYuka creer un ref qui est juste un obj.current
+  //le ref.position et quaternions sont modifiés selon l'entité rendue.
+  //pour la target qui change, j'ai constaté l'utilisation du useStore.subscribe pour changer modificer les parametres du comportement selon la nouvelle position (trigerring )
+  //possible de tester d'abord dans le manager puis ensuite de l'exporter ailleurs.
+  //setInterval function dans un hook avec le navmesh avec le temps en parametre. 
+  //intéret du GameEntity ? setRenderComponent? 
+  //le ref permets de controler le component => reflechir pour le vehicle.
+  //tte modification du ref se situe dans le hook useYukafinalement.
+  //le cycle d'un hook est rendu via le useEffect avec ou sans parametre de rafraichissement.
+
   export function useYuka({
     type = GameEntity,
     position = [0, 0, 0],
