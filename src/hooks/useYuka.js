@@ -15,7 +15,6 @@ export function Manager({ children, behavior }) {
   useEffect(() => {
     const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
     const target = IAManager.entities.find((item) => item.name === 'Target')
-    console.log(random);
     const behavior2 = new SeekBehavior(target.position)
     vehicle.steering.add(behavior2)
     target.position.set(random.x, random.y, random.z)
@@ -51,16 +50,20 @@ function generateTarget(target) {
 }
 
 export function useYuka({ type = GameEntity, position = [0, 0, 0], name = 'unnamed' }) {
+  console.log(arguments[0]);
   const ref = useRef()
   const mgr = useStore((state) => state.IAManager)
   const [entity] = useState(() => new type())
+  console.log(entity);
   useEffect(() => {
     entity.position.set(...position)
     entity.name = name
+    console.log(entity.position, entity.name);
     entity.setRenderComponent(ref, (entity) => {
       ref.current.position.copy(entity.position)
       ref.current.quaternion.copy(entity.rotation)
     })
+    console.log(entity);
     mgr.add(entity)
     return () => mgr.remove(entity)
   }, [])

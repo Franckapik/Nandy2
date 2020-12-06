@@ -1,3 +1,4 @@
+import { useGLTF } from '@react-three/drei'
 import React, { useEffect, useState } from 'react'
 import { useFrame, useUpdate } from 'react-three-fiber'
 import { GameEntity, SeekBehavior, Vector3, Vehicle } from 'yuka'
@@ -19,10 +20,11 @@ WanderBehavior */
 
 function VehicleMesh(props) {
   const [ref] = useYuka({ type: Vehicle, name: 'Vehicle' })
+  const { nodes, materials } = useGLTF('remorque.gltf', '/draco/')
 
   return (
     <mesh ref={ref}>
-      <coneBufferGeometry ref={useUpdate((geometry) => geometry.rotateX(Math.PI * 0.5), [])} attach="geometry" args={[2, 2, 8]} />
+      <coneBufferGeometry args={[2, 2, 8]} />
       <meshNormalMaterial attach="material" />
     </mesh>
   )
@@ -69,21 +71,7 @@ function VehicleMesh(props) {
 
 function TargetMesh(props) {
   const [ref] = useYuka({ type: GameEntity, name: 'Target' })
-  const [randomTime, setTime] = useState(5)
-  const [target, setTarget] = useState([0, 25, 0])
 
-  let elapsed = 0
-  let time = 5
-
-
-  useFrame((state, delta) => {
-    if (elapsed >= time) {
-      ref.current.position.x += 5
-      elapsed = 0
-    } else {
-      elapsed += delta
-    }
-  })
   return (
     <mesh ref={ref}>
       <sphereBufferGeometry attach="geometry" args={[0.5]} />
