@@ -13,7 +13,10 @@ import useStore from '../store'
       const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
       const target = IAManager.entities.find((item) => item.name === 'Target')
       vehicle.steering.add(behavior)
-        console.log(IAManager);
+
+      
+    generateTarget(target)
+
     }, [IAManager.entities])
   
     useFrame((state, delta) => IAManager.update(delta))
@@ -31,9 +34,17 @@ import useStore from '../store'
   //tte modification du ref se situe dans le hook useYukafinalement.
   //le cycle d'un hook est rendu via le useEffect avec ou sans parametre de rafraichissement.
 
-  const randomPos = (() => {
-    setInterval(() => console.log("oui"), 1000)
-  }) ()
+  function generateTarget(target) {
+    const radius = 2
+    const phi = Math.acos(2 * Math.random() - 1)
+    const theta = Math.random() * Math.PI * 2
+  
+    if (target) {
+      target.position.fromSpherical(radius, phi, theta)
+    }
+  
+    setTimeout(() => generateTarget(target), 3000)
+  }
 
 
   
@@ -55,6 +66,7 @@ import useStore from '../store'
       mgr.add(entity)
       return () => mgr.remove(entity)
     }, [])
+
     return [ref, entity]
   }
   
