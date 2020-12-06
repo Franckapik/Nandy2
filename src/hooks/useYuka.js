@@ -31,6 +31,12 @@ import useStore from '../store'
   //tte modification du ref se situe dans le hook useYukafinalement.
   //le cycle d'un hook est rendu via le useEffect avec ou sans parametre de rafraichissement.
 
+  const randomPos = (() => {
+    setInterval(() => console.log("oui"), 1000)
+  }) ()
+
+
+  
   export function useYuka({
     type = GameEntity,
     position = [0, 0, 0],

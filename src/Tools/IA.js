@@ -64,6 +64,9 @@ function VehicleMesh(props) {
   })
 } */
 
+//ne pas compter sur useFrame mais plutot setInterval pour genererune position ts les x sec ? 
+
+
 function TargetMesh(props) {
   const [ref] = useYuka({ type: GameEntity, name: 'Target' })
   const [randomTime, setTime] = useState(5)
