@@ -3,7 +3,7 @@ import { NavMesh, NavMeshLoader, Vector3 } from 'yuka';
 
 
 
-export const useNavLoader =(url) => {
+export const useNavLoader =(url, time) => {
     const [nav, setNav] = useState(new NavMesh());
     const [rtarget, setTarget] = useState(new Vector3(5,5,5))
 
@@ -25,7 +25,7 @@ export const useNavLoader =(url) => {
           setInterval(()=> {
             const random = nav.getRandomRegion().centroid;
             setTarget(random);
-          }, 5000)
+          }, time)
         }
       }, [nav.regions])
 

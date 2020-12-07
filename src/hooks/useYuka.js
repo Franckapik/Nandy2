@@ -7,7 +7,7 @@ import { useNavLoader } from './useNavLoader'
 const context = createContext()
 
 export function Manager({ children, behavior }) {
-  const [navMesh, random] = useNavLoader('/navmesh_applied.glb')
+  const [navMesh, random] = useNavLoader('/navmesh_applied.glb', 10000)
 
   const [mgr] = useState(() => new EntityManager(), [])
   useStore.setState({ IAManager: mgr })
