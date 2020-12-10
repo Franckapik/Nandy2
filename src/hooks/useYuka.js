@@ -12,9 +12,7 @@ export function Manager({ children, behavior }) {
   const [mgr] = useState(() => new EntityManager(), [])
   useStore.setState({ IAManager: mgr })
   const IAManager = useStore((state) => state.IAManager)
-  console.log(IAManager);
   useEffect(() => {
-    console.log(IAManager);
     const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
     const target = IAManager.entities.find((item) => item.name === 'Target')
     const behavior2 = new SeekBehavior(target.position)
