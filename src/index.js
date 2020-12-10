@@ -1,8 +1,8 @@
 import { Physics } from '@react-three/cannon'
-import { HTML, Loader, Sky } from '@react-three/drei'
+import { HTML, Loader, Sky, useGLTF } from '@react-three/drei'
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Canvas } from 'react-three-fiber'
+import { Canvas, useFrame } from 'react-three-fiber'
 import { Vector3 } from 'yuka'
 import { useNavLoader } from './hooks/useNavLoader'
 import Budie from './references/Budie'
@@ -15,18 +15,92 @@ import { IA } from './Tools/IA'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
+import * as THREE from 'three'  
+
+/* function Pave({xa, ya, za, position, number}) {
+  const tempObject = new THREE.Object3D()
+  const gltf = useGLTF('./pave.glb')
+  const geometry = gltf.nodes.pave.geometry
+
+  console.log(geometry);
+  React.useMemo(() => {
+    geometry.computeVertexNormals()
+    geometry.scale(0.5, 0.5, 0.5)
+  }, [geometry])
+
+  const ref = useRef()
+
+  useFrame((state) => {
+    let i = 0
+    for (let x = 0; x < xa; x++)
+      for (let y = 0; y < ya; y++)
+        for (let z = 0; z < za; z++) {
+          const id = i++
+          tempObject.position.set(- x, - y, - z)
+          const scale = 1
+          tempObject.rotation.x = -Math.PI/2;
+          tempObject.scale.set(scale, scale, scale)
+          tempObject.updateMatrix()
+          ref.current.setMatrixAt(id, tempObject.matrix)
+        }
+    ref.current.instanceMatrix.needsUpdate = true
+  })
   
+  const args = React.useMemo(() => [geometry, null, number], [geometry])
+
+  //how is it possible to instance a iport gltf ?
+
+  return (
+    <instancedMesh position={position} ref={ref} args={args} rotation= {[0, 0, 0]} >
+      <meshNormalMaterial attach="material" />
+    </instancedMesh>
+  )
+} */
 
 const NavMeshRandom = (props) => {
   const [arrayRegions, setArrayRegions] = useState([]);
   const [navMesh, random] = useNavLoader('/navmesh_applied.glb', 10000)
+  const tempObject = new THREE.Object3D()
+  const gltf = useGLTF('./pilar.glb')
+  const geometry = gltf.nodes.Pilar.geometry;
+
+  React.useMemo(() => {
+    geometry.computeVertexNormals()
+    geometry.scale(0.5, 0.5, 0.5)
+  }, [geometry])
 
   useEffect(() => {
     setArrayRegions(navMesh.regions)
     console.log(arrayRegions);
   })
+  const ref = useRef()
 
+  useFrame((state) => {
+    let i = 0
+    for (let x = 0; x < 10; x++)
+      for (let y = 0; y < 10; y++)
+        for (let z = 0; z < 10; z++) {
+          const id = i++
+          tempObject.position.set(- x, - y, - z)
+          const scale = 1
+          tempObject.rotation.x = -Math.PI/2;
+          tempObject.scale.set(scale, scale, scale)
+          tempObject.updateMatrix()
+          ref.current.setMatrixAt(id, tempObject.matrix)
+        }
+    ref.current.instanceMatrix.needsUpdate = true
+  })
+  
+  const args = React.useMemo(() => [geometry, null, 100], [geometry])
 
+  //how is it possible to instance a iport gltf ?
+
+  return (
+    <instancedMesh ref={ref} args={args} rotation= {[0, 0, 0]} >
+      <meshNormalMaterial attach="material" />
+    </instancedMesh>
+  )
+/* 
 
   return (
     arrayRegions.map( 
@@ -34,7 +108,7 @@ const NavMeshRandom = (props) => {
       const offset = Math.floor(Math.random() * 3) + 1  
       return <Cube position={[a.centroid.x +offset, a.centroid.y, a.centroid.z+offset]}  />
     })
-  )
+  ) */
 }
 
 
