@@ -1,8 +1,10 @@
 import { Physics } from '@react-three/cannon'
 import { HTML, Loader, Sky } from '@react-three/drei'
-import React, { Suspense, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Canvas } from 'react-three-fiber'
+import { Vector3 } from 'yuka'
+import { useNavLoader } from './hooks/useNavLoader'
 import Budie from './references/Budie'
 import { Cube } from './references/Cube'
 import './styles.css'
@@ -14,6 +16,26 @@ import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
   
+
+const NavMeshRandom = (props) => {
+  const [arrayRegions, setArrayRegions] = useState([]);
+  const [navMesh, random] = useNavLoader('/navmesh_applied.glb', 10000)
+
+  useEffect(() => {
+    setArrayRegions(navMesh.regions)
+    console.log(arrayRegions);
+  })
+
+
+
+  return (
+    arrayRegions.map( 
+      (a, i) => {
+      const offset = Math.floor(Math.random() * 3) + 1  
+      return <Cube position={[a.centroid.x +offset, a.centroid.y, a.centroid.z+offset]}  />
+    })
+  )
+}
 
 
 const App = (props) => {
@@ -51,7 +73,7 @@ const App = (props) => {
 
         <Physics>
         <IA/>
-
+        <NavMeshRandom />
           <Models />
           <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
