@@ -9,10 +9,11 @@ import './styles.css'
 import CameraTarget from './Tools/CameraTarget'
 import { Ground } from './Tools/Ground'
 import { Hud } from './Tools/Hud'
+import { IA } from './Tools/IA'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
-
+  
 
 
 const App = (props) => {
@@ -30,7 +31,7 @@ const App = (props) => {
           // Export canvas events, we will put them onto the scroll area
           setEvents(events)
         }}>
-        >
+        
         <CameraTarget />
         <hemisphereLight intensity={0.35} />
         <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
@@ -47,8 +48,10 @@ const App = (props) => {
         <HTML center portal={domContent}>
           <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }} >Hello</div>
         </HTML>
+
         <Physics>
-        <Budie position={[-62,0,72]} />
+        <IA/>
+
           <Models />
           <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />

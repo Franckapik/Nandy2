@@ -2,17 +2,18 @@ import { useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
+import { useYuka } from '../hooks/useYuka'
 
 
 export default function Budie(props) {
-  const group = useRef()
+  const [ref] = useYuka({ type: 'Vehicle', name: 'Vehicle' })
   const { nodes, materials, animations } = useGLTF('./budie.gltf')
   const actions = useRef()
   const [mixer] = useState(() => new THREE.AnimationMixer())
   useFrame((state, delta) => mixer.update(delta))
   useEffect(() => {
     actions.current = {
-      Marche: mixer.clipAction(animations[0], group.current)
+      Marche: mixer.clipAction(animations[0], ref.current).play()
     }
     return () => animations.forEach((clip) => mixer.uncacheClip(clip))
   }, [])
@@ -23,7 +24,7 @@ export default function Budie(props) {
   }, []) */
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={ref} {...props} dispose={null}>
       <primitive object={nodes.Body} />
       <primitive object={nodes.HancheL} />
       <primitive object={nodes.HancheR} />
