@@ -20,9 +20,12 @@ const MapMesh = (urlGltf) => {
   const arr = [1,1,1,1,1,1]
   const size=[2,1,1]
   const positions = []
+ const xmax = 5;
+  const ymax = 5;
 
-  for (let x = 0; x < 5; x++)
-  for (let y = 0; y < 5; y++) {
+  for (let x = 0; x < xmax; x++)
+  for (let y = 0; y < ymax; y++) {
+    console.log(x,y);
     positions.push([x * size[0] * 1.2,y * size[1] * 2, -5])
   }
 
