@@ -1,5 +1,5 @@
 import { Physics } from '@react-three/cannon'
-import { HTML, Loader, Sky } from '@react-three/drei'
+import { HTML, Loader, Sky, useGLTF } from '@react-three/drei'
 import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Canvas } from 'react-three-fiber'
@@ -15,6 +15,16 @@ import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
 import { NavMeshRandom } from './Tools/NavMeshRandom'
+
+const MapMesh = (urlGltf) => {
+  const arr = [1,1,1,1,1,1]
+  const size=[2,1,1]
+
+  return arr.map((a, i) => {
+    console.log(i)
+    return <Cube position={[size[0]*i*2, 2, 0]} args={size} />
+  })
+}
 
 const App = (props) => {
   const [events, setEvents] = useState()
@@ -48,6 +58,7 @@ const App = (props) => {
         </HTML>
 
         <Physics>
+          <MapMesh />
           <IA />
           <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
           <Models />
