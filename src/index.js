@@ -1,5 +1,5 @@
 import { Physics } from '@react-three/cannon'
-import { HTML, Loader, Sky } from '@react-three/drei'
+import { HTML, Loader, Sky, Stats } from '@react-three/drei'
 import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Canvas } from 'react-three-fiber'
@@ -56,6 +56,7 @@ const App = (props) => {
           <Cube />
         </Physics>
       </Canvas>
+      <Stats />
       <Loader />
       <Suspense fallback="null">
         <ModalBox title={'Bienvenue sur Nature&You'} startup={false} />
