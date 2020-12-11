@@ -1,10 +1,9 @@
 import { Physics } from '@react-three/cannon'
-import { HTML, Loader, Sky, useGLTF } from '@react-three/drei'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import { HTML, Loader, Sky } from '@react-three/drei'
+import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Canvas, useFrame } from 'react-three-fiber'
+import { Canvas } from 'react-three-fiber'
 import { Vector3 } from 'yuka'
-import { useNavLoader } from './hooks/useNavLoader'
 import Budie from './references/Budie'
 import { Cube } from './references/Cube'
 import './styles.css'
@@ -15,82 +14,7 @@ import { IA } from './Tools/IA'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
-import * as THREE from 'three'
-
-/* function Pave({xa, ya, za, position, number}) {
-  const tempObject = new THREE.Object3D()
-  const gltf = useGLTF('./pave.glb')
-  const geometry = gltf.nodes.pave.geometry
-
-  console.log(geometry);
-  React.useMemo(() => {
-    geometry.computeVertexNormals()
-    geometry.scale(0.5, 0.5, 0.5)
-  }, [geometry])
-
-  const ref = useRef()
-
-  useFrame((state) => {
-    let i = 0
-    for (let x = 0; x < xa; x++)
-      for (let y = 0; y < ya; y++)
-        for (let z = 0; z < za; z++) {
-          const id = i++
-          tempObject.position.set(- x, - y, - z)
-          const scale = 1
-          tempObject.rotation.x = -Math.PI/2;
-          tempObject.scale.set(scale, scale, scale)
-          tempObject.updateMatrix()
-          ref.current.setMatrixAt(id, tempObject.matrix)
-        }
-    ref.current.instanceMatrix.needsUpdate = true
-  })
-  
-  const args = React.useMemo(() => [geometry, null, number], [geometry])
-
-  //how is it possible to instance a iport gltf ?
-
-  return (
-    <instancedMesh position={position} ref={ref} args={args} rotation= {[0, 0, 0]} >
-      <meshNormalMaterial attach="material" />
-    </instancedMesh>
-  )
-} */
-
-const NavMeshRandom = (props) => {
-  const [arrayRegions, setArrayRegions] = useState([])
-  const [navMesh, random] = useNavLoader('/navmesh_applied.glb', 10000)
-  const tempObject = new THREE.Object3D()
-  const gltf = useGLTF('./pilar.glb')
-  const geometry = gltf.nodes.Pilar.geometry
-
-  useEffect(() => {
-    setArrayRegions(navMesh.regions)
-    console.log(arrayRegions)
-  })
-  const ref = useRef()
-
-  useFrame((state) => {
-    if (arrayRegions.length) {
-      arrayRegions.map((a, i) => {
-        console.log(i)
-        const id = i++
-        tempObject.position.set(a.centroid.x, a.centroid.y, a.centroid.z)
-        tempObject.updateMatrix()
-        ref.current.setMatrixAt(i, tempObject.matrix)
-      })
-      ref.current.instanceMatrix.needsUpdate = true
-    }
-  })
-
-  const args = React.useMemo(() => [geometry, null, 1000], [geometry])
-
-  return (
-    <instancedMesh ref={ref} args={args} rotation={[0, 0, 0]}>
-      <meshNormalMaterial attach="material" />
-    </instancedMesh>
-  )
-}
+import { NavMeshRandom } from './Tools/NavMeshRandom'
 
 const App = (props) => {
   const [events, setEvents] = useState()
@@ -125,7 +49,7 @@ const App = (props) => {
 
         <Physics>
           <IA />
-          <NavMeshRandom />
+          <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./pilar.glb'} max={1000} />
           <Models />
           <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
