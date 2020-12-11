@@ -19,18 +19,18 @@ import { NavMeshRandom } from './Tools/NavMeshRandom'
 const MapMesh = (urlGltf) => {
   const arr = [1,1,1,1,1,1]
   const size=[2,1,1]
+  const positions = []
 
   for (let x = 0; x < 10; x++)
-  for (let y = 0; y < 2; y++) {
-console.log(x, y, 0);
-    }
+  for (let y = 0; y < 10; y++) {
+    positions.push([x * size[0] * 1.2,y * size[1] * 2, -5])
+  }
 
-    return null
 
-/*   return arr.map((a, i) => {
-    console.log(i)
-    return <Cube position={[size[0]*i*2, 2, 0]} args={size} />
-  }) */
+  return positions.map((a, i) => {
+    console.log(a)
+    return <Cube position={a} args={size} />
+  })
 }
 
 const App = (props) => {
