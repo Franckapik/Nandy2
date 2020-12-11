@@ -1,5 +1,5 @@
 import { Physics } from '@react-three/cannon'
-import { HTML, Loader, Sky, useGLTF } from '@react-three/drei'
+import { HTML, Loader, Sky, Stats } from '@react-three/drei'
 import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Canvas } from 'react-three-fiber'
@@ -21,14 +21,13 @@ const MapMesh = (urlGltf) => {
   const size=[2,1,1]
   const positions = []
 
-  for (let x = 0; x < 10; x++)
-  for (let y = 0; y < 10; y++) {
+  for (let x = 0; x < 5; x++)
+  for (let y = 0; y < 5; y++) {
     positions.push([x * size[0] * 1.2,y * size[1] * 2, -5])
   }
 
 
   return positions.map((a, i) => {
-    console.log(a)
     return <Cube position={a} args={size} />
   })
 }
@@ -74,6 +73,7 @@ const App = (props) => {
           <Cube />
         </Physics>
       </Canvas>
+      <Stats />
       <Loader />
       <Suspense fallback="null">
         <ModalBox title={'Bienvenue sur Nature&You'} startup={false} />
