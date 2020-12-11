@@ -14,6 +14,7 @@ const useStore = create((set) => ({
     popOpen : false,
     cameraTarget: [0,0,0],
     targetIA: [25,0,25],
+    IAManager: null,
     cameraControlsEnabled: true,
     videoPos : [0,0,0],
     characterPos : [0,0,0],
