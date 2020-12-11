@@ -20,10 +20,17 @@ const MapMesh = (urlGltf) => {
   const arr = [1,1,1,1,1,1]
   const size=[2,1,1]
 
-  return arr.map((a, i) => {
+  for (let x = 0; x < 10; x++)
+  for (let y = 0; y < 2; y++) {
+console.log(x, y, 0);
+    }
+
+    return null
+
+/*   return arr.map((a, i) => {
     console.log(i)
     return <Cube position={[size[0]*i*2, 2, 0]} args={size} />
-  })
+  }) */
 }
 
 const App = (props) => {
