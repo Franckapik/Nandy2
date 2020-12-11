@@ -15,7 +15,7 @@ import { IA } from './Tools/IA'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
-import * as THREE from 'three'  
+import * as THREE from 'three'
 
 /* function Pave({xa, ya, za, position, number}) {
   const tempObject = new THREE.Object3D()
@@ -58,59 +58,39 @@ import * as THREE from 'three'
 } */
 
 const NavMeshRandom = (props) => {
-  const [arrayRegions, setArrayRegions] = useState([]);
+  const [arrayRegions, setArrayRegions] = useState([])
   const [navMesh, random] = useNavLoader('/navmesh_applied.glb', 10000)
   const tempObject = new THREE.Object3D()
   const gltf = useGLTF('./pilar.glb')
-  const geometry = gltf.nodes.Pilar.geometry;
-
-  React.useMemo(() => {
-    geometry.computeVertexNormals()
-    geometry.scale(0.5, 0.5, 0.5)
-  }, [geometry])
+  const geometry = gltf.nodes.Pilar.geometry
 
   useEffect(() => {
     setArrayRegions(navMesh.regions)
-    console.log(arrayRegions);
+    console.log(arrayRegions)
   })
   const ref = useRef()
 
   useFrame((state) => {
-    let i = 0
-    for (let x = 0; x < 10; x++)
-      for (let y = 0; y < 10; y++)
-        for (let z = 0; z < 10; z++) {
-          const id = i++
-          tempObject.position.set(- x, - y, - z)
-          const scale = 1
-          tempObject.rotation.x = -Math.PI/2;
-          tempObject.scale.set(scale, scale, scale)
-          tempObject.updateMatrix()
-          ref.current.setMatrixAt(id, tempObject.matrix)
-        }
-    ref.current.instanceMatrix.needsUpdate = true
+    if (arrayRegions.length) {
+      arrayRegions.map((a, i) => {
+        console.log(i)
+        const id = i++
+        tempObject.position.set(a.centroid.x, a.centroid.y, a.centroid.z)
+        tempObject.updateMatrix()
+        ref.current.setMatrixAt(i, tempObject.matrix)
+      })
+      ref.current.instanceMatrix.needsUpdate = true
+    }
   })
-  
-  const args = React.useMemo(() => [geometry, null, 100], [geometry])
 
-  //how is it possible to instance a iport gltf ?
+  const args = React.useMemo(() => [geometry, null, 1000], [geometry])
 
   return (
-    <instancedMesh ref={ref} args={args} rotation= {[0, 0, 0]} >
+    <instancedMesh ref={ref} args={args} rotation={[0, 0, 0]}>
       <meshNormalMaterial attach="material" />
     </instancedMesh>
   )
-/* 
-
-  return (
-    arrayRegions.map( 
-      (a, i) => {
-      const offset = Math.floor(Math.random() * 3) + 1  
-      return <Cube position={[a.centroid.x +offset, a.centroid.y, a.centroid.z+offset]}  />
-    })
-  ) */
 }
-
 
 const App = (props) => {
   const [events, setEvents] = useState()
@@ -118,7 +98,6 @@ const App = (props) => {
 
   return (
     <>
-
       <Canvas
         id="canvas"
         shadowMap
@@ -127,7 +106,6 @@ const App = (props) => {
           // Export canvas events, we will put them onto the scroll area
           setEvents(events)
         }}>
-        
         <CameraTarget />
         <hemisphereLight intensity={0.35} />
         <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
@@ -142,12 +120,12 @@ const App = (props) => {
           azimuth={0.5}
         />
         <HTML center portal={domContent}>
-          <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }} >Hello</div>
+          <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }}>Hello</div>
         </HTML>
 
         <Physics>
-        <IA/>
-        <NavMeshRandom />
+          <IA />
+          <NavMeshRandom />
           <Models />
           <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
@@ -157,14 +135,12 @@ const App = (props) => {
       <Loader />
       <Suspense fallback="null">
         <ModalBox title={'Bienvenue sur Nature&You'} startup={false} />
-        <div className="frontDiv" {...events} ref={domContent}> 
-        <Hud />
-      </div>
+        <div className="frontDiv" {...events} ref={domContent}>
+          <Hud />
+        </div>
       </Suspense>
-
     </>
   )
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
-
