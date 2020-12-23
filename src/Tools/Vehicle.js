@@ -232,7 +232,7 @@ function Vehicle(props) {
     return () => console.log('unmounting...');
   }, [])
 
-  const emptyVehiclePos = useEmpty('origin9Ecology') //name to change to originVehicle
+  const emptyVehiclePos = useEmpty('origin1Character') //name to change to originVehicle
 
   return (
     <group ref={vehicle}>
