@@ -9,7 +9,6 @@ import useEmpty from '../hooks/useEmpty';
 export default function CameraTarget() {
 
   const offset = new Vector3()
-  const cameraControlsEnabled = useStore(state => state.cameraControlsEnabled)
   const cameraTarget = useStore(state => state.cameraTarget)
 
   //calcul initial offset Vehicle-Camera from blender
@@ -20,7 +19,6 @@ export default function CameraTarget() {
 
   const moovingVehicle = new Vector3(...cameraTarget)
   offset.copy(a).sub(b)
-  console.log(offset);
   
   const cameraRef = useRef()
   const cam = useRef()
