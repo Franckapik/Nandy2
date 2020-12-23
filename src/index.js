@@ -31,18 +31,7 @@ const App = (props) => {
           setEvents(events)
         }}>
         <CameraTarget />
-        <hemisphereLight intensity={0.35} />
-        <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
-        <Sky
-          distance={3000}
-          turbidity={2}
-          rayleigh={4}
-          mieCoefficient={0.038}
-          mieDirectionalG={0.85}
-          sunPosition={[Math.PI, -10, 0]}
-          exposure={5}
-          azimuth={0.5}
-        />
+
         <HTML center portal={domContent}>
           <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }}>Hello</div>
         </HTML>
