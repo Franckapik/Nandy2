@@ -236,8 +236,8 @@ function Vehicle(props) {
 
   const emptyVehiclePos = useEmpty('origin1Character') //name to change to originVehicle
 
-  const { nodes } = useGLTF('./cloud.gltf', '/draco/');
-  const geo = nodes.Cloud.geometry
+  const { nodes } = useGLTF('./character.gltf', '/draco/');
+  const geo = nodes.Cloud001.geometry
   console.log(geo);
 
   return (
