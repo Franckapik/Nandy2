@@ -24,17 +24,20 @@ const Light = (props) => {
   const lightPos = useEmpty('origin1Light')
   window.scene = scene;
   const  reflight=useRef();
+  const refpointlight = useRef();
   // const lookAtTarget = scene.getObjectByName('Box2')
 
-    useLayoutEffect(()=> {
+    useFrame(()=> {
       const lookAtTarget = scene.getObjectByName("Chassis")
       console.log(lookAtTarget);
       reflight.current.target = lookAtTarget;
-    }, [])
+      refpointlight.current.position.copy(lookAtTarget.position);
+    })
  
   return (
     <>
-      <spotLight ref={reflight} position={lightPos} angle={0.8} penumbra={1} intensity={1} color="white" castShadow />
+      <spotLight ref={reflight} position={lightPos} angle={0.8} penumbra={1} intensity={0} color="white" castShadow />
+      <pointLight ref={refpointlight} intensity={1} color="red" castShadow />
     </>
   )
 }
