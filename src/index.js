@@ -2,7 +2,7 @@ import { Physics } from '@react-three/cannon'
 import { HTML, Loader, Sky, Stars, Stats } from '@react-three/drei'
 import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Canvas, useFrame } from 'react-three-fiber'
+import { Canvas, useFrame, useThree } from 'react-three-fiber'
 import { Vector3 } from 'yuka'
 import Budie from './references/Budie'
 import { Cube } from './references/Cube'
@@ -19,22 +19,22 @@ import useEmpty from './hooks/useEmpty'
 import { Object3D } from 'three'
 
 const Light = (props) => {
+  const { scene } = useThree()
+  console.log(scene);
   const lightPos = useEmpty('origin1Light')
-  const light1 = useRef();
-  const cube = useRef();
-  const target = new Object3D;
-  console.log(light1);
-  const essai = new Vector3(-55,0,-30);
-  target.position.copy(essai)
-  console.log(target);
+  window.scene = scene;
+  const  reflight=useRef();
+  // const lookAtTarget = scene.getObjectByName('Box2')
 
-  useLayoutEffect(()=> {
-     light1.current.target.position.x = -50
-   }, [])
-
-  return(
+    useLayoutEffect(()=> {
+      const lookAtTarget = scene.getObjectByName("Chassis")
+      console.log(lookAtTarget);
+      reflight.current.target = lookAtTarget;
+    }, [])
+ 
+  return (
     <>
-    <spotLight ref={light1} position={lightPos} penumbra={0.5} distance={0} angle={Math.PI/3} intensity={0.5} target={target} color={'purple'} />
+      <spotLight ref={reflight} position={lightPos} angle={0.8} penumbra={1} intensity={1} color="white" castShadow />
     </>
   )
 }
@@ -71,8 +71,9 @@ const App = (props) => {
           <IA />
           <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
           <Models />
-          <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
+          <Vehicle  position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
+          <Cube name="box1" position={[-70,0,45]} />
           <Light />
         </Physics>
       </Canvas>

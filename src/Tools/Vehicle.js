@@ -24,7 +24,7 @@ const Chassis = forwardRef((props, ref) => {
     ref
   )
   return (
-    <mesh ref={ref} api={api} castShadow>
+    <mesh name= {"Chassis"} ref={ref} api={api} castShadow>
       <boxBufferGeometry attach="geometry" args={boxSize} />
       <meshNormalMaterial attach="material" />
       <axesHelper scale={[5, 5, 5]} />
