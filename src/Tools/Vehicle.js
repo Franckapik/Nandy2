@@ -5,9 +5,11 @@ import useKeyPress from '../hooks/useKeyPress'
 import useEmpty from '../hooks/useEmpty'
 import useStore from '../store'
 import { Remorque, Remorque2 } from './Remorque'
+import { useGLTF } from '@react-three/drei'
 
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
+  console.log(props.geo);
   const boxSize = [1.2, 1, 4]
   // eslint-disable-next-line
   const [_, api] = useBox(
@@ -24,8 +26,8 @@ const Chassis = forwardRef((props, ref) => {
     ref
   )
   return (
-    <mesh ref={ref} api={api} castShadow>
-      <boxBufferGeometry attach="geometry" args={boxSize} />
+    <mesh ref={ref} api={api} geometry={props.geo} castShadow>
+      <boxBufferGeometry attach={props.geo} args={boxSize} />
       <meshNormalMaterial attach="material" />
       <axesHelper scale={[5, 5, 5]} />
     </mesh>
@@ -234,9 +236,14 @@ function Vehicle(props) {
 
   const emptyVehiclePos = useEmpty('origin1Character') //name to change to originVehicle
 
+  const { nodes } = useGLTF('./cloud.gltf', '/draco/');
+  const geo = nodes.Cloud.geometry
+  console.log(geo);
+
   return (
     <group ref={vehicle}>
       <Chassis
+        geo = {geo}
         ref={chassis}
         rotation={props.rotation}
         position={emptyVehiclePos}
