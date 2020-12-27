@@ -33,8 +33,6 @@ const Light = (props) => {
   const spotlight = useRef()
   const vs = useRef();
 
-  useHelper(vs, BoxHelper, 'cyan')
-
   useEffect(() => {
     const geometry = vs.current.geometry;
 
@@ -44,7 +42,7 @@ console.log(geometry);
   useLayoutEffect(() => {
     const lookAtTarget = scene.getObjectByName('Chassis')
     spotlight.current.target = lookAtTarget
-    vs.current.material.uniforms.lightColor.value = spotlight.current.color;
+    //vs.current.material.uniforms.lightColor.value = spotlight.current.color; //Change colors to Spotlight colors
   }, [])
 
   return (
@@ -59,7 +57,7 @@ console.log(geometry);
           uniforms-anglePower-value={6}
         />
       </mesh>
-
+      <ambientLight intensity={0.02} />
       <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={1} intensity={0.4} color="white" castShadow />
     </>
   )
