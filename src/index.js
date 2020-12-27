@@ -20,24 +20,20 @@ import { Object3D } from 'three'
 
 const Light = (props) => {
   const { scene } = useThree()
-  console.log(scene);
+  console.log(scene)
   const lightPos = useEmpty('origin1Light')
-  window.scene = scene;
-  const  reflight=useRef();
-  const refpointlight = useRef();
-  // const lookAtTarget = scene.getObjectByName('Box2')
+  window.scene = scene
+  const reflight = useRef()
 
-    useFrame(()=> {
-      const lookAtTarget = scene.getObjectByName("Chassis")
-      console.log(lookAtTarget);
-      reflight.current.target = lookAtTarget;
-      refpointlight.current.position.copy(lookAtTarget.position);
-    })
- 
+  useLayoutEffect(() => {
+    const lookAtTarget = scene.getObjectByName('Chassis')
+    console.log(lookAtTarget)
+    reflight.current.target = lookAtTarget
+  }, [])
+
   return (
     <>
-      <spotLight ref={reflight} position={lightPos} angle={0.8} penumbra={1} intensity={0} color="white" castShadow />
-      <pointLight ref={refpointlight} intensity={1} color="red" castShadow />
+      <spotLight ref={reflight} position={lightPos} angle={0.8} penumbra={1} intensity={1} color="white" castShadow />
     </>
   )
 }
@@ -61,22 +57,21 @@ const App = (props) => {
           <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }}>Hello</div>
         </HTML>
         <Stars
-  radius={100} // Radius of the inner sphere (default=100)
-  depth={50} // Depth of area where stars should fit (default=50)
-  count={5000} // Amount of stars (default=5000)
-  factor={4} // Size factor (default=4)
-  saturation={0} // Saturation 0-1 (default=0)
-  fade // Faded dots (default=false)
-/>
-
+          radius={100} // Radius of the inner sphere (default=100)
+          depth={50} // Depth of area where stars should fit (default=50)
+          count={5000} // Amount of stars (default=5000)
+          factor={4} // Size factor (default=4)
+          saturation={0} // Saturation 0-1 (default=0)
+          fade // Faded dots (default=false)
+        />
 
         <Physics>
           <IA />
           <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
           <Models />
-          <Vehicle  position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
+          <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
-          <Cube name="box1" position={[-70,0,45]} />
+          <Cube name="box1" position={[-70, 0, 45]} />
           <Light />
         </Physics>
       </Canvas>
