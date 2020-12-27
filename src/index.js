@@ -1,5 +1,5 @@
 import { Physics } from '@react-three/cannon'
-import { Cone, HTML, Loader, Sky, Stars, Stats } from '@react-three/drei'
+import { Cone, HTML, Loader, Sky, Stars, Stats, useHelper } from '@react-three/drei'
 import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Canvas, extend, useFrame, useThree } from 'react-three-fiber'
@@ -16,8 +16,9 @@ import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
 import { NavMeshRandom } from './Tools/NavMeshRandom'
 import useEmpty from './hooks/useEmpty'
-import { Object3D } from 'three'
+import { BoxHelper, Object3D } from 'three'
 import VolumetricSpotlight from "./Tools/volumetric-spotlight";
+import * as THREE from "three"
 
 extend({
   VolumetricSpotlight
@@ -29,28 +30,37 @@ const Light = (props) => {
   console.log(scene)
   const lightPos = useEmpty('origin1Light')
   window.scene = scene
-  const reflight = useRef()
+  const spotlight = useRef()
+  const vs = useRef();
+
+  useHelper(vs, BoxHelper, 'cyan')
+
+  useEffect(() => {
+    const geometry = vs.current.geometry;
+
+console.log(geometry);
+  }, []);
 
   useLayoutEffect(() => {
     const lookAtTarget = scene.getObjectByName('Chassis')
-    console.log(lookAtTarget)
-    reflight.current.target = lookAtTarget
+    spotlight.current.target = lookAtTarget
+    vs.current.material.uniforms.lightColor.value = spotlight.current.color;
   }, [])
 
   return (
     <>
-    <mesh position={[-50,0,60]}  >
-    <coneGeometry args={[10, 40, 64, 30, 40, true]} attach="geometry" />
+    <mesh ref={vs} position={lightPos}  >
+    <coneGeometry args={[10, 30, 40, 30, 40, true]} attach="geometry" /> //radius, height, nb faces
     {/* <meshBasicMaterial color={'yellow'} transparent opacity={0.5} /> */}
             <volumetricSpotlight
           attach="material"
           uniforms-lightColor-value='yellow'
-          uniforms-attenuation-value={240}
-          uniforms-anglePower-value={8}
+          uniforms-attenuation-value={200}
+          uniforms-anglePower-value={6}
         />
       </mesh>
 
-      <spotLight ref={reflight} position={lightPos} angle={0.8} penumbra={1} intensity={0} color="white" castShadow />
+      <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={1} intensity={0.4} color="white" castShadow />
     </>
   )
 }
