@@ -51,7 +51,7 @@ const App = (props) => {
           <IA />
           <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
           <Models />
-          <Vehicle position={[-5, 5, 5]} rotation={[0, -Math.PI * 1.2, 0]} angularVelocity={[0, 0.5, 0]} />
+          <Vehicle position={[-5, 5, 5]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
           <Cube />
         </Physics>
