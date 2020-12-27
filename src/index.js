@@ -1,8 +1,8 @@
 import { Physics } from '@react-three/cannon'
-import { HTML, Loader, Sky, Stars, Stats } from '@react-three/drei'
+import { Cone, HTML, Loader, Sky, Stars, Stats } from '@react-three/drei'
 import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Canvas, useFrame, useThree } from 'react-three-fiber'
+import { Canvas, extend, useFrame, useThree } from 'react-three-fiber'
 import { Vector3 } from 'yuka'
 import Budie from './references/Budie'
 import { Cube } from './references/Cube'
@@ -17,6 +17,12 @@ import Vehicle from './Tools/Vehicle'
 import { NavMeshRandom } from './Tools/NavMeshRandom'
 import useEmpty from './hooks/useEmpty'
 import { Object3D } from 'three'
+import VolumetricSpotlight from "./Tools/volumetric-spotlight";
+
+extend({
+  VolumetricSpotlight
+});
+
 
 const Light = (props) => {
   const { scene } = useThree()
@@ -33,7 +39,18 @@ const Light = (props) => {
 
   return (
     <>
-      <spotLight ref={reflight} position={lightPos} angle={0.8} penumbra={1} intensity={1} color="white" castShadow />
+    <mesh position={[-50,0,60]}  >
+    <coneGeometry args={[10, 40, 64, 30, 40, true]} attach="geometry" />
+    {/* <meshBasicMaterial color={'yellow'} transparent opacity={0.5} /> */}
+            <volumetricSpotlight
+          attach="material"
+          uniforms-lightColor-value='yellow'
+          uniforms-attenuation-value={240}
+          uniforms-anglePower-value={8}
+        />
+      </mesh>
+
+      <spotLight ref={reflight} position={lightPos} angle={0.8} penumbra={1} intensity={0} color="white" castShadow />
     </>
   )
 }
