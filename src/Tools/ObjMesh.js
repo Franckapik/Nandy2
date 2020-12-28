@@ -35,9 +35,7 @@ export const ObjMesh = ({ position, display, mass, ...props }) => {
   return (
     <>
     <mesh key={props.name} ref={cube} geometry={props.geometry} onClick={() => console.log(props.name)}>
-      <meshMatcapMaterial
-        attach="material"
-        matcap={props.mat[props.material.name]} />
+    <meshStandardMaterial color={'orange'} />
     </mesh>
       <Helper ref={helperRef} visible={false} bound={bound} />
     </>

@@ -16,7 +16,7 @@ export function Ground({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
   return (
     <mesh onClick={()=> console.log("gournd")} ref={ref} receiveShadow ref={ref} receiveShadow>
       <planeBufferGeometry attach="geometry" args={[200, 200]} />
-      <ParallaxMapMaterial map={map} bumpMap={bumpMap} mode={mode} parallaxScale={parallaxFactor} parallaxMinLayers={minLayers} parallaxMaxLayers={maxLayers} />
+      <meshStandardMaterial color={'blue'} />
     </mesh>
   );
 }
