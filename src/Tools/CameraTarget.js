@@ -30,7 +30,7 @@ export default function CameraTarget() {
   
   return (
   <group ref={cameraRef}>
-    <PerspectiveCamera ref={cam} makeDefault fov={30} position={offset}/>
+    <PerspectiveCamera ref={cam} makeDefault fov={35} position={offset}/>
   </group>
   )
 }
