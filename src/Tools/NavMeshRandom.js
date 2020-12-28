@@ -12,7 +12,6 @@ export const NavMeshRandom = ({ urlnav, urlGltf, nameMesh, max }) => {
   const geometry = gltf.nodes[nameMesh].geometry;
 
   useEffect(() => {
-    console.log(navMesh);
     const arrayOfPosition = navMesh.regions.map(x => [x.centroid.x, x.centroid.y, x.centroid.z]);
     setArrayRegions(arrayOfPosition);
   }, [navMesh]);
