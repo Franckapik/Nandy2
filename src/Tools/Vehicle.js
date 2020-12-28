@@ -5,6 +5,7 @@ import useKeyPress from '../hooks/useKeyPress'
 import useEmpty from '../hooks/useEmpty'
 import useStore from '../store'
 import { Remorque, Remorque2 } from './Remorque'
+import { useGLTF } from '@react-three/drei'
 
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
@@ -20,13 +21,13 @@ const Chassis = forwardRef((props, ref) => {
       args: boxSize,
       ...props,
     }),
-    true, //new bounding option debug
+    false, //new bounding option debug
     ref
   )
   return (
-    <mesh ref={ref} api={api} castShadow>
-      <boxBufferGeometry attach="geometry" args={boxSize} />
-      <meshNormalMaterial attach="material" />
+    <mesh ref={ref} api={api} geometry={props.geo} castShadow>
+      <boxBufferGeometry attach={props.geo} args={boxSize} />
+      <meshBasicMaterial attach={props.materials} />
       <axesHelper scale={[5, 5, 5]} />
     </mesh>
   )
@@ -44,7 +45,7 @@ const Wheel = forwardRef((props, ref) => {
       args: wheelSize,
       ...props,
     }),
-    true, //new bounding option debug
+    false, //new bounding option debug
     ref
   )
   // useCompoundBody(
@@ -59,7 +60,7 @@ const Wheel = forwardRef((props, ref) => {
   //   ref
   // )
   return (
-    <mesh ref={ref}>
+    <mesh visible={false} ref={ref}>
       <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
         <cylinderBufferGeometry attach="geometry" args={wheelSize} />
         <meshNormalMaterial attach="material" />
@@ -175,18 +176,18 @@ function Vehicle(props) {
 
   useFrame(() => {
     if (left && !right) {
-      setSteeringValue(maxSteerVal)
-    } else if (right && !left) {
       setSteeringValue(-maxSteerVal)
+    } else if (right && !left) {
+      setSteeringValue(maxSteerVal)
     } else {
       setSteeringValue(0)
     }
     if (forward && !backward) {
       setBrakeForce(0)
-      setEngineForce(-maxForce)
+      setEngineForce(maxForce)
     } else if (backward && !forward) {
       setBrakeForce(0)
-      setEngineForce(maxForce)
+      setEngineForce(-maxForce)
     } else if (engineForce !== 0) {
       setEngineForce(0)
     }
@@ -234,14 +235,18 @@ function Vehicle(props) {
 
   const emptyVehiclePos = useEmpty('origin1Character') //name to change to originVehicle
 
+  const { nodes } = useGLTF('./character.gltf', '/draco/');
+  const geo = nodes.Cloud001.geometry
+  const mat = nodes.Cloud001.materials
+
   return (
     <group ref={vehicle}>
       <Chassis
+        geo = {geo}
+        materials = {mat}
         ref={chassis}
-        rotation={props.rotation}
         position={emptyVehiclePos}
         angularVelocity={props.angularVelocity}></Chassis>
-      <Remorque2 ref={remorque} />
       <Wheel ref={wheel_1}></Wheel>
       <Wheel ref={wheel_2}></Wheel>
       <Wheel ref={wheel_3}></Wheel>
