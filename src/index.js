@@ -57,7 +57,7 @@ console.log(geometry);
           uniforms-anglePower-value={6}
         />
       </mesh>
-      <ambientLight intensity={0.02} />
+      <ambientLight intensity={0.1} />
       <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={1} intensity={0.4} color="white" castShadow />
     </>
   )
@@ -100,7 +100,7 @@ const App = (props) => {
           <Light />
         </Physics>
       </Canvas>
-      <Stats />
+      <Stats showPanel={2} />
       <Loader />
       <Suspense fallback="null">
         <ModalBox title={'Bienvenue sur Nature&You'} startup={false} />
