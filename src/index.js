@@ -27,21 +27,17 @@ extend({
 
 const Light = (props) => {
   const { scene } = useThree()
-  console.log(scene)
   const lightPos = useEmpty('origin1Light')
   window.scene = scene
   const spotlight = useRef()
   const vs = useRef();
 
-  useEffect(() => {
-    const geometry = vs.current.geometry;
-
-console.log(geometry);
-  }, []);
-
   useLayoutEffect(() => {
     const lookAtTarget = scene.getObjectByName('Chassis')
-    spotlight.current.target = lookAtTarget
+    if (lookAtTarget) {
+      spotlight.current.target = lookAtTarget
+      console.log(lookAtTarget);  
+    }
     //vs.current.material.uniforms.lightColor.value = spotlight.current.color; //Change colors to Spotlight colors
   }, [])
 
