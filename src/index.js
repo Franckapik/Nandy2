@@ -49,11 +49,11 @@ const Light = (props) => {
             <volumetricSpotlight
           attach="material"
           uniforms-lightColor-value='yellow'
-          uniforms-attenuation-value={200}
+          uniforms-attenuation-value={0}
           uniforms-anglePower-value={6}
         />
       </mesh>
-      <ambientLight intensity={0.1} />
+      <ambientLight intensity={0.02} />
       <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={1} intensity={0.4} color="white" castShadow />
     </>
   )

@@ -11,9 +11,6 @@ export const Model = ({ url, mass, matcaps }) => {
       return null
     } else if (obj.type === 'Mesh') {
       if (obj.parent.name === first[0]) {
-        obj.geometry.computeBoundingBox();
-        const b = obj.geometry.boundingBox.max;
-        let bound = [b.x * 2, b.y * 2, b.z * 2]; //half extent ? And for mesh rotated?
         return <ObjMesh mat={obj.material} mass={mass} display={true} key={name} {...obj} position={obj.getWorldPosition()} />;
       }
     } else {
