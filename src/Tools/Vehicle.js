@@ -25,10 +25,7 @@ const Chassis = forwardRef((props, ref) => {
     ref
   )
   return (
-    <mesh name="Chassis" ref={ref} api={api} geometry={props.geo} castShadow>
-      <boxBufferGeometry attach={props.geo} args={boxSize} />
-      <meshBasicMaterial attach={props.materials} />
-      <axesHelper scale={[5, 5, 5]} />
+    <mesh name="Chassis" ref={ref} api={api} geometry={props.geo} material={props.materials} castShadow>
     </mesh>
   )
 })
@@ -236,7 +233,7 @@ function Vehicle(props) {
 
   const { nodes } = useGLTF('./character.gltf', '/draco/')
   const geo = nodes.Cloud001.geometry
-  const mat = nodes.Cloud001.materials
+  const mat = nodes.Cloud001.material
 
   return (
     <group ref={vehicle}>
