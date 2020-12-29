@@ -17,6 +17,7 @@ const useStore = create((set) => ({
     IAManager: null,
     cameraControlsEnabled: true,
     videoPos : [0,0,0],
+    vehicleObj : null,
     characterPos : [0,0,0],
     entitymanager : [],
     portal : 0,
@@ -27,6 +28,7 @@ const useStore = create((set) => ({
     changeForce: (newForce) => set(() => ({force: newForce})),
     changeRotation: (newRotation) => set(() => ({rotation: newRotation})),
     changeTarget: (newPosition) => set(() => ({cameraTarget: newPosition})),
+    saveVehicle: (newObj) => set(() => ({vehicleObj: newObj})),
     changeVelocity: (newVelocity) => set(() => ({velocity: newVelocity})),
     changeId: (newId) => set(() => ({popid: newId})),
     addMsg: (newMsg) => set((state) => ({message: [...state.message, newMsg]})),
@@ -36,5 +38,7 @@ const useStore = create((set) => ({
     addCrate: (newCrate) => set((state) => ({crates: [...state.crates, newCrate]})),
     setVideoPos: (newPos) => set(() => ({videoPos: newPos })),
   }))
+
+  window.store = useStore;
 
 export default useStore;

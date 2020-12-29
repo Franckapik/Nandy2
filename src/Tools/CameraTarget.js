@@ -17,7 +17,7 @@ export default function CameraTarget() {
   const a = new Vector3(...originCamera)
   const b = new Vector3(...originVehicle)
 
-  const moovingVehicle = new Vector3(...cameraTarget)
+  const moovingVehicle = new Vector3(...cameraTarget).add(new Vector3(0,10,0))
   offset.copy(a).sub(b)
   
   const cameraRef = useRef()
@@ -30,7 +30,7 @@ export default function CameraTarget() {
   
   return (
   <group ref={cameraRef}>
-    <PerspectiveCamera ref={cam} makeDefault fov={35} position={offset}/>
+    <PerspectiveCamera ref={cam} makeDefault fov={30} position={offset}/>
   </group>
   )
 }

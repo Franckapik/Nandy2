@@ -14,9 +14,9 @@ export function Ground({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0] }));
 
   return (
-    <mesh onClick={()=> console.log("gournd")} ref={ref} receiveShadow ref={ref} receiveShadow>
+    <mesh ref={ref} receiveShadow ref={ref} receiveShadow>
       <planeBufferGeometry attach="geometry" args={[200, 200]} />
-      <meshStandardMaterial color={'blue'} />
+      <meshStandardMaterial color={'grey'} />
     </mesh>
   );
 }

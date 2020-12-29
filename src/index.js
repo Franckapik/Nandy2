@@ -19,6 +19,7 @@ import useEmpty from './hooks/useEmpty'
 import { BoxHelper, Object3D } from 'three'
 import VolumetricSpotlight from "./Tools/volumetric-spotlight";
 import * as THREE from "three"
+import useStore from './store'
 
 extend({
   VolumetricSpotlight
@@ -31,15 +32,15 @@ const Light = (props) => {
   window.scene = scene
   const spotlight = useRef()
   const vs = useRef();
+  const vehicle = useStore(state => state.vehicleObj)
+  console.log(vehicle);
 
   useLayoutEffect(() => {
-    const lookAtTarget = scene.getObjectByName('Chassis')
-    if (lookAtTarget) {
-      spotlight.current.target = lookAtTarget
-      console.log(lookAtTarget);  
+    if (vehicle) {
+      spotlight.current.target = vehicle
     }
     //vs.current.material.uniforms.lightColor.value = spotlight.current.color; //Change colors to Spotlight colors
-  }, [])
+  })
 
   return (
     <>
@@ -53,7 +54,7 @@ const Light = (props) => {
           uniforms-anglePower-value={6}
         />
       </mesh>
-      <ambientLight intensity={0.02} />
+      <ambientLight intensity={0.05} />
       <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={1} intensity={0.4} color="white" castShadow />
     </>
   )

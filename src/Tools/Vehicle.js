@@ -19,7 +19,7 @@ const Chassis = forwardRef((props, ref) => {
       angularVelocity: props.angularVelocity,
       allowSleep: false,
       args: boxSize,
-      ...props,
+      ...props
     }),
     false, //new bounding option debug
     ref
@@ -43,7 +43,7 @@ const Wheel = forwardRef((props, ref) => {
       material: 'wheel',
       collisionFilterGroup: 0, // turn off collisions !!
       args: wheelSize,
-      ...props,
+      ...props
     }),
     false, //new bounding option debug
     ref
@@ -84,16 +84,15 @@ const wheelInfo = {
   chassisConnectionPointLocal: [1, 0, 1],
   isFrontWheel: false,
   useCustomSlidingRotationalSpeed: true,
-  customSlidingRotationalSpeed: -30,
+  customSlidingRotationalSpeed: -30
 }
 
 function Vehicle(props) {
+  let changeTarget = useStore((state) => state.changeTarget)
+  let saveVehicle = useStore((state) => state.saveVehicle)
+  let portal = useStore((state) => state.portal)
 
-  let changeTarget = useStore(state => state.changeTarget)
-  let portal = useStore(state => state.portal)
-
-
-  //remorque 
+  //remorque
   const remorque = useRef()
 
   // chassisBody
@@ -108,15 +107,13 @@ function Vehicle(props) {
   var chassisFront = 1
   var chassisBack = -1
 
-
-
   useConeTwistConstraint(chassis, remorque, {
-    pivotA: [0, 0, -5 ],
+    pivotA: [0, 0, -5],
     pivotB: [0, 0, 2],
     axisA: [0, 1, 0],
     axisB: [0, 1, 0],
     twistAngle: 0,
-    angle: Math.PI / 8,
+    angle: Math.PI / 8
   })
 
   // FrontLeft [-X,Y,Z]
@@ -154,7 +151,7 @@ function Vehicle(props) {
     wheelInfos: wheelInfos,
     indexForwardAxis: 2,
     indexRightAxis: 0,
-    indexUpAxis: 1,
+    indexUpAxis: 1
   }))
 
   const forward = useKeyPress('z')
@@ -203,7 +200,6 @@ function Vehicle(props) {
     if (portal) {
       chassis.current.api.position.set(portal[0], portal[1], portal[2])
     }
-    
   })
 
   useEffect(() => {
@@ -223,30 +219,28 @@ function Vehicle(props) {
 
   useEffect(
     () =>
-    chassis.current.api.position.subscribe((position) => //https://github.com/pmndrs/zustand#transient-updates-for-often-occuring-state-changes
-      changeTarget(position)
-      ),
+      chassis.current.api.position.subscribe((
+        position //https://github.com/pmndrs/zustand#transient-updates-for-often-occuring-state-changes
+      ) => {
+        changeTarget(position)
+        saveVehicle(chassis.current)
+      }),
     [chassis]
-  );
+  )
 
   useEffect(() => {
-    return () => console.log('unmounting...');
+    return () => console.log('unmounting...')
   }, [])
 
   const emptyVehiclePos = useEmpty('origin1Character') //name to change to originVehicle
 
-  const { nodes } = useGLTF('./character.gltf', '/draco/');
+  const { nodes } = useGLTF('./character.gltf', '/draco/')
   const geo = nodes.Cloud001.geometry
   const mat = nodes.Cloud001.materials
 
   return (
     <group ref={vehicle}>
-      <Chassis
-        geo = {geo}
-        materials = {mat}
-        ref={chassis}
-        position={emptyVehiclePos}
-        angularVelocity={props.angularVelocity}></Chassis>
+      <Chassis geo={geo} materials={mat} ref={chassis} position={emptyVehiclePos} angularVelocity={props.angularVelocity}></Chassis>
       <Wheel ref={wheel_1}></Wheel>
       <Wheel ref={wheel_2}></Wheel>
       <Wheel ref={wheel_3}></Wheel>
@@ -254,7 +248,5 @@ function Vehicle(props) {
     </group>
   )
 }
-
-
 
 export default Vehicle
