@@ -1,6 +1,5 @@
-import React, { useRef } from 'react'
-import { useFrame } from 'react-three-fiber'
 import { useBox } from '@react-three/cannon'
+import React from 'react'
 import useBounds from '../hooks/useBounds'
 
 export const ObjMesh = ({ mat, position, display, mass, ...props }) => {
@@ -11,7 +10,8 @@ export const ObjMesh = ({ mat, position, display, mass, ...props }) => {
     () => ({
       mass: mass,
       args: bound,
-      position: [v.x, v.y, v.z]
+      position: [v.x, v.y, v.z],
+      allowSleep : true
     }),
     false
   )

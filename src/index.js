@@ -1,10 +1,9 @@
 import { Physics } from '@react-three/cannon'
-import { Cone, HTML, Loader, Sky, Stars, Stats, useHelper } from '@react-three/drei'
-import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { HTML, Loader, Stars, Stats } from '@react-three/drei'
+import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Canvas, extend, useFrame, useThree } from 'react-three-fiber'
-import { Vector3 } from 'yuka'
-import Budie from './references/Budie'
+import { Canvas, extend } from 'react-three-fiber'
+import { Light } from './Tools/Light'
 import { Cube } from './references/Cube'
 import './styles.css'
 import CameraTarget from './Tools/CameraTarget'
@@ -13,40 +12,8 @@ import { Hud } from './Tools/Hud'
 import { IA } from './Tools/IA'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
-import Vehicle from './Tools/Vehicle'
 import { NavMeshRandom } from './Tools/NavMeshRandom'
-import useEmpty from './hooks/useEmpty'
-import { BoxHelper, Object3D } from 'three'
-import VolumetricSpotlight from "./Tools/volumetric-spotlight";
-import * as THREE from "three"
-import useStore from './store'
-
-extend({
-  VolumetricSpotlight
-});
-
-
-const Light = (props) => {
-  const { scene } = useThree()
-  const lightPos = useEmpty('origin1Light')
-  window.scene = scene
-  const spotlight = useRef()
-  const vehicle = useStore(state => state.vehicleObj)
-
-  useLayoutEffect(() => {
-    if (vehicle) {
-      spotlight.current.target = vehicle
-    }
-    //vs.current.material.uniforms.lightColor.value = spotlight.current.color; //Change colors to Spotlight colors
-  })
-
-  return (
-    <>
-      <ambientLight intensity={0.05} />
-      <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={0.1} intensity={0.4} color="white" castShadow />
-    </>
-  )
-}
+import Vehicle from './Tools/Vehicle'
 
 const App = (props) => {
   const [events, setEvents] = useState()

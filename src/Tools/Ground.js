@@ -2,7 +2,6 @@ import { usePlane } from '@react-three/cannon';
 import { useTexture } from '@react-three/drei';
 import React from 'react';
 import * as THREE from 'three';
-import ParallaxMapMaterial from './parallaxMap';
 
 export function Ground({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
   const [map, bumpMap] = useTexture(['/textures/floor3.jpg', '/textures/floorbump.jpg']);
