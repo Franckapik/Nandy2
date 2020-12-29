@@ -33,15 +33,6 @@ const App = (props) => {
         <HTML center portal={domContent}>
           <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }}>Hello</div>
         </HTML>
-        <Stars
-          radius={100} // Radius of the inner sphere (default=100)
-          depth={50} // Depth of area where stars should fit (default=50)
-          count={5000} // Amount of stars (default=5000)
-          factor={4} // Size factor (default=4)
-          saturation={0} // Saturation 0-1 (default=0)
-          fade // Faded dots (default=false)
-        />
-
         <Physics>
           <IA />
           <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
