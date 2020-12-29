@@ -1,5 +1,5 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import React, {useRef} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {useFrame, useThree} from 'react-three-fiber'
 import useStore from "../store";
 import { Vector3 } from "three";
@@ -9,28 +9,37 @@ import useEmpty from '../hooks/useEmpty';
 export default function CameraTarget() {
 
   const offset = new Vector3()
-  const cameraTarget = useStore(state => state.cameraTarget)
 
-  //calcul initial offset Vehicle-Camera from blender
+  //looking for empty
   const originCamera = useEmpty('originCamera') 
   const originVehicle = useEmpty('origin1Character') 
+
+  //offset
   const a = new Vector3(...originCamera)
   const b = new Vector3(...originVehicle)
-
-  const moovingVehicle = new Vector3(...cameraTarget).add(new Vector3(0,10,0))
   offset.copy(a).sub(b)
-  
+
+  //refs
   const cameraRef = useRef()
   const cam = useRef()
 
+  //vehicle vectors
+  const vehicleVec = new Vector3()
+  const cameraUp = new Vector3(0,10,0)
+
   useFrame(() => {
-  cameraRef.current.position.copy(moovingVehicle)
-  cam.current.lookAt(moovingVehicle)
+    const vehicle = useStore.getState().vehicleObj
+    if(vehicle) {
+      vehicleVec.copy(vehicle.position).add(cameraUp)
+      cameraRef.current.position.copy(vehicleVec)
+      cam.current.lookAt(vehicleVec)
+    }
   })
-  
+
+
   return (
   <group ref={cameraRef}>
-    <PerspectiveCamera ref={cam} makeDefault fov={30} position={offset}/>
+    <PerspectiveCamera ref={cam} makeDefault fov={35} position={offset}/>
   </group>
   )
 }
