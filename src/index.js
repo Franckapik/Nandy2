@@ -31,9 +31,7 @@ const Light = (props) => {
   const lightPos = useEmpty('origin1Light')
   window.scene = scene
   const spotlight = useRef()
-  const vs = useRef();
   const vehicle = useStore(state => state.vehicleObj)
-  console.log(vehicle);
 
   useLayoutEffect(() => {
     if (vehicle) {
@@ -44,18 +42,8 @@ const Light = (props) => {
 
   return (
     <>
-    <mesh ref={vs} position={lightPos}  >
-    <coneGeometry args={[10, 30, 40, 30, 40, true]} attach="geometry" /> //radius, height, nb faces
-    {/* <meshBasicMaterial color={'yellow'} transparent opacity={0.5} /> */}
-            <volumetricSpotlight
-          attach="material"
-          uniforms-lightColor-value='yellow'
-          uniforms-attenuation-value={0}
-          uniforms-anglePower-value={6}
-        />
-      </mesh>
       <ambientLight intensity={0.05} />
-      <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={1} intensity={0.4} color="white" castShadow />
+      <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={0.1} intensity={0.4} color="white" castShadow />
     </>
   )
 }

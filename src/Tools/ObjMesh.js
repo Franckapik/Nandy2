@@ -22,7 +22,9 @@ export const ObjMesh = ({ mat, position, display, mass, ...props }) => {
     key={props.name} 
     ref={cube} 
     geometry={props.geometry} 
-    onClick={() => console.log(props.name)}>
+    onClick={() => console.log(props.name)}
+    castShadow>
+      
     </mesh>
   )
 }
