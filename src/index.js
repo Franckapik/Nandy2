@@ -14,18 +14,20 @@ import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import { NavMeshRandom } from './Tools/NavMeshRandom'
 import Vehicle from './Tools/Vehicle'
+import useStore from './store'
 
 const Flower= (props) => {
+const bulleOpacity = useStore((state) => state.bulleOpacity);
+console.log(bulleOpacity);
   return (
-    <group position={[-70, 0, 60]}>
-                <Cube name="box1" position={[-70, 0, 60]} />
-                <HTML visible={false} center >
-        <div className="bulle">
+    <group position={[-58, 2, 71]}>
+                <Cube name="box1" position={[-10,0,0]}  />
+                <HTML scaleFactor={30}  center >
+        <div className="bulle" style={bulleOpacity} >
           Pont solitaire <br/>
 il s’est trouvé un ami<br/>
 le vent vagabond</div>
         </HTML>
-
     </group>
 
   )
