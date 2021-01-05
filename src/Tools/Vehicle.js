@@ -9,19 +9,20 @@ import { useGLTF } from '@react-three/drei'
 
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
-  const boxSize = [1.2, 1, 4]
+  const b = props.geo.boundingBox.max;
+  const boxSize = [b.x*2, b.y,b.z*2]
+  console.log(boxSize);
   // eslint-disable-next-line
   const [_, api] = useBox(
     () => ({
       // type: 'Kinematic',
-      mass: 500,
-      rotation: props.rotation,
+      mass: 100,
       angularVelocity: props.angularVelocity,
       allowSleep: false,
       args: boxSize,
       ...props
     }),
-    false, //new bounding option debug
+    true, //new bounding option debug
     ref
   )
   return (
@@ -29,10 +30,27 @@ const Chassis = forwardRef((props, ref) => {
     </mesh>
   )
 })
+const wheelInfo = {
+  radius: 0.7,
+  directionLocal: [0, -1, 0], // same as Physics gravity
+  suspensionStiffness: 30, //rigidité suspensions
+  suspensionRestLength: 0.1, //suspensions longueur de repos 
+  maxSuspensionForce: 1e4,
+  maxSuspensionTravel: 0.3,
+  dampingRelaxation: 2.3,
+  dampingCompression: 4.4,
+  frictionSlip: 5, //friction au sol
+  rollInfluence: 0.01,
+  axleLocal: [1, 0, 0], // wheel rotates around X-axis
+  chassisConnectionPointLocal: [1, 0, 1],
+  isFrontWheel: false,
+  useCustomSlidingRotationalSpeed: true,
+  customSlidingRotationalSpeed: -30
+}
 
 // A Wheel
 const Wheel = forwardRef((props, ref) => {
-  const wheelSize = [0.7, 0.7, 0.5, 16]
+  const wheelSize = [wheelInfo.radius, wheelInfo.radius, 0.5, 16]
   useCylinder(
     () => ({
       mass: 1,
@@ -42,22 +60,11 @@ const Wheel = forwardRef((props, ref) => {
       args: wheelSize,
       ...props
     }),
-    false, //new bounding option debug
+    true, //new bounding option debug
     ref
   )
-  // useCompoundBody(
-  //   () => ({
-  //     mass: 1,
-  //     type: 'Kinematic',
-  //     material: 'wheel',
-  //     collisionFilterGroup: 0, // turn off collisions
-  //     ...props,
-  //     shapes: [{ type: 'Cylinder', args: wheelSize, rotation: [Math.PI / 2, 0, 0] }],
-  //   }),
-  //   ref
-  // )
   return (
-    <mesh visible={false} ref={ref}>
+    <mesh visible={true} ref={ref}>
       <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
         <cylinderBufferGeometry attach="geometry" args={wheelSize} />
         <meshNormalMaterial attach="material" />
@@ -66,23 +73,7 @@ const Wheel = forwardRef((props, ref) => {
   )
 })
 
-const wheelInfo = {
-  radius: 0.7,
-  directionLocal: [0, -1, 0], // same as Physics gravity
-  suspensionStiffness: 30,
-  suspensionRestLength: 0.3,
-  maxSuspensionForce: 1e4,
-  maxSuspensionTravel: 0.3,
-  dampingRelaxation: 2.3,
-  dampingCompression: 4.4,
-  frictionSlip: 5,
-  rollInfluence: 0.01,
-  axleLocal: [1, 0, 0], // wheel rotates around X-axis
-  chassisConnectionPointLocal: [1, 0, 1],
-  isFrontWheel: false,
-  useCustomSlidingRotationalSpeed: true,
-  customSlidingRotationalSpeed: -30
-}
+
 
 function Vehicle(props) {
   let changeTarget = useStore((state) => state.changeTarget)
@@ -100,7 +91,7 @@ function Vehicle(props) {
 
   // chassis - wheel connection helpers
   var chassisWidth = 2
-  var chassisHeight = 0
+  var chassisHeight = -0.5
   var chassisFront = 1
   var chassisBack = -1
 
@@ -165,7 +156,7 @@ function Vehicle(props) {
   const [brakeForce, setBrakeForce] = useState(0)
 
   var maxSteerVal = 0.5
-  var maxForce = 1e3
+  var maxForce = 5e2
   var maxBrakeForce = 1e5
 
   useFrame(() => {
@@ -178,10 +169,10 @@ function Vehicle(props) {
     }
     if (forward && !backward) {
       setBrakeForce(0)
-      setEngineForce(maxForce)
+      setEngineForce(-maxForce)
     } else if (backward && !forward) {
       setBrakeForce(0)
-      setEngineForce(-maxForce)
+      setEngineForce(maxForce)
     } else if (engineForce !== 0) {
       setEngineForce(0)
     }
