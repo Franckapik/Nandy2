@@ -9,6 +9,7 @@ export const ObjMesh = ({ mat, position, display, mass, ...props }) => {
   const [cube] = useBox(
     () => ({
       mass: mass,
+      rotation : [Math.PI/4,0,0],
       args: bound,
       position: [v.x, v.y, v.z],
       allowSleep : true

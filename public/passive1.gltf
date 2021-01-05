@@ -52,8 +52,8 @@
             "name" : "Poubelle",
             "translation" : [
                 -54.22907638549805,
-                1.8389633893966675,
-                37.709632873535156
+                1.8389601707458496,
+                37.709659576416016
             ]
         },
         {
@@ -928,27 +928,27 @@
         },
         {
             "componentType" : 5126,
-            "count" : 2098,
+            "count" : 2179,
             "max" : [
                 5.093547821044922,
-                4.073002338409424,
-                8.058662414550781
+                2.658435344696045,
+                8.000293731689453
             ],
             "min" : [
                 -8.256000518798828,
-                -2.3007330894470215,
-                -4.952507019042969
+                -4.208325386047363,
+                -5.990924835205078
             ],
             "type" : "VEC3"
         },
         {
             "componentType" : 5126,
-            "count" : 2098,
+            "count" : 2179,
             "type" : "VEC3"
         },
         {
             "componentType" : 5126,
-            "count" : 2098,
+            "count" : 2179,
             "type" : "VEC2"
         },
         {
@@ -1400,88 +1400,88 @@
         },
         {
             "buffer" : 0,
-            "byteLength" : 11663,
+            "byteLength" : 12139,
             "byteOffset" : 7776
         },
         {
             "buffer" : 0,
             "byteLength" : 3216,
-            "byteOffset" : 19440
+            "byteOffset" : 19916
         },
         {
             "buffer" : 0,
             "byteLength" : 2228,
-            "byteOffset" : 22656
+            "byteOffset" : 23132
         },
         {
             "buffer" : 0,
             "byteLength" : 1750,
-            "byteOffset" : 24884
+            "byteOffset" : 25360
         },
         {
             "buffer" : 0,
             "byteLength" : 5979,
-            "byteOffset" : 26636
+            "byteOffset" : 27112
         },
         {
             "buffer" : 0,
             "byteLength" : 3175,
-            "byteOffset" : 32616
+            "byteOffset" : 33092
         },
         {
             "buffer" : 0,
             "byteLength" : 1495,
-            "byteOffset" : 35792
+            "byteOffset" : 36268
         },
         {
             "buffer" : 0,
             "byteLength" : 2874,
-            "byteOffset" : 37288
+            "byteOffset" : 37764
         },
         {
             "buffer" : 0,
             "byteLength" : 4507,
-            "byteOffset" : 40164
+            "byteOffset" : 40640
         },
         {
             "buffer" : 0,
             "byteLength" : 3106,
-            "byteOffset" : 44672
+            "byteOffset" : 45148
         },
         {
             "buffer" : 0,
             "byteLength" : 4507,
-            "byteOffset" : 47780
+            "byteOffset" : 48256
         },
         {
             "buffer" : 0,
             "byteLength" : 197396,
-            "byteOffset" : 52288
+            "byteOffset" : 52764
         },
         {
             "buffer" : 0,
             "byteLength" : 5348,
-            "byteOffset" : 249684
+            "byteOffset" : 250160
         },
         {
             "buffer" : 0,
             "byteLength" : 1396,
-            "byteOffset" : 255032
+            "byteOffset" : 255508
         },
         {
             "buffer" : 0,
             "byteLength" : 1398,
-            "byteOffset" : 256428
+            "byteOffset" : 256904
         },
         {
             "buffer" : 0,
             "byteLength" : 1395,
-            "byteOffset" : 257828
+            "byteOffset" : 258304
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 259224,
+            "byteLength" : 259700,
             "uri" : "passive1.bin"
         }
     ]
