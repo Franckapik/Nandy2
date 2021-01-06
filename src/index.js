@@ -35,11 +35,11 @@ const App = (props) => {
           <HTML center portal={domContent}>
             <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }}>Hello</div>
           </HTML>
-          <Physics gravity={[0, -3, 0]}>
+          <Physics gravity={[0, -10, 0]}>
             <IA />
             <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
             <Models />
-            <Vehicle position={[-5, 5, 5]} angularVelocity={[0, 0.5, 0]} />
+            <Vehicle position={[-5, 5, 5]}  />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
             <Cube name="box1" />
             <Light />
@@ -53,7 +53,7 @@ const App = (props) => {
             <Hud />
           </div>
         </Suspense>
-        <Controls collapsed={false} anchor={'bottom_right'} />
+        <Controls  />
       </Controls.Provider>
     </>
   )

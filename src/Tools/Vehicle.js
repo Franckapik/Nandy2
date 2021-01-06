@@ -1,115 +1,33 @@
-import { useBox, useConeTwistConstraint, useCylinder, usePointToPointConstraint, useRaycastVehicle } from '@react-three/cannon'
+import { useBox, useCylinder, useRaycastVehicle } from '@react-three/cannon'
+import { useGLTF } from '@react-three/drei'
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
-import useKeyPress from '../hooks/useKeyPress'
+import { useControl } from 'react-three-gui'
 import useEmpty from '../hooks/useEmpty'
+import useKeyPress from '../hooks/useKeyPress'
 import useStore from '../store'
-import { Remorque, Remorque2 } from './Remorque'
-import { useGLTF } from '@react-three/drei'
-import { Controls, useControl } from 'react-three-gui';
 
+const Vehicle = () => {
+  const chassisRef = useRef()
+  const emptyVehiclePos = useEmpty('origin1Character')
+  const { nodes } = useGLTF('./character.gltf', '/draco/')
 
+  const [steeringValue, setSteeringValue] = useState(0)
+  const [engineForce, setEngineForce] = useState(0)
+  const [brakeForce, setBrakeForce] = useState(0)
 
+  let changeTarget = useStore((state) => state.changeTarget)
+  let saveVehicle = useStore((state) => state.saveVehicle)
+  let portal = useStore((state) => state.portal)
 
-
-// The vehicle chassis
-const Chassis = forwardRef((props, ref) => {
-  const b = props.geo.boundingBox.max;
-  const scale = 1.5;
-  const boxSize = [b.x*scale, b.y,b.z*scale]
-  // eslint-disable-next-line
-  const [_, api] = useBox(
-    () => ({
-      // type: 'Kinematic',
-      mass: 500,
-      angularVelocity: props.angularVelocity,
-      allowSleep: false,
-      args: boxSize,
-      ...props
-    }),
-    true, //new bounding option debug
-    ref
-  )
-  return (
-    <mesh name="Chassis" ref={ref} api={api} geometry={props.geo} material={props.materials} castShadow>
-    </mesh>
-  )
-})
-const wheelInfo = {
-  radius: 0.7,
-  directionLocal: [0, -1, 0], // same as Physics gravity
-  suspensionStiffness: 30, //rigidité suspensions
-  suspensionRestLength: 0.1, //suspensions longueur de repos 
-  maxSuspensionForce: 1e4,
-  maxSuspensionTravel: 0.3,
-  dampingRelaxation: 2.3,
-  dampingCompression: 4.4,
-  frictionSlip: 5, //friction au sol
-  rollInfluence: 0.01,
-  axleLocal: [1, 0, 0], // wheel rotates around X-axis
-  chassisConnectionPointLocal: [1, 0, 1],
-  isFrontWheel: false,
-  useCustomSlidingRotationalSpeed: true,
-  customSlidingRotationalSpeed: -30
-}
-
-// A Wheel
-const Wheel = forwardRef((props, ref) => {
-  const wheelSize = [wheelInfo.radius, wheelInfo.radius, 0.5, 16]
-  useCylinder(
-    () => ({
-      mass: 1,
-      type: 'Kinematic',
-      material: 'wheel',
-      collisionFilterGroup: 0, // turn off collisions !!
-      args: wheelSize,
-      ...props
-    }),
-    true, //new bounding option debug
-    ref
-  )
-  return (
-    <mesh visible={true} ref={ref}>
-      <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
-        <cylinderBufferGeometry attach="geometry" args={wheelSize} />
-        <meshNormalMaterial attach="material" />
-      </mesh>
-    </mesh>
-  )
-})
-
-
-
-function Vehicle(props) {
-  const wheelRadius = useControl('wheel Radius', { type: 'number', value : 0.7, min : 0, max : 5 });
-  const wheelMass = useControl('wheel Mass', { type: 'number', value : 1, min : 0, max : 5 });
-  const wheelhelper = useControl('wheel Helper', { type: 'boolean', value : true });
-  const suspensionStiffness = useControl('suspension Stiffness', { type: 'number', value : 30, min : 0, max : 50 });
-  const suspensionRestLength = useControl('suspension RestLength', { type: 'number', value : 0.1, min : 0, max : 10 });
-  const maxSuspensionForce = useControl('maxSuspensionForce', { type: 'number', value : 1e4, min : 0, max : 1e5 });
-  const maxSuspensionTravel = useControl('maxSuspensionTravel', { type: 'number', value : 0.3, min : 0, max : 2 });
-  const dampingRelaxation = useControl('dampingRelaxation', { type: 'number', value : 2.3, min : 0, max : 10 });
-  const frictionSlip = useControl('frictionSlip', { type: 'number', value : 5, min : 0, max : 10 });
-  const rollInfluence = useControl('rollInfluence', { type: 'number', value : 0.01, min : 0, max : 1 });
-  const customSlidingRotationalSpeed = useControl('customSlidingRotationalSpeed', { type: 'number', value : -30, min : -50, max : 50 });
-  const chassisWidth = useControl('chassisWidth', { type: 'number', value : 2, min : -5, max : 5 });
-  const chassisHeight = useControl('chassisHeight', { type: 'number', value : -1, min : -5, max : 5 });
-  const chassisFront = useControl('chassisFront', { type: 'number', value : 1, min : -5, max : 5 });
-  const chassisBack = useControl('chassisBack', { type: 'number', value : -1, min : -5, max : 5 });
-  const chassisScale = useControl('chassisScale', { type: 'number', value : 1.5, min : 0, max : 5 });
-  const chassisMass = useControl('chassisMass', { type: 'number', value : 100, min : 0, max : 500 });
-  const chassisSleep = useControl('Chassis Sleep', { type: 'boolean', value : false });
-  const maxSteerVal = useControl('maxSteerVal', { type: 'number', value : 0.5, min : 0, max : 2 });
-  const maxForce = useControl('maxSteerVal', { type: 'number', value : 5e2, min : 0, max : 5e4 });
-  const maxBrakeForce = useControl('maxBrakeForce', { type: 'number', value : 1e5, min : 0, max : 1e6 });
-
-  const vehicle={
-    wheelInfo : {
-      radius: wheelRadius,
-      wheelMass : 1,
-      wheelHelper : true,
+  const vehicle = {
+    wheelInfo: {
+      radius: 0.7,
+      wheelMass: 1,
+      wheelHelper: true,
+      wheelDistanceX : 2,
       suspensionStiffness: 30, //rigidité suspensions
-      suspensionRestLength: 0.1, //suspensions longueur de repos 
+      suspensionRestLength: 0.1, //suspensions longueur de repos
       maxSuspensionForce: 1e4,
       maxSuspensionTravel: 0.3,
       dampingRelaxation: 2.3,
@@ -121,133 +39,111 @@ function Vehicle(props) {
       useCustomSlidingRotationalSpeed: true,
       customSlidingRotationalSpeed: -30,
       axleLocal: [1, 0, 0], // wheel rotates around X-axis
-      directionLocal: [0, -1, 0], // same as Physics gravity
+      directionLocal: [0, -1, 0], // same as Physics gravity,
+      visible: true //make wheel visible
     },
-    chassis : {
-      chassisWidth : 2,
-      chassisHeight : -1,
-      chassisFront : 1,
-      chassisBack : -1,
-      geo: null,
-      mat : null,
-      initialPosition : null,
-      shape : null,
-      scale : 1.5,
-      chassisMass : 500,
-      angularVelocity : null,
-      allowSleep : false 
+    chassis: {
+      chassisWidth: 2,
+      chassisHeight: -1,
+      chassisLength: 2,
+      shape: null,
+      scale: 1.5,
+      chassisMass: 200,
+      allowSleep: false
     },
-    forces : {
-      maxSteerVal : 0.5,
-      maxForce : 5e2,
-      maxBrakeForce : 1e5
+    forces: {
+      maxSteerVal: 0.5,
+      maxForce: 5e2,
+      maxBrakeForce: 1e5
+    },
+    api: {
+      chassisBody: chassisRef,
+      wheels: [],
+      wheelInfos: [],
+      indexForwardAxis: 2,
+      indexRightAxis: 0,
+      indexUpAxis: 1
     }
   }
 
-  console.log(vehicle);
+  vehicle.wheelInfo.radius = useControl('wheel Radius', { type: 'number', value: vehicle.wheelInfo.radius, min: 0, max: 5 })
+  vehicle.wheelInfo.wheelMass = useControl('wheel Mass', { type: 'number', value: vehicle.wheelInfo.wheelMass, min: 0, max: 5 })
+  vehicle.wheelInfo.wheelHelper = useControl('wheel Helper', { type: 'boolean', value: vehicle.wheelInfo.wheelHelper })
+  vehicle.wheelInfo.wheelDistanceX = useControl('wheel Distance', {type: 'number', value: vehicle.wheelInfo.wheelDistanceX, min: 1, max: 5 })
+  vehicle.wheelInfo.suspensionStiffness = useControl('suspension Stiffness', { type: 'number', value: vehicle.wheelInfo.suspensionStiffness, min: 0, max: 50 })
+  vehicle.wheelInfo.suspensionRestLength = useControl('suspension RestLength', { type: 'number', value: vehicle.wheelInfo.suspensionRestLength, min: 0, max: 10 })
+  vehicle.wheelInfo.maxSuspensionForce = useControl('maxSuspensionForce', { type: 'number', value: vehicle.wheelInfo.maxSuspensionForce, min: 0, max: 1e5 })
+  vehicle.wheelInfo.maxSuspensionTravel = useControl('maxSuspensionTravel', { type: 'number', value: vehicle.wheelInfo.maxSuspensionTravel, min: 0, max: 2 })
+  vehicle.wheelInfo.dampingRelaxation = useControl('dampingRelaxation', { type: 'number', value: vehicle.wheelInfo.dampingRelaxation, min: 0, max: 10 })
+  vehicle.wheelInfo.frictionSlip = useControl('frictionSlip', { type: 'number', value: vehicle.wheelInfo.frictionSlip, min: 0, max: 10 })
+  vehicle.wheelInfo.rollInfluence = useControl('rollInfluence', { type: 'number', value: 0.01, min: 0, max: 1 })
+  vehicle.wheelInfo.customSlidingRotationalSpeed = useControl('customSlidingRotationalSpeed', { type: 'number', value: vehicle.wheelInfo.rollInfluence, min: -50, max: 50 })
+  vehicle.chassis.chassisWidth = useControl('chassisWidth', { type: 'number', value: vehicle.chassis.chassisWidth, min: -5, max: 5 })
+  vehicle.chassis.chassisHeight = useControl('chassisHeight', { type: 'number', value: vehicle.chassis.chassisHeight, min: -5, max: 5 })
+  vehicle.chassis.chassisLength = useControl('chassisLength', { type: 'number', value: vehicle.chassis.chassisLength, min: -5, max: 5 })
+  vehicle.chassis.chassisScale = useControl('chassisScale', { type: 'number', value: vehicle.chassis.chassisScale, min: 0, max: 5 })
+  vehicle.chassis.chassisMass = useControl('chassisMass', { type: 'number', value: vehicle.chassis.chassisMass, min: 0, max: 500 })
+  vehicle.chassis.chassisSleep = useControl('Chassis Sleep', { type: 'boolean', value: false })
+  vehicle.forces.maxSteerVal = useControl('maxSteerVal', { type: 'number', value: vehicle.forces.maxSteerVal, min: 0, max: 2 })
+  vehicle.forces.maxForce = useControl('maxSteerVal', { type: 'number', value: vehicle.forces.maxForce, min: 0, max: 5e4 })
+  vehicle.forces.maxBrakeForce = useControl('maxBrakeForce', { type: 'number', value: vehicle.forces.maxBrakeForce, min: 0, max: 1e6 })
 
-  let changeTarget = useStore((state) => state.changeTarget)
-  let saveVehicle = useStore((state) => state.saveVehicle)
-  let portal = useStore((state) => state.portal)
+  const pointX = [-1, 1, -1, 1]
+  const pointZ = [1, 1, -1, -1]
+  const frontWheel = [true, true, false, false]
 
-  //remorque
-  const remorque = useRef()
-
-  // chassisBody
-  const chassis = useRef()
-  // wheels
-  const wheels = []
-  const wheelInfos = []
-
-
-  useConeTwistConstraint(chassis, remorque, {
-    pivotA: [0, 0, -5],
-    pivotB: [0, 0, 2],
-    axisA: [0, 1, 0],
-    axisB: [0, 1, 0],
-    twistAngle: 0,
-    angle: Math.PI / 8
+  new Array(4).fill('wheel').map((a, i) => {
+    const wheel_info = { ...vehicle.wheelInfo }
+    wheel_info.chassisConnectionPointLocal = [
+      (pointX[i] * vehicle.chassis.chassisWidth) / vehicle.wheelInfo.wheelDistanceX,
+      vehicle.chassis.chassisHeight,
+      pointZ[i] * vehicle.chassis.chassisLength
+    ]
+    wheel_info.isFrontWheel = frontWheel[i]
+    vehicle.api.wheelInfos.push(wheel_info)
   })
 
-  // FrontLeft [-X,Y,Z]
-  const wheel_1 = useRef()
-  wheels.push(wheel_1)
-  const wheelInfo_1 = { ...wheelInfo }
-  wheelInfo_1.chassisConnectionPointLocal = [-chassisWidth / 2, chassisHeight, chassisFront]
-  wheelInfo_1.isFrontWheel = true
-  wheelInfos.push(wheelInfo_1)
-  // FrontRight [X,Y,Z]
-  const wheel_2 = useRef()
-  wheels.push(wheel_2)
-  const wheelInfo_2 = { ...wheelInfo }
-  wheelInfo_2.chassisConnectionPointLocal = [chassisWidth / 2, chassisHeight, chassisFront]
-  wheelInfo_2.isFrontWheel = true
-  wheelInfos.push(wheelInfo_2)
-  // BackLeft [-X,Y,-Z]
-  const wheel_3 = useRef()
-  wheels.push(wheel_3)
-  const wheelInfo_3 = { ...wheelInfo }
-  wheelInfo_3.chassisConnectionPointLocal = [-chassisWidth / 2, chassisHeight, chassisBack]
-  wheelInfo_3.isFrontWheel = false
-  wheelInfos.push(wheelInfo_3)
-  // BackRight [X,Y,-Z]
-  const wheel_4 = useRef()
-  wheels.push(wheel_4)
-  const wheelInfo_4 = { ...wheelInfo }
-  wheelInfo_4.chassisConnectionPointLocal = [chassisWidth / 2, chassisHeight, chassisBack]
-  wheelInfo_4.isFrontWheel = false
-  wheelInfos.push(wheelInfo_4)
+  const [wheel_1, wheel_2, wheel_3, wheel_4] = [useRef(), useRef(), useRef(), useRef()]
+  const wheels = [wheel_1, wheel_2, wheel_3, wheel_4]
+  vehicle.api.wheels = wheels
 
-  const [vehicleRef, api] = useRaycastVehicle(() => ({
-    chassisBody: chassis,
-    wheels: wheels,
-    wheelInfos: wheelInfos,
-    indexForwardAxis: 2,
-    indexRightAxis: 0,
-    indexUpAxis: 1
-  }))
+  const [vehicleRef, api] = useRaycastVehicle(() => vehicle.api)
 
   const forward = useKeyPress('z')
-  // const forward = useKeyPress('z')
   const backward = useKeyPress('s')
   const left = useKeyPress('q')
-  // const left = useKeyPress('q')
   const right = useKeyPress('d')
   const brake = useKeyPress(' ') // space bar
   const reset = useKeyPress('r')
 
-  const [steeringValue, setSteeringValue] = useState(0)
-  const [engineForce, setEngineForce] = useState(0)
-  const [brakeForce, setBrakeForce] = useState(0)
-
   useFrame(() => {
     if (left && !right) {
-      setSteeringValue(-maxSteerVal)
+      setSteeringValue(-vehicle.forces.maxSteerVal)
     } else if (right && !left) {
-      setSteeringValue(maxSteerVal)
+      setSteeringValue(vehicle.forces.maxSteerVal)
     } else {
       setSteeringValue(0)
     }
     if (forward && !backward) {
       setBrakeForce(0)
-      setEngineForce(-maxForce)
+      setEngineForce(-vehicle.forces.maxForce)
     } else if (backward && !forward) {
       setBrakeForce(0)
-      setEngineForce(maxForce)
+      setEngineForce(vehicle.forces.maxForce)
     } else if (engineForce !== 0) {
       setEngineForce(0)
     }
     if (brake) {
-      setBrakeForce(maxBrakeForce)
+      setBrakeForce(vehicle.forces.maxBrakeForce)
     }
     if (reset) {
       //chassis.current.api.position.set(0, 5, 0)
-      chassis.current.api.velocity.set(0, 0, 0)
-      chassis.current.api.angularVelocity.set(0, 0.5, 0)
-      chassis.current.api.rotation.set(0, -Math.PI / 4, 0)
+      chassisRef.current.api.velocity.set(0, 0, 0)
+      chassisRef.current.api.angularVelocity.set(0, 0.5, 0)
+      chassisRef.current.api.rotation.set(0, -Math.PI / 4, 0)
     }
     if (portal) {
-      chassis.current.api.position.set(portal[0], portal[1], portal[2])
+      chassisRef.current.api.position.set(portal[0], portal[1], portal[2])
     }
   })
 
@@ -268,34 +164,102 @@ function Vehicle(props) {
 
   useEffect(
     () =>
-      chassis.current.api.position.subscribe((
-        position //https://github.com/pmndrs/zustand#transient-updates-for-often-occuring-state-changes
-      ) => {
-        changeTarget(position)
-        saveVehicle(chassis.current)
-      }),
-    [chassis]
+      chassisRef.current.api.position.subscribe(
+        (
+          position //https://github.com/pmndrs/zustand#transient-updates-for-often-occuring-state-changes
+        ) => {
+          changeTarget(position)
+          saveVehicle(chassisRef.current)
+        }
+      ),
+    [chassisRef]
   )
 
   useEffect(() => {
     return () => console.log('unmounting...')
   }, [])
 
-  const emptyVehiclePos = useEmpty('origin1Character') //name to change to originVehicle
-  console.log(emptyVehiclePos);
-  const { nodes } = useGLTF('./character.gltf', '/draco/')
-  const geo = nodes.Cloud001.geometry
-  const mat = nodes.Cloud001.material
-
   return (
     <group ref={vehicleRef}>
-      <Chassis geo={geo} materials={mat} ref={chassis} position={emptyVehiclePos} angularVelocity={props.angularVelocity}></Chassis>
-      <Wheel ref={wheel_1}></Wheel>
-      <Wheel ref={wheel_2}></Wheel>
-      <Wheel ref={wheel_3}></Wheel>
-      <Wheel ref={wheel_4}></Wheel>
+      <Chassis
+        geo={nodes.Cloud001.geometry}
+        mat={nodes.Cloud001.material}
+        ref={chassisRef}
+        position={emptyVehiclePos}
+        scale={vehicle.chassis.scale}
+        mass={vehicle.chassis.chassisMass}
+      />
+      <Wheel
+        ref={wheel_1}
+        radius={vehicle.wheelInfo.radius}
+        mass={vehicle.wheelInfo.wheelMass}
+        visible={vehicle.wheelInfo.visible}
+        wheelHelper={vehicle.wheelInfo.wheelHelper}
+      />
+      <Wheel
+        ref={wheel_2}
+        radius={vehicle.wheelInfo.radius}
+        mass={vehicle.wheelInfo.wheelMass}
+        visible={vehicle.wheelInfo.visible}
+        wheelHelper={vehicle.wheelInfo.wheelHelper}
+      />
+      <Wheel
+        ref={wheel_3}
+        radius={vehicle.wheelInfo.radius}
+        mass={vehicle.wheelInfo.wheelMass}
+        visible={vehicle.wheelInfo.visible}
+        wheelHelper={vehicle.wheelInfo.wheelHelper}
+      />
+      <Wheel
+        ref={wheel_4}
+        radius={vehicle.wheelInfo.radius}
+        mass={vehicle.wheelInfo.wheelMass}
+        visible={vehicle.wheelInfo.visible}
+        wheelHelper={vehicle.wheelInfo.wheelHelper}
+      />
     </group>
   )
 }
+
+const Chassis = forwardRef(({ geo, mat, position, scale, mass }, ref) => {
+  const b = geo.boundingBox.max
+  const chassisShape = [b.x * scale, b.y, b.z * scale]
+
+  // eslint-disable-next-line
+  const [_, api] = useBox(
+    () => ({
+      mass: mass,
+      allowSleep: false,
+      args: chassisShape,
+      position: position
+    }),
+    true,
+    ref
+  )
+  return <mesh name="Chassis" ref={ref} api={api} geometry={geo} material={mat} castShadow></mesh>
+})
+
+const Wheel = forwardRef(({ radius, mass, visible, wheelHelper }, ref) => {
+  const wheelShape = [radius, radius, 0.5, 16]
+  useCylinder(
+    () => ({
+      mass: mass,
+      type: 'Kinematic',
+      material: 'wheel',
+      collisionFilterGroup: 0, // turn off collisions
+      args: wheelShape
+    }),
+    wheelHelper,
+    ref
+  )
+  return (
+    <group visible={visible} ref={ref}>
+      <mesh rotation={[0, 0, Math.PI / 2]}>
+        <cylinderBufferGeometry args={wheelShape} />
+        <meshNormalMaterial />
+      </mesh>
+    </group>
+  )
+})
 
 export default Vehicle
