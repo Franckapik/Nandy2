@@ -6,6 +6,11 @@ import useEmpty from '../hooks/useEmpty'
 import useStore from '../store'
 import { Remorque, Remorque2 } from './Remorque'
 import { useGLTF } from '@react-three/drei'
+import { Controls, useControl } from 'react-three-gui';
+
+
+
+
 
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
@@ -76,6 +81,71 @@ const Wheel = forwardRef((props, ref) => {
 
 
 function Vehicle(props) {
+  const wheelRadius = useControl('wheel Radius', { type: 'number', value : 0.7, min : 0, max : 5 });
+  const wheelMass = useControl('wheel Mass', { type: 'number', value : 1, min : 0, max : 5 });
+  const wheelhelper = useControl('wheel Helper', { type: 'boolean', value : true });
+  const suspensionStiffness = useControl('suspension Stiffness', { type: 'number', value : 30, min : 0, max : 50 });
+  const suspensionRestLength = useControl('suspension RestLength', { type: 'number', value : 0.1, min : 0, max : 10 });
+  const maxSuspensionForce = useControl('maxSuspensionForce', { type: 'number', value : 1e4, min : 0, max : 1e5 });
+  const maxSuspensionTravel = useControl('maxSuspensionTravel', { type: 'number', value : 0.3, min : 0, max : 2 });
+  const dampingRelaxation = useControl('dampingRelaxation', { type: 'number', value : 2.3, min : 0, max : 10 });
+  const frictionSlip = useControl('frictionSlip', { type: 'number', value : 5, min : 0, max : 10 });
+  const rollInfluence = useControl('rollInfluence', { type: 'number', value : 0.01, min : 0, max : 1 });
+  const customSlidingRotationalSpeed = useControl('customSlidingRotationalSpeed', { type: 'number', value : -30, min : -50, max : 50 });
+  const chassisWidth = useControl('chassisWidth', { type: 'number', value : 2, min : -5, max : 5 });
+  const chassisHeight = useControl('chassisHeight', { type: 'number', value : -1, min : -5, max : 5 });
+  const chassisFront = useControl('chassisFront', { type: 'number', value : 1, min : -5, max : 5 });
+  const chassisBack = useControl('chassisBack', { type: 'number', value : -1, min : -5, max : 5 });
+  const chassisScale = useControl('chassisScale', { type: 'number', value : 1.5, min : 0, max : 5 });
+  const chassisMass = useControl('chassisMass', { type: 'number', value : 100, min : 0, max : 500 });
+  const chassisSleep = useControl('Chassis Sleep', { type: 'boolean', value : false });
+  const maxSteerVal = useControl('maxSteerVal', { type: 'number', value : 0.5, min : 0, max : 2 });
+  const maxForce = useControl('maxSteerVal', { type: 'number', value : 5e2, min : 0, max : 5e4 });
+  const maxBrakeForce = useControl('maxBrakeForce', { type: 'number', value : 1e5, min : 0, max : 1e6 });
+
+  const vehicle={
+    wheelInfo : {
+      radius: wheelRadius,
+      wheelMass : 1,
+      wheelHelper : true,
+      suspensionStiffness: 30, //rigidité suspensions
+      suspensionRestLength: 0.1, //suspensions longueur de repos 
+      maxSuspensionForce: 1e4,
+      maxSuspensionTravel: 0.3,
+      dampingRelaxation: 2.3,
+      dampingCompression: 4.4,
+      frictionSlip: 5, //friction au sol
+      rollInfluence: 0.01,
+      chassisConnectionPointLocal: [1, 0, 1],
+      isFrontWheel: false,
+      useCustomSlidingRotationalSpeed: true,
+      customSlidingRotationalSpeed: -30,
+      axleLocal: [1, 0, 0], // wheel rotates around X-axis
+      directionLocal: [0, -1, 0], // same as Physics gravity
+    },
+    chassis : {
+      chassisWidth : 2,
+      chassisHeight : -1,
+      chassisFront : 1,
+      chassisBack : -1,
+      geo: null,
+      mat : null,
+      initialPosition : null,
+      shape : null,
+      scale : 1.5,
+      chassisMass : 500,
+      angularVelocity : null,
+      allowSleep : false 
+    },
+    forces : {
+      maxSteerVal : 0.5,
+      maxForce : 5e2,
+      maxBrakeForce : 1e5
+    }
+  }
+
+  console.log(vehicle);
+
   let changeTarget = useStore((state) => state.changeTarget)
   let saveVehicle = useStore((state) => state.saveVehicle)
   let portal = useStore((state) => state.portal)
@@ -89,11 +159,6 @@ function Vehicle(props) {
   const wheels = []
   const wheelInfos = []
 
-  // chassis - wheel connection helpers
-  var chassisWidth = 2
-  var chassisHeight = -1
-  var chassisFront = 1
-  var chassisBack = -1
 
   useConeTwistConstraint(chassis, remorque, {
     pivotA: [0, 0, -5],
@@ -133,7 +198,7 @@ function Vehicle(props) {
   wheelInfo_4.isFrontWheel = false
   wheelInfos.push(wheelInfo_4)
 
-  const [vehicle, api] = useRaycastVehicle(() => ({
+  const [vehicleRef, api] = useRaycastVehicle(() => ({
     chassisBody: chassis,
     wheels: wheels,
     wheelInfos: wheelInfos,
@@ -154,10 +219,6 @@ function Vehicle(props) {
   const [steeringValue, setSteeringValue] = useState(0)
   const [engineForce, setEngineForce] = useState(0)
   const [brakeForce, setBrakeForce] = useState(0)
-
-  var maxSteerVal = 0.5
-  var maxForce = 5e2
-  var maxBrakeForce = 1e5
 
   useFrame(() => {
     if (left && !right) {
@@ -227,7 +288,7 @@ function Vehicle(props) {
   const mat = nodes.Cloud001.material
 
   return (
-    <group ref={vehicle}>
+    <group ref={vehicleRef}>
       <Chassis geo={geo} materials={mat} ref={chassis} position={emptyVehiclePos} angularVelocity={props.angularVelocity}></Chassis>
       <Wheel ref={wheel_1}></Wheel>
       <Wheel ref={wheel_2}></Wheel>
