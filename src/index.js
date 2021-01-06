@@ -44,7 +44,7 @@ const App = (props) => {
           <Models />
           <Vehicle position={[-5, 5, 5]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
-          <Cube name="box1" position={[-65,3,71]} />
+          <Cube name="box1"/>
           <Light />
         </Physics>
         </Controls.Canvas>
