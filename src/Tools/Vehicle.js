@@ -10,13 +10,13 @@ import { useGLTF } from '@react-three/drei'
 // The vehicle chassis
 const Chassis = forwardRef((props, ref) => {
   const b = props.geo.boundingBox.max;
-  const boxSize = [b.x*2, b.y,b.z*2]
-  console.log(boxSize);
+  const scale = 1.5;
+  const boxSize = [b.x*scale, b.y,b.z*scale]
   // eslint-disable-next-line
   const [_, api] = useBox(
     () => ({
       // type: 'Kinematic',
-      mass: 100,
+      mass: 200,
       angularVelocity: props.angularVelocity,
       allowSleep: false,
       args: boxSize,
@@ -91,7 +91,7 @@ function Vehicle(props) {
 
   // chassis - wheel connection helpers
   var chassisWidth = 2
-  var chassisHeight = -0.5
+  var chassisHeight = -1
   var chassisFront = 1
   var chassisBack = -1
 
