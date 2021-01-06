@@ -17,17 +17,18 @@ import Vehicle from './Tools/Vehicle'
 import useStore from './store'
 
 const Flower= (props) => {
+const visible = useStore(state => state.visible);
 const bulleOpacity = useStore((state) => state.bulleOpacity);
 console.log(bulleOpacity);
   return (
     <group position={[-58, 2, 71]}>
                 <Cube name="box1" position={[-10,0,0]}  />
-                <HTML scaleFactor={30}  center >
+{          visible &&      <HTML scaleFactor={30}  center >
         <div className="bulle" style={bulleOpacity} >
           Pont solitaire <br/>
 il s’est trouvé un ami<br/>
 le vent vagabond</div>
-        </HTML>
+        </HTML>}
     </group>
 
   )

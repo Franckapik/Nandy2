@@ -22,6 +22,7 @@ const useStore = create((set) => ({
     entitymanager : [],
     portal : 0,
     bulleOpacity : {opacity : 0.8},
+    visible : true,
     isModalOpen : true,
     inc: () => set((state) => ({ count: state.count + 1 })),
     changeContent: (newContent) => set(() => ({content: newContent})),
@@ -39,6 +40,7 @@ const useStore = create((set) => ({
     addCrate: (newCrate) => set((state) => ({crates: [...state.crates, newCrate]})),
     setVideoPos: (newPos) => set(() => ({videoPos: newPos })),
     setOpacity: (newFactor) => set(() => ({bulleOpacity: {opacity : newFactor }})),
+    toggleVisible: () => set(state => ({visible : !state.visible}) ),
   }))
 
   window.store = useStore;
