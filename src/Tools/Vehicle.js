@@ -16,7 +16,7 @@ const Chassis = forwardRef((props, ref) => {
   const [_, api] = useBox(
     () => ({
       // type: 'Kinematic',
-      mass: 200,
+      mass: 500,
       angularVelocity: props.angularVelocity,
       allowSleep: false,
       args: boxSize,
@@ -221,7 +221,7 @@ function Vehicle(props) {
   }, [])
 
   const emptyVehiclePos = useEmpty('origin1Character') //name to change to originVehicle
-
+  console.log(emptyVehiclePos);
   const { nodes } = useGLTF('./character.gltf', '/draco/')
   const geo = nodes.Cloud001.geometry
   const mat = nodes.Cloud001.material

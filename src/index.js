@@ -14,6 +14,9 @@ import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import { NavMeshRandom } from './Tools/NavMeshRandom'
 import Vehicle from './Tools/Vehicle'
+import { Controls, useControl } from 'react-three-gui';
+
+
 
 const App = (props) => {
   const [events, setEvents] = useState()
@@ -21,7 +24,8 @@ const App = (props) => {
 
   return (
     <>
-      <Canvas
+          <Controls.Provider>
+      <Controls.Canvas
         id="canvas"
         shadowMap
         gl={{ alpha: false }}
@@ -33,16 +37,18 @@ const App = (props) => {
         <HTML center portal={domContent}>
           <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }}>Hello</div>
         </HTML>
-        <Physics>
+        <Physics 
+        gravity = {[0, -3, 0]}>
           <IA />
           <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
           <Models />
           <Vehicle position={[-5, 5, 5]} angularVelocity={[0, 0.5, 0]} />
           <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
-          <Cube name="box1" position={[-70, 0, 45]} />
+          <Cube name="box1" position={[-65,3,71]} />
           <Light />
         </Physics>
-      </Canvas>
+        </Controls.Canvas>
+
       <Stats showPanel={2} />
       <Loader />
       <Suspense fallback="null">
@@ -51,6 +57,9 @@ const App = (props) => {
           <Hud />
         </div>
       </Suspense>
+      <Controls  collapsed={false} anchor={'bottom_right'}   />
+
+      </Controls.Provider>
     </>
   )
 }
