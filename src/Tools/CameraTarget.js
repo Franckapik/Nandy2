@@ -33,7 +33,6 @@ export default function CameraTarget() {
     if(vehicle) {
       vehicleVec.copy(vehicle.position).add(lookUp)
       cameraRef.current.position.copy(vehicleVec)
-      console.log(cam.current);
       cam.current.lookAt(vehicleVec)
     }
   })
