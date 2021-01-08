@@ -22,6 +22,7 @@ const useStore = create((set) => ({
     entitymanager : [],
     portal : 0,
     isModalOpen : true,
+    isControlsOpen : false,
     inc: () => set((state) => ({ count: state.count + 1 })),
     changeContent: (newContent) => set(() => ({content: newContent})),
     changeVehiclePos: (newPos) => set(() => ({portal: newPos})),
@@ -35,6 +36,7 @@ const useStore = create((set) => ({
     addIdea: (newIdea) => set((state) => ({idea: [...state.idea, newIdea]})),
     changeInfo: (newInfo) => set(() => ({info: newInfo})),
     toggleModal: () => set((state) => ({isModalOpen: !state.isModalOpen})),
+    toggleControls: () => set((state) => ({isControlsOpen: !state.isControlsOpen})),
     addCrate: (newCrate) => set((state) => ({crates: [...state.crates, newCrate]})),
     setVideoPos: (newPos) => set(() => ({videoPos: newPos })),
   }))

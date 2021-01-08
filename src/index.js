@@ -15,11 +15,12 @@ import { Models } from './Tools/Models'
 import { NavMeshRandom } from './Tools/NavMeshRandom'
 import Vehicle from './Tools/Vehicle'
 import { Controls, useControl } from 'react-three-gui'
+import useStore from './store'
 
 const App = (props) => {
   const [events, setEvents] = useState()
   const domContent = useRef()
-
+  const isControlsOpen = useStore((state) => state.isControlsOpen)
   return (
     <>
       <Controls.Provider>
@@ -39,13 +40,12 @@ const App = (props) => {
             <IA />
             <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
             <Models />
-            <Vehicle position={[-5, 5, 5]}  />
+            <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
             <Cube name="box1" />
             <Light />
           </Physics>
         </Controls.Canvas>
-        <Stats showPanel={2} />
         <Loader />
         <Suspense fallback="null">
           <ModalBox title={'Bienvenue sur Nature&You'} startup={false} />
@@ -53,7 +53,12 @@ const App = (props) => {
             <Hud />
           </div>
         </Suspense>
-        <Controls  />
+        {isControlsOpen && (
+          <>
+            <Controls title="Controls du véhicule" collapsed={false} />
+            <Stats showPanel={2} />{' '}
+          </>
+        )}
       </Controls.Provider>
     </>
   )
