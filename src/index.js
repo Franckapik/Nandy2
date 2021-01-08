@@ -37,8 +37,8 @@ const App = () => {
           <Physics gravity={[0, -10, 0]}>
             <IA />
             <Bubble position={[-65, 2, 65]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
-            <Cube name="box1" position={[8, 0, 3]} />
-          </Bubble>
+              <Cube name="box1" position={[8, 0, 3]} />
+            </Bubble>
             <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
             <Models />
             <Vehicle position={[-5, 5, 5]} />
