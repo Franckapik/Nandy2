@@ -17,6 +17,7 @@ import Vehicle from './Tools/Vehicle'
 import { Controls, useControl } from 'react-three-gui'
 import useStore from './store'
 import { Bubble } from './Tools/Bubble'
+import { InstanciateMesh } from './Tools/InstanciateMesh'
 
 const App = () => {
   const [events, setEvents] = useState()
@@ -39,6 +40,7 @@ const App = () => {
             <Bubble position={[-65, 2, 65]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
               <Cube name="box1" position={[8, 0, 3]} />
             </Bubble>
+            <InstanciateMesh arrayOfPositions={[[0,0,0], [0,5,0], [10,0,0]]} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
             <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
             <Models />
             <Vehicle position={[-5, 5, 5]} />
