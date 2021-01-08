@@ -7,6 +7,7 @@ export const Models = (props) => {
     <>
       <Model url={'/passive1.gltf'} mass={0} />
       <Model url={'/active1.gltf'} mass={10} />
+      <Model url={'/traversant1.gltf'} mass={0} collision={0} />
     </>
   );
 };

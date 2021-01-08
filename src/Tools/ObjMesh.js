@@ -2,7 +2,7 @@ import { useBox } from '@react-three/cannon'
 import React from 'react'
 import useBounds from '../hooks/useBounds'
 
-export const ObjMesh = ({ mat, position, display, mass, ...props }) => {
+export const ObjMesh = ({ mat, position, display, collision, mass, ...props }) => {
   const v = position
   const bound = useBounds(props)
 
@@ -11,7 +11,8 @@ export const ObjMesh = ({ mat, position, display, mass, ...props }) => {
       mass: mass,
       args: bound,
       position: [v.x, v.y, v.z],
-      allowSleep : true
+      allowSleep : true,
+      collisionFilterGroup : collision
     }),
     false
   )
