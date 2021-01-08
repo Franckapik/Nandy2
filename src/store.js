@@ -21,7 +21,10 @@ const useStore = create((set) => ({
     characterPos : [0,0,0],
     entitymanager : [],
     portal : 0,
+    bulleOpacity : {opacity : 0.8},
+    visible : true,
     isModalOpen : true,
+    isControlsOpen : false,
     inc: () => set((state) => ({ count: state.count + 1 })),
     changeContent: (newContent) => set(() => ({content: newContent})),
     changeVehiclePos: (newPos) => set(() => ({portal: newPos})),
@@ -35,8 +38,11 @@ const useStore = create((set) => ({
     addIdea: (newIdea) => set((state) => ({idea: [...state.idea, newIdea]})),
     changeInfo: (newInfo) => set(() => ({info: newInfo})),
     toggleModal: () => set((state) => ({isModalOpen: !state.isModalOpen})),
+    toggleControls: () => set((state) => ({isControlsOpen: !state.isControlsOpen})),
     addCrate: (newCrate) => set((state) => ({crates: [...state.crates, newCrate]})),
     setVideoPos: (newPos) => set(() => ({videoPos: newPos })),
+    setOpacity: (newFactor) => set(() => ({bulleOpacity: {opacity : newFactor }})),
+    toggleVisible: () => set(state => ({visible : !state.visible}) ),
   }))
 
   window.store = useStore;

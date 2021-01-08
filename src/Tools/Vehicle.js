@@ -25,7 +25,7 @@ const Vehicle = () => {
       radius: 0.7,
       wheelMass: 1,
       wheelHelper: true,
-      wheelDistanceX : 2,
+      wheelDistanceX: 2,
       suspensionStiffness: 30, //rigidité suspensions
       suspensionRestLength: 0.1, //suspensions longueur de repos
       maxSuspensionForce: 1e4,
@@ -40,7 +40,7 @@ const Vehicle = () => {
       customSlidingRotationalSpeed: -30,
       axleLocal: [1, 0, 0], // wheel rotates around X-axis
       directionLocal: [0, -1, 0], // same as Physics gravity,
-      visible: true //make wheel visible
+      visible: false //make wheel visible
     },
     chassis: {
       chassisWidth: 2,
@@ -49,7 +49,8 @@ const Vehicle = () => {
       shape: null,
       scale: 1.5,
       chassisMass: 200,
-      allowSleep: false
+      allowSleep: false,
+      chassisHelper: false
     },
     forces: {
       maxSteerVal: 0.5,
@@ -69,7 +70,7 @@ const Vehicle = () => {
   vehicle.wheelInfo.radius = useControl('wheel Radius', { type: 'number', value: vehicle.wheelInfo.radius, min: 0, max: 5 })
   vehicle.wheelInfo.wheelMass = useControl('wheel Mass', { type: 'number', value: vehicle.wheelInfo.wheelMass, min: 0, max: 5 })
   vehicle.wheelInfo.wheelHelper = useControl('wheel Helper', { type: 'boolean', value: vehicle.wheelInfo.wheelHelper })
-  vehicle.wheelInfo.wheelDistanceX = useControl('wheel Distance', {type: 'number', value: vehicle.wheelInfo.wheelDistanceX, min: 1, max: 5 })
+  vehicle.wheelInfo.wheelDistanceX = useControl('wheel Distance', { type: 'number', value: vehicle.wheelInfo.wheelDistanceX, min: 1, max: 5 })
   vehicle.wheelInfo.suspensionStiffness = useControl('suspension Stiffness', { type: 'number', value: vehicle.wheelInfo.suspensionStiffness, min: 0, max: 50 })
   vehicle.wheelInfo.suspensionRestLength = useControl('suspension RestLength', { type: 'number', value: vehicle.wheelInfo.suspensionRestLength, min: 0, max: 10 })
   vehicle.wheelInfo.maxSuspensionForce = useControl('maxSuspensionForce', { type: 'number', value: vehicle.wheelInfo.maxSuspensionForce, min: 0, max: 1e5 })
@@ -84,6 +85,7 @@ const Vehicle = () => {
   vehicle.chassis.chassisScale = useControl('chassisScale', { type: 'number', value: vehicle.chassis.chassisScale, min: 0, max: 5 })
   vehicle.chassis.chassisMass = useControl('chassisMass', { type: 'number', value: vehicle.chassis.chassisMass, min: 0, max: 500 })
   vehicle.chassis.chassisSleep = useControl('Chassis Sleep', { type: 'boolean', value: false })
+  vehicle.chassis.chassisHelper = useControl('Chassis Helper', { type: 'boolean', value: vehicle.chassis.chassisHelper })
   vehicle.forces.maxSteerVal = useControl('maxSteerVal', { type: 'number', value: vehicle.forces.maxSteerVal, min: 0, max: 2 })
   vehicle.forces.maxForce = useControl('maxSteerVal', { type: 'number', value: vehicle.forces.maxForce, min: 0, max: 5e4 })
   vehicle.forces.maxBrakeForce = useControl('maxBrakeForce', { type: 'number', value: vehicle.forces.maxBrakeForce, min: 0, max: 1e6 })
@@ -126,10 +128,10 @@ const Vehicle = () => {
     }
     if (forward && !backward) {
       setBrakeForce(0)
-      setEngineForce(-vehicle.forces.maxForce)
+      setEngineForce(vehicle.forces.maxForce)
     } else if (backward && !forward) {
       setBrakeForce(0)
-      setEngineForce(vehicle.forces.maxForce)
+      setEngineForce(-vehicle.forces.maxForce)
     } else if (engineForce !== 0) {
       setEngineForce(0)
     }
@@ -188,6 +190,7 @@ const Vehicle = () => {
         position={emptyVehiclePos}
         scale={vehicle.chassis.scale}
         mass={vehicle.chassis.chassisMass}
+        chassisHelper={vehicle.chassis.chassisHelper}
       />
       <Wheel
         ref={wheel_1}
@@ -221,7 +224,7 @@ const Vehicle = () => {
   )
 }
 
-const Chassis = forwardRef(({ geo, mat, position, scale, mass }, ref) => {
+const Chassis = forwardRef(({ geo, mat, position, scale, mass, chassisHelper }, ref) => {
   const b = geo.boundingBox.max
   const chassisShape = [b.x * scale, b.y, b.z * scale]
 
@@ -233,7 +236,7 @@ const Chassis = forwardRef(({ geo, mat, position, scale, mass }, ref) => {
       args: chassisShape,
       position: position
     }),
-    true,
+    chassisHelper,
     ref
   )
   return <mesh name="Chassis" ref={ref} api={api} geometry={geo} material={mat} castShadow></mesh>
