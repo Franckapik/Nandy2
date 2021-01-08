@@ -1,5 +1,5 @@
 import { Physics } from '@react-three/cannon'
-import { HTML, Loader, Stars, Stats } from '@react-three/drei'
+import { Html, Loader, Stars, Stats } from '@react-three/drei'
 import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Canvas, extend } from 'react-three-fiber'
@@ -16,8 +16,9 @@ import { NavMeshRandom } from './Tools/NavMeshRandom'
 import Vehicle from './Tools/Vehicle'
 import { Controls, useControl } from 'react-three-gui'
 import useStore from './store'
+import { Bubble } from './Tools/Bubble'
 
-const App = (props) => {
+const App = () => {
   const [events, setEvents] = useState()
   const domContent = useRef()
   const isControlsOpen = useStore((state) => state.isControlsOpen)
@@ -33,11 +34,11 @@ const App = (props) => {
             setEvents(events)
           }}>
           <CameraTarget />
-          <HTML center portal={domContent}>
-            <div style={{ top: '2.55rem', fontSize: '2em', top: '4rem' }}>Hello</div>
-          </HTML>
           <Physics gravity={[0, -10, 0]}>
             <IA />
+            <Bubble position={[-65, 2, 65]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
+            <Cube name="box1" position={[8, 0, 3]} />
+          </Bubble>
             <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
             <Models />
             <Vehicle position={[-5, 5, 5]} />
