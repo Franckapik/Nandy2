@@ -35,7 +35,7 @@ const App = () => {
           }}>
           <CameraTarget />
           <Physics gravity={[0, -10, 0]}>
-            <IA />
+            {/*<IA />*/}
             <Bubble position={[-65, 2, 65]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
               <Cube name="box1" position={[8, 0, 3]} />
             </Bubble>
