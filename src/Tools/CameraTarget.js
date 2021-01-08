@@ -17,7 +17,8 @@ export default function CameraTarget() {
   //offset
   const a = new Vector3(...originCamera)
   const b = new Vector3(...originVehicle)
-  offset.copy(a).sub(b)
+  const positionDown = new Vector3(0,-5,0)
+  offset.copy(a).sub(b).add(positionDown)
 
   //refs
   const cameraRef = useRef()
@@ -25,13 +26,14 @@ export default function CameraTarget() {
 
   //vehicle vectors
   const vehicleVec = new Vector3()
-  const cameraUp = new Vector3(0,5,-10)
+  const lookUp = new Vector3(0,8,-10)
 
   useFrame(() => {
     const vehicle = useStore.getState().vehicleObj
     if(vehicle) {
-      vehicleVec.copy(vehicle.position).add(cameraUp)
+      vehicleVec.copy(vehicle.position).add(lookUp)
       cameraRef.current.position.copy(vehicleVec)
+      console.log(cam.current);
       cam.current.lookAt(vehicleVec)
     }
   })
