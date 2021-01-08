@@ -128,10 +128,10 @@ const Vehicle = () => {
     }
     if (forward && !backward) {
       setBrakeForce(0)
-      setEngineForce(-vehicle.forces.maxForce)
+      setEngineForce(vehicle.forces.maxForce)
     } else if (backward && !forward) {
       setBrakeForce(0)
-      setEngineForce(vehicle.forces.maxForce)
+      setEngineForce(-vehicle.forces.maxForce)
     } else if (engineForce !== 0) {
       setEngineForce(0)
     }
