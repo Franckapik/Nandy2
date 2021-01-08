@@ -17,6 +17,7 @@ import Vehicle from './Tools/Vehicle'
 import { Controls, useControl } from 'react-three-gui'
 import useStore from './store'
 import { Bubble } from './Tools/Bubble'
+import { EffectComposer, Bloom, SSAO, Glitch } from "react-postprocessing"
 
 const App = () => {
   const [events, setEvents] = useState()
@@ -45,6 +46,9 @@ const App = () => {
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
             <Cube name="box1" />
             <Light />
+            <EffectComposer>
+          <Bloom luminanceThreshold={0.55} luminanceSmoothing={0.8} height={300} />
+        </EffectComposer>
           </Physics>
         </Controls.Canvas>
         <Loader />
