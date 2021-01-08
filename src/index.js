@@ -43,7 +43,6 @@ const App = () => {
             <Models />
             <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
-            <Cube name="box1" />
             <Light />
           </Physics>
         </Controls.Canvas>
