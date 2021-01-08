@@ -25,7 +25,7 @@ export default function CameraTarget() {
 
   //vehicle vectors
   const vehicleVec = new Vector3()
-  const cameraUp = new Vector3(0,10,0)
+  const cameraUp = new Vector3(0,5,-10)
 
   useFrame(() => {
     const vehicle = useStore.getState().vehicleObj
