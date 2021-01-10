@@ -1,8 +1,8 @@
 import { Physics } from '@react-three/cannon'
-import { Html, Loader, Stars, Stats } from '@react-three/drei'
-import React, { Suspense, useRef, useState } from 'react'
+import { Html, Loader, Stars, Stats, useGLTF } from '@react-three/drei'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Canvas, extend } from 'react-three-fiber'
+import { Canvas, extend, useFrame } from 'react-three-fiber'
 import { Light } from './Tools/Light'
 import { Cube } from './references/Cube'
 import './styles.css'
@@ -12,16 +12,19 @@ import { Hud } from './Tools/Hud'
 import { IA } from './Tools/IA'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
-import { NavMeshRandom } from './Tools/NavMeshRandom'
 import Vehicle from './Tools/Vehicle'
 import { Controls, useControl } from 'react-three-gui'
 import useStore from './store'
 import { Bubble } from './Tools/Bubble'
+import { InstanciateMesh } from './Tools/InstanciateMesh'
+import { useRandomFromNavmesh } from './hooks/useRandomFromNavmesh'
+import * as THREE from 'three'
 
 const App = () => {
   const [events, setEvents] = useState()
   const domContent = useRef()
   const isControlsOpen = useStore((state) => state.isControlsOpen)
+  const randomPositions = useRandomFromNavmesh('/navmesh_applied.glb', 1000, 3);
   return (
     <>
       <Controls.Provider>
@@ -39,7 +42,7 @@ const App = () => {
             <Bubble position={[-65, 2, 65]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
               <Cube name="box1" position={[8, 0, 3]} />
             </Bubble>
-            <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
+            <InstanciateMesh arrayOfPositions={randomPositions} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
             <Models />
             <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
