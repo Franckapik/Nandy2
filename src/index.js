@@ -32,9 +32,7 @@ const App = () => {
           <CameraTarget />
           <Physics gravity={[0, -10, 0]}>
             {/*<IA />*/}
-            <Bubble position={[-65, 2, 65]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
-              <Cube name="box1" position={[8, 0, 3]} />
-            </Bubble>
+
             <Models />
             <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
