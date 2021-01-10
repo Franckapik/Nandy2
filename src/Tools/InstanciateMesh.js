@@ -7,12 +7,11 @@ export const InstanciateMesh = ({ arrayOfPositions, meshUrl, nameMesh, maxNumber
   const tempObject = new THREE.Object3D();
   const gltf = useGLTF(meshUrl);
   const geometry = gltf.nodes[nameMesh].geometry;
-
   const ref = useRef();
 
   useFrame((state) => {
     if (arrayOfPositions.length) {
-      arrayOfPositions.map((a, i) => {
+      arrayOfPositions[0].map((a, i) => {
         const id = i++;
         tempObject.position.set(...a);
         tempObject.updateMatrix();

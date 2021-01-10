@@ -1,12 +1,12 @@
 import { useGLTF } from '@react-three/drei';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFrame } from 'react-three-fiber';
-import { useNavLoader } from '../hooks/useNavLoader';
+import { useNavLoader } from '../hooks/useRandomFromNavmesh';
 import * as THREE from 'three';
 
 export const NavMeshRandom = ({ urlnav, urlGltf, nameMesh, max }) => {
   const [arrayRegions, setArrayRegions] = useState([]);
-  const [navMesh, random] = useNavLoader(urlnav, 1000);
+  const [navMesh, random] = useNavLoader(urlnav, 1000, 3);
   const tempObject = new THREE.Object3D();
   const gltf = useGLTF(urlGltf);
   const geometry = gltf.nodes[nameMesh].geometry;
