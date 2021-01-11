@@ -2,7 +2,6 @@ import { Physics } from '@react-three/cannon'
 import { Loader, Stats } from '@react-three/drei'
 import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Controls } from 'react-three-gui'
 import { Cube } from './references/Cube'
 import useStore from './store'
 import './styles.css'
@@ -13,6 +12,8 @@ import { Hud } from './Tools/Hud'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
+import { Controls, useControl } from 'react-three-gui'
+import { EffectComposer, Bloom, SSAO, Glitch } from "react-postprocessing"
 
 const App = () => {
   const [events, setEvents] = useState()
@@ -36,10 +37,12 @@ const App = () => {
             <Models />
             <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
+            <Cube name="box1" />
+
+          </Physics>
 {/*             <Light /> */}
        <ambientLight intensity={0.05} />
 
-           </Physics>
         </Controls.Canvas>
         <Loader />
         <Suspense fallback="null">
