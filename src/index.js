@@ -1,22 +1,18 @@
 import { Physics } from '@react-three/cannon'
-import { Html, Loader, Stars, Stats } from '@react-three/drei'
+import { Loader, Stats } from '@react-three/drei'
 import React, { Suspense, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Canvas, extend } from 'react-three-fiber'
-import { Light } from './Tools/Light'
 import { Cube } from './references/Cube'
+import useStore from './store'
 import './styles.css'
+import { Bubble } from './Tools/Bubble'
 import CameraTarget from './Tools/CameraTarget'
 import { Ground } from './Tools/Ground'
 import { Hud } from './Tools/Hud'
-import { IA } from './Tools/IA'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
-import { NavMeshRandom } from './Tools/NavMeshRandom'
 import Vehicle from './Tools/Vehicle'
 import { Controls, useControl } from 'react-three-gui'
-import useStore from './store'
-import { Bubble } from './Tools/Bubble'
 import { EffectComposer, Bloom, SSAO, Glitch } from "react-postprocessing"
 
 const App = () => {
@@ -37,19 +33,18 @@ const App = () => {
           <CameraTarget />
           <Physics gravity={[0, -10, 0]}>
             {/*<IA />*/}
-            <Bubble position={[-65, 2, 65]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
-              <Cube name="box1" position={[8, 0, 3]} />
-            </Bubble>
-            <NavMeshRandom urlnav={'/navmesh_applied.glb'} urlGltf={'./traversant.glb'} max={1000} nameMesh={'Herb'} />
+
             <Models />
             <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
             <Cube name="box1" />
-            <Light />
             <EffectComposer>
           <Bloom luminanceThreshold={0.55} luminanceSmoothing={0.8} height={300} />
         </EffectComposer>
           </Physics>
+{/*             <Light /> */}
+       <ambientLight intensity={0.05} />
+
         </Controls.Canvas>
         <Loader />
         <Suspense fallback="null">

@@ -1,6 +1,6 @@
 import { useBox, useCylinder, useRaycastVehicle } from '@react-three/cannon'
 import { useGLTF } from '@react-three/drei'
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import { useControl } from 'react-three-gui'
 import useEmpty from '../hooks/useEmpty'
@@ -239,8 +239,25 @@ const Chassis = forwardRef(({ geo, mat, position, scale, mass, chassisHelper }, 
     chassisHelper,
     ref
   )
-  return <mesh name="Chassis" ref={ref} api={api} geometry={geo} material={mat} castShadow></mesh>
+  const cubeRef = useRef()
+  const spotLight = useRef()
+
+  useLayoutEffect(() => {
+    spotLight.current.target = cubeRef.current
+  })
+
+  return (
+<mesh name="Chassis" ref={ref} api={api} geometry={geo} material={mat} castShadow>
+       <spotLight ref={spotLight} position={[0, 0, 0]} angle={0.8} penumbra={1} intensity={0.4} color="#FDEFD3" />
+      <mesh visible={false} ref={cubeRef} position={[0, 0, -5]}>
+        <boxBufferGeometry />
+        <meshLambertMaterial color="hotpink" />
+      </mesh>
+    </mesh>
+  )
 })
+
+
 
 const Wheel = forwardRef(({ radius, mass, visible, wheelHelper }, ref) => {
   const wheelShape = [radius, radius, 0.5, 16]

@@ -22,7 +22,7 @@ const useStore = create((set) => ({
     entitymanager : [],
     portal : 0,
     bulleOpacity : {opacity : 0.8},
-    visible : true,
+    visible : false,
     isModalOpen : true,
     isControlsOpen : false,
     inc: () => set((state) => ({ count: state.count + 1 })),
