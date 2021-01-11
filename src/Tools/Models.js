@@ -27,8 +27,7 @@ export const Models = (props) => {
       <Bubble position={[-65, 2, 50]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
         <Single url={'/onclick1.gltf'} name="Fleur" onClick={() => toggleVisible()} position={[8, 0, 3]} />
       </Bubble>
-      <Single url={'/navmesh.glb'} name="NavMesh" position={navPosition} />
-
+{/*       <Single url={'/navmesh.glb'} name="NavMesh" position={navPosition} /> */}
     </>
   )
 }
