@@ -2,7 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import React, { useEffect, useState } from 'react'
 import { NavMesh, NavMeshLoader, Vector3 } from 'yuka'
 
-export const useRandomFromNavmesh = (url, name, time, nbPositions) => {
+export const useRandomFromNavmesh = (url, name, nbPositions) => {
   const [arrayOfPositions, setArrayOfPositions] = useState([[0,0,0], [0,5,0], [10,0,0]])
   
   const { nodes } = useGLTF(url)
