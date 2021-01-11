@@ -54,7 +54,7 @@ const Vehicle = () => {
     },
     forces: {
       maxSteerVal: 0.5,
-      maxForce: 5e2,
+      maxForce: 1000,
       maxBrakeForce: 1e5
     },
     api: {
