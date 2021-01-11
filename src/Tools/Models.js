@@ -11,23 +11,23 @@ const Single = ({ url, name, ...props }) => {
   const { nodes } = useGLTF(url, '/draco/')
   const position = []
   nodes[name].getWorldPosition().toArray(position)
-  console.log(props)
   return <mesh material={nodes[name].material} geometry={nodes[name].geometry} position={position} {...props} />
 }
 
 export const Models = (props) => {
-  const randomPositions = useRandomFromNavmesh('/navmesh_applied.glb', 1000, 3)
+  const [randomPositions, navPosition] = useRandomFromNavmesh('/navmesh.glb', 'NavMesh', 30)
   const toggleVisible = useStore((state) => state.toggleVisible)
-
+  console.log([randomPositions, navPosition]);
   return (
     <>
       <Model url={'/passive1.gltf'} mass={0} />
       <Model url={'/active1.gltf'} mass={10} />
       <Model url={'/traversant1.gltf'} mass={0} collision={0} />
-      <InstanciateMesh arrayOfPositions={randomPositions} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
+      <InstanciateMesh position={navPosition} arrayOfPositions={[randomPositions]} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
       <Bubble position={[-65, 2, 50]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
         <Single url={'/onclick1.gltf'} name="Fleur" onClick={() => toggleVisible()} position={[8, 0, 3]} />
       </Bubble>
+{/*       <Single url={'/navmesh.glb'} name="NavMesh" position={navPosition} /> */}
     </>
   )
 }

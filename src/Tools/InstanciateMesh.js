@@ -3,11 +3,13 @@ import React, { useRef } from 'react';
 import { useFrame } from 'react-three-fiber';
 import * as THREE from 'three';
 
-export const InstanciateMesh = ({ arrayOfPositions, meshUrl, nameMesh, maxNumber }) => {
+export const InstanciateMesh = ({ arrayOfPositions, meshUrl, nameMesh, maxNumber, position }) => {
   const tempObject = new THREE.Object3D();
   const gltf = useGLTF(meshUrl);
   const geometry = gltf.nodes[nameMesh].geometry;
+  const mat = gltf.nodes[nameMesh].material;
   const ref = useRef();
+  console.log(gltf);
 
   useFrame((state) => {
     if (arrayOfPositions.length) {
@@ -24,8 +26,7 @@ export const InstanciateMesh = ({ arrayOfPositions, meshUrl, nameMesh, maxNumber
   const args = React.useMemo(() => [geometry, null, maxNumber], [geometry]);
 
   return (
-    <instancedMesh ref={ref} args={args} rotation={[0, 0, 0]}>
-      <meshNormalMaterial attach="material" />
+    <instancedMesh position={position} ref={ref} args={args} rotation={[0, 0, 0]} material={mat} >
     </instancedMesh>
   );
 };
