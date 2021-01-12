@@ -26,7 +26,7 @@ export const ObjMesh = ({ mat, position, display, collision, mass, ...props }) =
     key={props.name} 
     ref={cube} 
     geometry={props.geometry} 
-    onClick={(e) => {changeTarget(e.eventObject.position); console.log(e.eventObject.name);}}
+    onClick={(e) => {changeTarget(e.eventObject); console.log(e.eventObject.name);}}
     {...props} />
       
 

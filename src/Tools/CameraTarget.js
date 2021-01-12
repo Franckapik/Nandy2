@@ -14,7 +14,6 @@ export default function CameraTarget() {
   const originCamera = useEmpty('originCamera') 
   const originVehicle = useEmpty('origin1Character') 
   const cameraTarget = useStore(state => state.cameraTarget)
-  const changeTarget = useStore(state => state.changeTarget)
 
   //offset
   const a = new Vector3(...originCamera)
@@ -38,11 +37,11 @@ export default function CameraTarget() {
   }, [cameraTarget])
 
   useFrame(() => {
-    if (cameraTarget.length) {
-      targetVec.copy(cameraTarget)
+    if (cameraTarget.position) {
+      targetVec.copy(cameraTarget.position)
       cam.current.position.lerp(lookY, 0.05) 
       cameraRef.current.position.lerp(targetVec,0.05)
-      cam.current.lookAt(cameraTarget)  
+      cam.current.lookAt(cameraTarget.position)  
     } else {
       const vehicle = useStore.getState().vehicleObj
       if(vehicle) {

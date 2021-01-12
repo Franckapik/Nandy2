@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Slab|Love+Ya+Like+A+Sister&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
 
 * {
   box-sizing: border-box;
@@ -30,6 +30,21 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
   color: black;
 }
+
+.hud {
+  font-family: 'Fjalla One', sans-serif;  
+  font-size: 2em;
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+  line-height: 1em;
+  color: white;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
 
 .frontDiv {
   position: absolute;
