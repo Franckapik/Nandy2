@@ -40,14 +40,15 @@ export default function CameraTarget() {
   useFrame(() => {
     if (cameraTarget.length) {
       targetVec.copy(cameraTarget)
-      cam.current.position.copy(lookY)
-      cameraRef.current.position.copy(targetVec)
+      cam.current.position.lerp(lookY, 0.05) 
+      cameraRef.current.position.lerp(targetVec,0.05)
       cam.current.lookAt(cameraTarget)  
     } else {
       const vehicle = useStore.getState().vehicleObj
       if(vehicle) {
         vehicleVec.copy(vehicle.position).add(lookUp)
         cameraRef.current.position.copy(vehicleVec)
+        cam.current.position.copy(offset) 
         cam.current.lookAt(vehicleVec)  
     }
     }
@@ -55,7 +56,7 @@ export default function CameraTarget() {
 
   return (
   <group ref={cameraRef}>
-    <PerspectiveCamera ref={cam} makeDefault fov={35} position={offset}/>
+    <PerspectiveCamera ref={cam} makeDefault fov={35}/>
   </group>
   )
 }
