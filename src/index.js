@@ -19,9 +19,6 @@ const App = () => {
   const [events, setEvents] = useState()
   const [debug, setDebug] = useState(false)
   const domContent = useRef()
-  const isControlsOpen = useStore((state) => state.isControlsOpen)
-  var url = window.location;
-  console.log(url.pathname);
 
   useEffect(()=> {
     if (window.location.pathname === '/debug') {
