@@ -14,16 +14,26 @@ import useBounds from '../hooks/useBounds'
 const Single = ({ url, name, ...props }) => {
   const { nodes } = useGLTF(url, '/draco/')
   const position = []
+  const bound = useBounds(nodes[name])
+
   nodes[name].getWorldPosition().toArray(position)
-  const ref = useRef()
+  console.log(position);
+
+  const [ref] = useBox(() => ({ 
+    mass: 1,
+    position : [8,10,0],
+    args: bound,
+    onCollide : (e) => console.log(e)
+  }), true);
+
   return( 
     <EffectComposer>
     <Outline 
-    edgeStrength={0.3} // the edge strength
+    edgeStrength={0.1} // the edge strength
     pulseSpeed={0.3} // a pulse speed. A value of zero disables the pulse effect
     blur={true}
     selection={[ref]} />
-    <mesh ref={ref} material={nodes[name].material} geometry={nodes[name].geometry} position={position} {...props} />
+    <mesh ref={ref} material={nodes[name].material} geometry={nodes[name].geometry}  />
   </EffectComposer>
 )}
 
@@ -56,7 +66,7 @@ export const Models = (props) => {
       <Model url={'/traversant1.gltf'} mass={0} collision={0} />
       <InstanciateMesh position={navPosition} arrayOfPositions={[randomPositions]} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
       <Bubble position={[-65, 2, 50]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
-          <Single url={'/onclick1.gltf'} name="Fleur" onClick={() => toggleVisible()} position={[8, 0, 3]} />
+      <Single url={'/onclick1.gltf'} name="Calendula" onClick={() => toggleVisible()}  />
       </Bubble>
       <Trash />
 
