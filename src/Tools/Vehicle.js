@@ -170,7 +170,6 @@ const Vehicle = () => {
         (
           position //https://github.com/pmndrs/zustand#transient-updates-for-often-occuring-state-changes
         ) => {
-          changeTarget(position)
           saveVehicle(chassisRef.current)
         }
       ),
