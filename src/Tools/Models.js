@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Model } from './Model'
 import { useRandomFromNavmesh } from '../hooks/useRandomFromNavmesh'
 import { InstanciateMesh } from './InstanciateMesh'
@@ -13,6 +13,7 @@ import useBounds from '../hooks/useBounds'
 
 const Single = ({ url, name, ...props }) => {
   const { nodes } = useGLTF(url, '/draco/')
+  const [isVisible, setVisible] = useState(true)
   const position = []
   const bound = useBounds(nodes[name])
 
@@ -23,7 +24,7 @@ const Single = ({ url, name, ...props }) => {
     mass: 0,
     position : [-60, 2, 60],
     args: bound,
-    onCollide : (e) => ref.current.visible = false
+    onCollide : () => setVisible(false)
   }));
 
   return( 
@@ -34,7 +35,7 @@ const Single = ({ url, name, ...props }) => {
     blur={true}
     selection={[ref]} />
           <Bubble scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
-          <mesh ref={ref} material={nodes[name].material} geometry={nodes[name].geometry}  />
+  { isVisible && <mesh ref={ref} material={nodes[name].material} geometry={nodes[name].geometry}  />}
       </Bubble>
   </EffectComposer>
 )}
