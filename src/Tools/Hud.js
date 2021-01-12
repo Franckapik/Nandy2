@@ -4,7 +4,6 @@ import useEmpty from '../hooks/useEmpty'
 
 export const Hud = ({ name }) => {
   const changeVehiclePos = useStore((state) => state.changeVehiclePos)
-  const toggleControls = useStore(state => state.toggleControls)
   const pos2 = useEmpty('origin2Game')
   const pos3 = useEmpty('origin3Cinema')
   const pos4 = useEmpty('origin4Garden')
@@ -97,10 +96,6 @@ export const Hud = ({ name }) => {
           {' '}
           et voici le dernier lien{' '}
         </li> */}
-        <li
-          onClick={() => toggleControls()}
-        >Controls
-        </li>
       </ul>
     </div>
   )
