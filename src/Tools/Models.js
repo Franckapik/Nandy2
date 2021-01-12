@@ -20,11 +20,11 @@ const Single = ({ url, name, ...props }) => {
   console.log(position);
 
   const [ref] = useBox(() => ({ 
-    mass: 1,
-    position : [8,10,0],
+    mass: 0,
+    position : [-60, 2, 60],
     args: bound,
-    onCollide : (e) => console.log(e)
-  }), true);
+    onCollide : (e) => ref.current.visible = false
+  }));
 
   return( 
     <EffectComposer>
@@ -33,7 +33,9 @@ const Single = ({ url, name, ...props }) => {
     pulseSpeed={0.3} // a pulse speed. A value of zero disables the pulse effect
     blur={true}
     selection={[ref]} />
-    <mesh ref={ref} material={nodes[name].material} geometry={nodes[name].geometry}  />
+          <Bubble scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
+          <mesh ref={ref} material={nodes[name].material} geometry={nodes[name].geometry}  />
+      </Bubble>
   </EffectComposer>
 )}
 
@@ -65,9 +67,7 @@ export const Models = (props) => {
       <Model url={'/active1.gltf'} mass={10} />
       <Model url={'/traversant1.gltf'} mass={0} collision={0} />
       <InstanciateMesh position={navPosition} arrayOfPositions={[randomPositions]} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
-      <Bubble position={[-65, 2, 50]} scale={30} Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}>
       <Single url={'/onclick1.gltf'} name="Calendula" onClick={() => toggleVisible()}  />
-      </Bubble>
       <Trash />
 
 {/*       <Single url={'/navmesh.glb'} name="NavMesh" position={navPosition} /> */}
