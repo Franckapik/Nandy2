@@ -1,9 +1,11 @@
 import React from 'react'
 import useStore from '../store'
 import useEmpty from '../hooks/useEmpty'
+import { slide as Menu } from 'react-burger-menu'
 
 export const Hud = ({ name }) => {
   const changeVehiclePos = useStore((state) => state.changeVehiclePos)
+  const toggleControls = useStore(state => state.toggleControls)
   const pos2 = useEmpty('origin2Game')
   const pos3 = useEmpty('origin3Cinema')
   const pos4 = useEmpty('origin4Garden')
@@ -14,89 +16,18 @@ export const Hud = ({ name }) => {
   const pos9 = useEmpty('origin9Ecology')
 
   return (
-    <div className="hud">
-      <ul>
-{/*         <li
-          onPointerDown={() => {
-            changeVehiclePos(pos2)
-          }}
-          onPointerUp={() => {
-            changeVehiclePos(0)
-          }}>
-          {' '}
-          Actualité{' '}
-        </li>
-        <li
-          onPointerDown={() => {
-            changeVehiclePos(pos3)
-          }}
-          onPointerUp={() => {
-            changeVehiclePos(0)
-          }}>
-          {' '}
-          Journal{' '}
-        </li>
-        <li
-          onPointerDown={() => {
-            changeVehiclePos(pos4)
-          }}
-          onPointerUp={() => {
-            changeVehiclePos(0)
-          }}>
-          {' '}
-          Galleries{' '}
-        </li>
-        <li
-          onPointerDown={() => {
-            changeVehiclePos(pos5)
-          }}
-          onPointerUp={() => {
-            changeVehiclePos(0)
-          }}>
-          {' '}
-          Rencontre{' '}
-        </li>
-        <li
-          onPointerDown={() => {
-            changeVehiclePos(pos6)
-          }}
-          onPointerUp={() => {
-            changeVehiclePos(0)
-          }}>
-          {' '}
-          Boite à mots{' '}
-        </li>
-        <li
-          onPointerDown={() => {
-            changeVehiclePos(pos7)
-          }}
-          onPointerUp={() => {
-            changeVehiclePos(0)
-          }}>
-          {' '}
-          Un autre lien{' '}
-        </li>
-        <li
-          onPointerDown={() => {
-            changeVehiclePos(pos8)
-          }}
-          onPointerUp={() => {
-            changeVehiclePos(0)
-          }}>
-          {' '}
-          Et encore un autre{' '}
-        </li>
-        <li
-          onPointerDown={() => {
-            changeVehiclePos(pos9)
-          }}
-          onPointerUp={() => {
-            changeVehiclePos(0)
-          }}>
-          {' '}
-          et voici le dernier lien{' '}
-        </li> */}
-      </ul>
-    </div>
-  )
+    <Menu>
+      <a id="home" className="menu-item" href="/">Home</a>
+      <a id="debug" className="menu-item" href="/debug">Debug</a>
+      <a onPointerDown={() => { changeVehiclePos(pos2) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone2</a>
+      <a onPointerDown={() => { changeVehiclePos(pos3) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone3</a>
+      <a onPointerDown={() => { changeVehiclePos(pos4) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone4</a>
+      <a onPointerDown={() => { changeVehiclePos(pos5) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone5</a>
+      <a onPointerDown={() => { changeVehiclePos(pos6) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone6</a>
+{/*       <a onPointerDown={() => { changeVehiclePos(pos7) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone7</a>
+      <a onPointerDown={() => { changeVehiclePos(pos8) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone8</a>
+      <a onPointerDown={() => { changeVehiclePos(pos9) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone9</a>
+ */}
+    </Menu>
+  );
 }
