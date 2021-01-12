@@ -1,10 +1,13 @@
 import { useBox } from '@react-three/cannon'
 import React from 'react'
 import useBounds from '../hooks/useBounds'
+import useStore from '../store'
 
 export const ObjMesh = ({ mat, position, display, collision, mass, ...props }) => {
   const v = position
   const bound = useBounds(props)
+  const changeTarget = useStore(state => state.changeTarget)
+
 
   const [cube] = useBox(
     () => ({
@@ -23,7 +26,7 @@ export const ObjMesh = ({ mat, position, display, collision, mass, ...props }) =
     key={props.name} 
     ref={cube} 
     geometry={props.geometry} 
-    onClick={() => console.log(props.name)}
+    onClick={(e) => {changeTarget(e.eventObject); console.log(e.eventObject.name);}}
     {...props} />
       
 

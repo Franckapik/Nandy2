@@ -12,7 +12,7 @@ const useStore = create((set) => ({
     crates : [],
     popid : 0,
     popOpen : false,
-    cameraTarget: [0,0,0],
+    cameraTarget: {},
     targetIA: [25,0,25],
     IAManager: null,
     cameraControlsEnabled: true,
