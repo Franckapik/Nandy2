@@ -1,9 +1,9 @@
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import React, {useEffect, useRef, useState} from 'react'
-import {useFrame, useThree} from 'react-three-fiber'
-import useStore from "../store";
+import { PerspectiveCamera } from '@react-three/drei';
+import React, { useEffect, useRef } from 'react';
+import { useFrame } from 'react-three-fiber';
 import { Vector3 } from "three";
 import useEmpty from '../hooks/useEmpty';
+import useStore from "../store";
 
 
 export default function CameraTarget() {
@@ -31,10 +31,6 @@ export default function CameraTarget() {
   const lookUp = new Vector3(0,8,-10)
   const lookY = new Vector3(0,0,20)
   const lookX = new Vector3(20,0,0)
-
-  useEffect(() => {
-    console.log(cameraTarget);
-  }, [cameraTarget])
 
   useFrame(() => {
     if (cameraTarget.position) {
