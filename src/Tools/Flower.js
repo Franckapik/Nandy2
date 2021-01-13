@@ -1,29 +1,32 @@
 import { useBox } from '@react-three/cannon'
 import { HTML, useGLTF } from '@react-three/drei'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useFrame } from 'react-three-fiber'
 import useBounds from '../hooks/useBounds'
+import useToggle from '../hooks/useToggle'
 
 export const Flower = ({ Text, scale, url, name }) => {
   const { nodes } = useGLTF(url, '/draco/')
-  const [isVisible, setVisible] = useState(true)
-  const [bulleOpen, setBulle] = useState(false)
+  const [isVisible, setVisible] = useState(1)
+  const [bulleOpen, setBulle] = useToggle()
   const position = []
   const bound = useBounds(nodes[name])
+  const position2 = [-55, 2, 55]
 
   nodes[name].getWorldPosition().toArray(position)
 
-  const [ref] = useBox(() => ({
+  const [ref, api] = useBox(() => ({
     mass: 0,
-    position: [-55, 2, 55],
     args: bound,
-    onCollide: () => setVisible(false)
+    position : position2,
+    onCollide: () => setVisible(0),
   }))
 
   return (
-    <group>
-      {isVisible && <mesh ref={ref} material={nodes[name].material} geometry={nodes[name].geometry} onClick={() => setBulle(true)} />}{' '}
+    <group ref={ref}>
+      {isVisible && <mesh  material={nodes[name].material} geometry={nodes[name].geometry} onClick={() => setBulle()} />}
       {bulleOpen && (
-        <HTML scaleFactor={scale} center>
+        <HTML position={[-5,5,0]} scaleFactor={scale} center>
           <div className="bulle">{Text}</div>
         </HTML>
       )}
