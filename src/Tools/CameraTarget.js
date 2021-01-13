@@ -1,9 +1,9 @@
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import React, {useEffect, useRef} from 'react'
-import {useFrame, useThree} from 'react-three-fiber'
-import useStore from "../store";
+import { PerspectiveCamera } from '@react-three/drei';
+import React, { useRef } from 'react';
+import { useFrame } from 'react-three-fiber';
 import { Vector3 } from "three";
 import useEmpty from '../hooks/useEmpty';
+import useStore from "../store";
 
 
 export default function CameraTarget() {
