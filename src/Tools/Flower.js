@@ -9,6 +9,7 @@ export const Flower = ({ setVisible, Text, scale, url, name }) => {
   const { nodes } = useGLTF(url, '/draco/')
   const [bulleOpen, setBulle] = useToggle()
   const position = []
+  console.log(nodes);
   const bound = useBounds(nodes[name])
   const position2 = [-55, 2, 55]
 
