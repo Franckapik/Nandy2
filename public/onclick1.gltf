@@ -19,7 +19,16 @@
             "nodes" : [
                 0,
                 1,
-                2
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
             ]
         }
     ],
@@ -49,6 +58,117 @@
                 -54.12891387939453,
                 1.4571725130081177,
                 60.56669235229492
+            ]
+        },
+        {
+            "mesh" : 3,
+            "name" : "Planche1",
+            "translation" : [
+                -46.71315383911133,
+                8.781577110290527,
+                33.165767669677734
+            ]
+        },
+        {
+            "mesh" : 4,
+            "name" : "Woodwallbg2",
+            "translation" : [
+                -48.778377532958984,
+                5.106558322906494,
+                32.87371826171875
+            ]
+        },
+        {
+            "mesh" : 5,
+            "name" : "Poteaux",
+            "translation" : [
+                -46.9543342590332,
+                4.984121322631836,
+                32.638816833496094
+            ]
+        },
+        {
+            "mesh" : 6,
+            "name" : "Planche2",
+            "rotation" : [
+                0,
+                0,
+                0.04193935915827751,
+                0.9991201758384705
+            ],
+            "translation" : [
+                -46.71315383911133,
+                7.311840057373047,
+                33.165767669677734
+            ]
+        },
+        {
+            "mesh" : 7,
+            "name" : "Planche3",
+            "rotation" : [
+                0,
+                0,
+                -0.005938153713941574,
+                0.9999824166297913
+            ],
+            "translation" : [
+                -46.71315383911133,
+                5.716561794281006,
+                33.165767669677734
+            ]
+        },
+        {
+            "mesh" : 8,
+            "name" : "Planche4",
+            "rotation" : [
+                0,
+                0,
+                -0.026109591126441956,
+                0.9996591210365295
+            ],
+            "translation" : [
+                -46.71315383911133,
+                4.614822864532471,
+                33.165767669677734
+            ]
+        },
+        {
+            "mesh" : 9,
+            "name" : "Planche5",
+            "rotation" : [
+                0,
+                0,
+                -0.05080607533454895,
+                0.9987086057662964
+            ],
+            "translation" : [
+                -46.71315383911133,
+                3.4037604331970215,
+                33.165767669677734
+            ]
+        },
+        {
+            "mesh" : 10,
+            "name" : "Planche6",
+            "rotation" : [
+                0,
+                0,
+                0.009806829504668713,
+                0.9999518990516663
+            ],
+            "translation" : [
+                -46.71315383911133,
+                1.130940318107605,
+                33.165767669677734
+            ]
+        },
+        {
+            "mesh" : 11,
+            "name" : "Woodwallbg",
+            "translation" : [
+                -45.3642463684082,
+                5.106558322906494,
+                32.87371826171875
             ]
         }
     ],
@@ -94,6 +214,22 @@
                 },
                 "metallicFactor" : 0,
                 "roughnessFactor" : 0.823941707611084
+            }
+        },
+        {
+            "emissiveFactor" : [
+                0,
+                0,
+                0
+            ],
+            "name" : "lambert2.011",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 2,
+                    "texCoord" : 0
+                },
+                "metallicFactor" : 0,
+                "roughnessFactor" : 1
             }
         }
     ],
@@ -172,6 +308,231 @@
                     "mode" : 4
                 }
             ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.001",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 12,
+                        "NORMAL" : 13,
+                        "TEXCOORD_0" : 14
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 5,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 15,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.003",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 16,
+                        "NORMAL" : 17,
+                        "TEXCOORD_0" : 18
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 6,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 19,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.004",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 20,
+                        "NORMAL" : 21,
+                        "TEXCOORD_0" : 22
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 7,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 23,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.005",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 24,
+                        "NORMAL" : 25,
+                        "TEXCOORD_0" : 26
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 8,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 15,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.006",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 27,
+                        "NORMAL" : 28,
+                        "TEXCOORD_0" : 29
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 9,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 15,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.007",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 30,
+                        "NORMAL" : 31,
+                        "TEXCOORD_0" : 32
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 10,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 15,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.008",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 33,
+                        "NORMAL" : 34,
+                        "TEXCOORD_0" : 35
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 11,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 15,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.009",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 36,
+                        "NORMAL" : 37,
+                        "TEXCOORD_0" : 38
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 12,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 15,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
+        },
+        {
+            "name" : "SA_Prop_FenceWoodL_Patched_02_lambert2_0.010",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 39,
+                        "NORMAL" : 40,
+                        "TEXCOORD_0" : 41
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 13,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 19,
+                    "material" : 3,
+                    "mode" : 4
+                }
+            ]
         }
     ],
     "textures" : [
@@ -180,6 +541,9 @@
         },
         {
             "source" : 1
+        },
+        {
+            "source" : 0
         }
     ],
     "images" : [
@@ -284,6 +648,246 @@
             "componentType" : 5123,
             "count" : 1587,
             "type" : "SCALAR"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "max" : [
+                3.9923691749572754,
+                0.44741249084472656,
+                0.08752793073654175
+            ],
+            "min" : [
+                -4.478410243988037,
+                -0.46039319038391113,
+                -0.1642802357673645
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5123,
+            "count" : 102,
+            "type" : "SCALAR"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 24,
+            "max" : [
+                1.567093014717102,
+                5.092225551605225,
+                0.1278705596923828
+            ],
+            "min" : [
+                -1.5670928955078125,
+                -5.092226028442383,
+                -0.1278705596923828
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 24,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 24,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5123,
+            "count" : 36,
+            "type" : "SCALAR"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 56,
+            "max" : [
+                4.341161727905273,
+                5.007671356201172,
+                0.3691798448562622
+            ],
+            "min" : [
+                -4.387311935424805,
+                -4.984121322631836,
+                -0.36918532848358154
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 56,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 56,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5123,
+            "count" : 72,
+            "type" : "SCALAR"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "max" : [
+                3.9923691749572754,
+                0.4474126100540161,
+                0.08752794563770294
+            ],
+            "min" : [
+                -4.478410243988037,
+                -0.4603930711746216,
+                -0.1642802208662033
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "max" : [
+                3.9923691749572754,
+                0.4474126100540161,
+                0.08752794563770294
+            ],
+            "min" : [
+                -4.478410243988037,
+                -0.4603930711746216,
+                -0.1642802208662033
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "max" : [
+                3.9923691749572754,
+                0.4474126100540161,
+                0.08752794563770294
+            ],
+            "min" : [
+                -4.478410243988037,
+                -0.4603930711746216,
+                -0.1642802208662033
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "max" : [
+                3.9923691749572754,
+                0.4474126100540161,
+                0.08752794563770294
+            ],
+            "min" : [
+                -4.478410243988037,
+                -0.4603930711746216,
+                -0.1642802208662033
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "max" : [
+                3.9923691749572754,
+                0.4474126100540161,
+                0.08752794563770294
+            ],
+            "min" : [
+                -4.478410243988037,
+                -0.4603930711746216,
+                -0.1642802208662033
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 102,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 24,
+            "max" : [
+                1.567093014717102,
+                5.092225551605225,
+                0.1278705596923828
+            ],
+            "min" : [
+                -1.5670928955078125,
+                -5.092226028442383,
+                -0.1278705596923828
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 24,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 24,
+            "type" : "VEC2"
         }
     ],
     "bufferViews" : [
