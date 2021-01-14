@@ -2,7 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import React from 'react'
 import { ObjMesh } from './ObjMesh'
 
-export const Model = ({ url, mass, collision, matcaps }) => {
+export const Model = ({ url, mass,updateMass, collision, matcaps }) => {
   const { nodes, materials } = useGLTF(url, '/draco/')
   const first = Object.keys(nodes)
   const noCast = ['LightLampadaire', 'LightPano1', 'LightPano2']
@@ -16,7 +16,7 @@ export const Model = ({ url, mass, collision, matcaps }) => {
         if (noCast.indexOf(obj.name) !== -1) {
           castShadow = false
         }
-        return <ObjMesh collision={collision} mat={obj.material} mass={mass} display={true} key={name} {...obj} position={obj.getWorldPosition()} castShadow={castShadow} />
+        return <ObjMesh updateMass={updateMass} collision={collision} mat={obj.material} mass={mass} display={true} key={name} {...obj} position={obj.getWorldPosition()} castShadow={castShadow} />
       }
     } else {
       //do nothing
