@@ -11,6 +11,7 @@ import { Hud } from './Tools/Hud'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
+import {Light} from './Tools/Light'
 
 const App = () => {
   const [events, setEvents] = useState()
@@ -44,7 +45,7 @@ const App = () => {
             <Cube name="box1" />
             
           </Physics>
-{/*             <Light /> */}
+            <Light />
        <ambientLight intensity={0.05} />
 
         </Controls.Canvas>
