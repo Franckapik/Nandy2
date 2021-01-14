@@ -1,12 +1,42 @@
 import { useBox } from '@react-three/cannon'
 import { useGLTF } from '@react-three/drei'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useBounds from '../hooks/useBounds'
 import { useRandomFromNavmesh } from '../hooks/useRandomFromNavmesh'
 import useToggle from '../hooks/useToggle'
 import { Flower } from './Flower'
 import { InstanciateMesh } from './InstanciateMesh'
 import { Model } from './Model'
+
+const Woodwall = ({ url, ...props }) => {
+  const { nodes } = useGLTF('/onclick1.gltf', '/draco/')
+  const [isCollided, setCollide] = useToggle(false)
+  const name = 'Woodwallbg'
+  const position = []
+  nodes[name].getWorldPosition().toArray(position)
+
+  const bound = useBounds(nodes[name])
+
+  const [poubelleRef, api] = useBox(() => ({
+    mass: 0,
+    position: position,
+    args: bound,
+    onCollide: () => setCollide()
+  }))
+
+  useEffect(()=> {
+    if (isCollided) {
+      console.log('oui');
+      api.mass.set(5)
+    }
+  }, [isCollided])
+
+  return (
+  <group>
+  <mesh ref={poubelleRef} material={nodes[name].material} geometry={nodes[name].geometry} {...props} />
+  </group>
+  )
+}
 
 const Trash = ({ url, ...props }) => {
   const name = 'Poubelle'
@@ -45,6 +75,7 @@ export const Models = (props) => {
           Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}
         />
       )}
+      <Woodwall />
       <Trash />
     </>
   )
