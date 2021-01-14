@@ -20,7 +20,7 @@ export const Light = (props) => {
   return (
     <>
       <spotLight ref={spotlight} position={lightPos} angle={0.8} penumbra={1} intensity={0.05} color="white" castShadow />
-      <spotLight  position={lightPos2} angle={0.8} penumbra={1} intensity={0.5} color="blue" castShadow />
+      <spotLight  position={lightPos2} angle={0.1} penumbra={0} intensity={1} color="blue" castShadow />
     </>
   );
 };
