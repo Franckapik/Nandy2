@@ -26,29 +26,29 @@
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "LightPano2",
+            "name" : "LightLampadaire.001",
             "translation" : [
-                -91.85459899902344,
-                12.624725341796875,
-                60.85285186767578
+                -35.465293884277344,
+                6.328932285308838,
+                16.615873336791992
             ]
         },
         {
             "mesh" : 1,
-            "name" : "LightPano1",
+            "name" : "LightLampadaire.003",
             "translation" : [
-                -91.87906646728516,
-                12.624726295471191,
-                72.99715423583984
+                -34.93218994140625,
+                6.328932285308838,
+                -9.47838306427002
             ]
         },
         {
             "mesh" : 2,
-            "name" : "Herb",
+            "name" : "LightLampadaire.004",
             "translation" : [
-                -41.600486755371094,
-                0.28678882122039795,
-                52.19768524169922
+                -34.52157211303711,
+                6.802671909332275,
+                -37.86292266845703
             ]
         }
     ],
@@ -60,7 +60,7 @@
                 0.7995283007621765,
                 0.05634935945272446
             ],
-            "name" : "LightCone",
+            "name" : "LightCone.001",
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
                     "index" : 0,
@@ -69,30 +69,11 @@
                 "metallicFactor" : 0,
                 "roughnessFactor" : 0.5
             }
-        },
-        {
-            "doubleSided" : true,
-            "emissiveFactor" : [
-                0,
-                0,
-                0
-            ],
-            "name" : "vert",
-            "pbrMetallicRoughness" : {
-                "baseColorFactor" : [
-                    0.09084171056747437,
-                    0.1946178674697876,
-                    0.04666510969400406,
-                    1
-                ],
-                "metallicFactor" : 0,
-                "roughnessFactor" : 1
-            }
         }
     ],
     "meshes" : [
         {
-            "name" : "Cone.004",
+            "name" : "Cone.006",
             "primitives" : [
                 {
                     "attributes" : {
@@ -117,7 +98,7 @@
             ]
         },
         {
-            "name" : "Cone.005",
+            "name" : "Cone.009",
             "primitives" : [
                 {
                     "attributes" : {
@@ -142,7 +123,7 @@
             ]
         },
         {
-            "name" : "Cube.020",
+            "name" : "Cone.010",
             "primitives" : [
                 {
                     "attributes" : {
@@ -160,8 +141,8 @@
                             }
                         }
                     },
-                    "indices" : 10,
-                    "material" : 1,
+                    "indices" : 3,
+                    "material" : 0,
                     "mode" : 4
                 }
             ]
@@ -175,7 +156,7 @@
     "images" : [
         {
             "mimeType" : "image/png",
-            "name" : "kisspng-light-alpha-gradient-transparency-and-translucency-luz-5abef820a37198.2224870915224648006695",
+            "name" : "kisspng-light-alpha-gradient-transparency-and-translucency-luz-5abef820a37198_2224870915224648006695",
             "uri" : "textures/kisspng-light-alpha-gradient-transparency-and-translucency-luz-5abef820a37198_2224870915224648006695.png"
         }
     ],
@@ -184,14 +165,14 @@
             "componentType" : 5126,
             "count" : 128,
             "max" : [
-                5.4191131591796875,
-                3.1328601837158203,
-                4.666023254394531
+                5.007455825805664,
+                6.3054280281066895,
+                5.007467269897461
             ],
             "min" : [
-                -6.909980773925781,
-                -5.875487327575684,
-                -2.4009742736816406
+                -5.007453918457031,
+                -6.305428981781006,
+                -5.007455825805664
             ],
             "type" : "VEC3"
         },
@@ -214,14 +195,14 @@
             "componentType" : 5126,
             "count" : 128,
             "max" : [
-                5.43994140625,
-                3.132859230041504,
-                2.5354995727539062
+                5.007455825805664,
+                6.3054280281066895,
+                5.007467269897461
             ],
             "min" : [
-                -6.9105072021484375,
-                -5.875487804412842,
-                -4.5650787353515625
+                -5.007453918457031,
+                -6.305428981781006,
+                -5.007454872131348
             ],
             "type" : "VEC3"
         },
@@ -237,56 +218,51 @@
         },
         {
             "componentType" : 5126,
-            "count" : 42,
+            "count" : 128,
             "max" : [
-                0.61151123046875,
-                0.6500180959701538,
-                0.38516998291015625
+                5.925445556640625,
+                7.489857196807861,
+                5.925447463989258
             ],
             "min" : [
-                -0.46556854248046875,
-                -0.3437184691429138,
-                -0.6382637023925781
+                -5.925445556640625,
+                -7.489860534667969,
+                -5.925457000732422
             ],
             "type" : "VEC3"
         },
         {
             "componentType" : 5126,
-            "count" : 42,
+            "count" : 128,
             "type" : "VEC3"
         },
         {
             "componentType" : 5126,
-            "count" : 42,
+            "count" : 128,
             "type" : "VEC2"
-        },
-        {
-            "componentType" : 5123,
-            "count" : 78,
-            "type" : "SCALAR"
         }
     ],
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 1398,
+            "byteLength" : 1397,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 1395,
+            "byteLength" : 1397,
             "byteOffset" : 1400
         },
         {
             "buffer" : 0,
-            "byteLength" : 657,
-            "byteOffset" : 2796
+            "byteLength" : 1395,
+            "byteOffset" : 2800
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 3456,
-            "uri" : "traversant1.bin"
+            "byteLength" : 4196,
+            "uri" : "traversant2.bin"
         }
     ]
 }
