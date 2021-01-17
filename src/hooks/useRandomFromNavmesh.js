@@ -11,6 +11,7 @@ export const useRandomFromNavmesh = (url, name, nbPositions) => {
 
   async function fetchData() {
     const newNav = await loader.load(url) 
+    console.log(newNav);
     let newArrayOfPositions = []
     Array(nbPositions)
       .fill()
