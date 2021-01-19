@@ -25,6 +25,13 @@ const App = () => {
     zoom: 1,
     top: createRef()
   }
+  // no space-bar pageDown
+  window.onkeydown=function(e){
+    if(e.keyCode==32){
+     return false;
+    }
+  };
+
   const onScroll = (e) => (
     useStore.getState().top = e.target.scrollTop,
 console.log(useStore.getState().top)
