@@ -45,8 +45,6 @@ const App = () => {
             <Cube name="box1" />
             
           </Physics>
-            <Light />
-       <ambientLight intensity={0.05} />
 
         </Controls.Canvas>
         <Suspense fallback="null">
