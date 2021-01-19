@@ -9,8 +9,9 @@ export function Cube(props) {
  */  const [ref] = useBox(() => ({ mass: 1, position: props.position, rotation: [0.4, 0.2, 0.5], ...props }));
   const setOpacity = useStore((state) => state.setOpacity);
   const toggleVisible = useStore(state => state.toggleVisible);
-  
-
+/*   useFrame(()=> {
+    ref.current.position.x = positionX
+  }) */
 
   return (
     <mesh name={props.name} receiveShadow castShadow ref={ref} onClick={() => toggleVisible()}>
