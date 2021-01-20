@@ -32,7 +32,7 @@ export default function CameraTarget() {
   const lookY = new Vector3(0,0,20)
   const lookX = new Vector3(20,0,0)
   const scrollOffset = new Vector3(0,0,0)
-  const lookBehind = new Vector3(-30,12,-22)
+  const lookZup = new Vector3(-30,12,-22)
 
   useFrame(() => {
     if (cameraTarget.position) {
@@ -54,13 +54,8 @@ export default function CameraTarget() {
         cam.current.lookAt(vehicleVec) //camera rotation to vehicle
 
         if (vehicle.position.z < -40) { //-48
-          console.log('coucou');
-          lookBehind.set(-30, 12, -22)
-          cam.current.position.copy(lookBehind)
+          cam.current.position.copy(lookZup)
           cam.current.lookAt(vehicleVec)
-
-console.log('cam', cam.current.position);          
-console.log('camRef', cameraRef.current.position);          
         }
     }
     }

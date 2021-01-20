@@ -127,7 +127,6 @@ const Vehicle = () => {
       setSteeringValue(0)
     }
     if (forward && !backward) {
-      console.log(chassisRef.current.position);
       useStore.getState().top = 0;
       setBrakeForce(0)
       setEngineForce(vehicle.forces.maxForce)
