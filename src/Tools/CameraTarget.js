@@ -32,13 +32,14 @@ export default function CameraTarget() {
   const lookY = new Vector3(0,0,20)
   const lookX = new Vector3(20,0,0)
   const scrollOffset = new Vector3(0,0,0)
+  const lookBehind = new Vector3(-30,12,-22)
 
   useFrame(() => {
     if (cameraTarget.position) {
-      targetVec.copy(cameraTarget.position)
-      cam.current.position.lerp(lookY, 0.05) 
-      cameraRef.current.position.lerp(targetVec,0.05)
-      cam.current.lookAt(cameraTarget.position)  
+      targetVec.copy(cameraTarget.position) //copy new target position
+      cameraRef.current.position.lerp(targetVec,0.05) //move to the target position
+      cam.current.position.copy(lookY)  //front offset to the new target
+      cam.current.lookAt(cameraTarget.position)  //camera rotation to look to new target 
     } else {
       const vehicle = useStore.getState().vehicleObj
       if(vehicle) {
@@ -47,9 +48,20 @@ export default function CameraTarget() {
         cameraRef.current.position.copy(vehicleVec).add(scrollOffset) 
         if (scrollOffset.z !== 0) {
           vehicleVec.copy(vehicle.position).add(lookUp).add(scrollOffset) 
-     }
-        cam.current.position.copy(offset)
-        cam.current.lookAt(vehicleVec)
+        }
+
+        cam.current.position.copy(offset) //initial offset camera-target(vehicle) 
+        cam.current.lookAt(vehicleVec) //camera rotation to vehicle
+
+        if (vehicle.position.z < -40) { //-48
+          console.log('coucou');
+          lookBehind.set(-30, 12, -22)
+          cam.current.position.copy(lookBehind)
+          cam.current.lookAt(vehicleVec)
+
+console.log('cam', cam.current.position);          
+console.log('camRef', cameraRef.current.position);          
+        }
     }
     }
   })
