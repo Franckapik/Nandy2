@@ -13,6 +13,7 @@ import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
 import { createRef } from 'react'
 import useStore from './store'
+import Video from './Tools/Video'
 
 const App = () => {
   const [events, setEvents] = useState()
@@ -56,6 +57,11 @@ const App = () => {
             setEvents(events)
           }}>
           <CameraTarget />
+          <Video
+        url={"/souffle.webm"}
+        rotation={[0, Math.PI, 0]}
+        position={[-58,5,20]}
+      />
           <Physics gravity={[0, -10, 0]}>
             {/*<IA />*/}
 
