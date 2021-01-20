@@ -11,16 +11,16 @@ import { Hud } from './Tools/Hud'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
-import {Light} from './Tools/Light'
+import { Light } from './Tools/Light'
 
 const App = () => {
   const [events, setEvents] = useState()
   const [debug, setDebug] = useState(false)
   const domContent = useRef()
 
-  useEffect(()=> {
+  useEffect(() => {
     if (window.location.pathname === '/debug') {
-      setDebug(true);
+      setDebug(true)
     }
   })
 
@@ -43,9 +43,8 @@ const App = () => {
             <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
             <Cube name="box1" />
-            
           </Physics>
-
+          <ambientLight intensity={0.05} />
         </Controls.Canvas>
         <Suspense fallback="null">
           <ModalBox title={'Bienvenue sur Nature&You'} startup={false} />
