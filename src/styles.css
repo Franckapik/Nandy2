@@ -31,7 +31,7 @@ body {
   color: black;
 }
 
-.hud {
+.hud_title {
   font-family: 'Fjalla One', sans-serif;  
   font-size: 2em;
   opacity: 0.7;
@@ -186,4 +186,15 @@ Note: Beware of modifying this element as it can break the animations - you shou
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+.flowerCount {
+  color: #fff;
+  font-size: 1em;
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+  line-height: 1em;
+  position: fixed;
+  top: 90%;
+  left: 10%;
+  /* bring your own prefixes */
 }

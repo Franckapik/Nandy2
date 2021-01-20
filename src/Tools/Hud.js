@@ -16,6 +16,7 @@ export const Hud = ({ name }) => {
   const pos9 = useEmpty('origin9Ecology')
   const cameraTarget = useStore((state) => state.cameraTarget)
   const changeTarget = useStore((state) => state.changeTarget)
+  const nbFlower = useStore((state) => state.nbFlowers)
 
   return (
     <div>
@@ -81,13 +82,17 @@ export const Hud = ({ name }) => {
       <a onPointerDown={() => { changeVehiclePos(pos9) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone9</a>
  */}
       </Menu>
-      <div className="hud">
+      <div>
+      <div className="flowerCount">Flower : {nbFlower}</div> 
+      <div className="hud_title">
         {cameraTarget.position && (
           <div>
             <a onClick={() => changeTarget({})}>{cameraTarget.name}</a>
           </div>
         )}
       </div>
+      </div>
+
     </div>
   )
 }

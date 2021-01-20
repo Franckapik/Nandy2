@@ -4,10 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import useBounds from '../hooks/useBounds'
 import useToggle from '../hooks/useToggle'
+import useStore from '../store'
 
 export const Flower = ({ setVisible, Text, scale, url, name }) => {
   const { nodes } = useGLTF(url, '/draco/')
   const [bulleOpen, setBulle] = useToggle()
+  const addFlower = useStore(state => state.addFlower)
   const position = []
   console.log(nodes);
   const bound = useBounds(nodes[name])
@@ -19,7 +21,7 @@ export const Flower = ({ setVisible, Text, scale, url, name }) => {
     mass: 0,
     args: bound,
     position : position2,
-    onCollide: () => setVisible(false),
+    onCollide: () => {setVisible(false); addFlower()},
   }))
 
   return (
