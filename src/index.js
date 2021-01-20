@@ -65,7 +65,6 @@ console.log(useStore.getState().top)
             <Models />
             <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />
-            <Cube name="box1" />
           </Physics>
           {/*             <Light /> */}
           <ambientLight intensity={0.05} />
