@@ -18,6 +18,7 @@ const Vehicle = () => {
 
   let changeTarget = useStore((state) => state.changeTarget)
   let saveVehicle = useStore((state) => state.saveVehicle)
+  let setZone = useStore((state) => state.setZone)
   let portal = useStore((state) => state.portal)
 
   const vehicle = {
@@ -168,14 +169,20 @@ const Vehicle = () => {
   useEffect(
     () =>
       chassisRef.current.api.position.subscribe(
-        (
-          position //https://github.com/pmndrs/zustand#transient-updates-for-often-occuring-state-changes
-        ) => {
+        () => {
+          if (chassisRef.current.position.z > 40) {
+            setZone('1')
+          } else {
+            setZone('2')
+          }
+
           saveVehicle(chassisRef.current)
         }
       ),
     [chassisRef]
   )
+
+
 
   useEffect(() => {
     return () => console.log('unmounting...')

@@ -60,7 +60,6 @@ const Trash = ({ url, ...props }) => {
 export const Models = (props) => {
   const [randomPositions, navPosition] = useRandomFromNavmesh('/navmesh.glb', 'NavMesh', 50) //warning : no draco!
   const [isVisible, setVisible] = useToggle(true)
-  console.log(randomPositions);
   return (
     <>
       <Model url={'/passive1.gltf'} mass={0} />
