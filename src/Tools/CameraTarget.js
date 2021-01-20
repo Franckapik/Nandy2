@@ -28,11 +28,11 @@ export default function CameraTarget() {
   //vehicle vectors
   const vehicleVec = new Vector3()
   const targetVec = new Vector3()
-  const lookUp = new Vector3(0,8,-10)
+  const lookUp = new Vector3(0,8,0)
   const lookY = new Vector3(0,0,20)
   const lookX = new Vector3(20,0,0)
   const scrollOffset = new Vector3(0,0,0)
-  const lookZup = new Vector3(-30,12,-22)
+  const lookZup = new Vector3(-30,12,22)
 
   useFrame(() => {
     if (cameraTarget.position) {
@@ -50,13 +50,19 @@ export default function CameraTarget() {
           vehicleVec.copy(vehicle.position).add(lookUp).add(scrollOffset) 
         }
 
-        cam.current.position.copy(offset) //initial offset camera-target(vehicle) 
-        cam.current.lookAt(vehicleVec) //camera rotation to vehicle
+        lookZup.setX(vehicle.position.z/2)
 
-        if (vehicle.position.z < -40) { //-48
-          cam.current.position.copy(lookZup)
-          cam.current.lookAt(vehicleVec)
+        if (vehicle.position.z < -40) {
+          lookZup.setZ(-22)
         }
+        if (vehicle.position.z > -40) {
+          lookZup.setZ(22)
+        }
+
+        cam.current.position.copy(lookZup)
+        cam.current.lookAt(vehicleVec)
+
+
     }
     }
   })

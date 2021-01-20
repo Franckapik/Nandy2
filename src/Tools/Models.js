@@ -72,7 +72,7 @@ export const Models = (props) => {
       <Model url={'/traversant2.gltf'} mass={0} collision={0} />
       <Model url={'/woodwall.gltf'} mass={0} updateMass={1} />
       <InstanciateMesh position={navPosition} arrayOfPositions={[randomPositions]} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
-      {isVisible && (
+{/*       {isVisible && (
         <Flower
           url={'/onclick1.gltf'}
           setVisible={setVisible}
@@ -81,7 +81,7 @@ export const Models = (props) => {
           Text={['Pont solitaire', <br />, 'il s’est trouvé un ami', <br />, 'le vent vagabond']}
         />
       )}
-      <Trash />
+      <Trash /> */}
     </>
   )
 }
