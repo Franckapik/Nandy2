@@ -26,7 +26,7 @@ export const ObjMesh = ({ mat, position, display, collision, mass, updateMass, .
     }),
     false
   )
-
+  
   return (
     <mesh
     material={mat}

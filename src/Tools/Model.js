@@ -1,5 +1,6 @@
 import { useGLTF } from '@react-three/drei'
 import React from 'react'
+import { Vector3 } from 'three'
 import { ObjMesh } from './ObjMesh'
 
 export const Model = ({ url, mass,updateMass, collision, matcaps }) => {
@@ -16,7 +17,10 @@ export const Model = ({ url, mass,updateMass, collision, matcaps }) => {
         if (noCast.indexOf(obj.name) !== -1) {
           castShadow = false
         }
-        return <ObjMesh updateMass={updateMass} collision={collision} mat={obj.material} mass={mass} display={true} key={name} {...obj} position={obj.getWorldPosition()} castShadow={castShadow} />
+        let objWorldPos = new Vector3()
+        obj.getWorldPosition(objWorldPos)
+
+        return <ObjMesh updateMass={updateMass} collision={collision} mat={obj.material} mass={mass} display={true} key={name} {...obj} position={objWorldPos} castShadow={castShadow} />
       }
     } else {
       //do nothing

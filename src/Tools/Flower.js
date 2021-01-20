@@ -1,6 +1,7 @@
 import { useBox } from '@react-three/cannon'
 import { HTML, useGLTF } from '@react-three/drei'
 import React from 'react'
+import { Vector3 } from 'yuka'
 import useBounds from '../hooks/useBounds'
 import useToggle from '../hooks/useToggle'
 import useStore from '../store'
@@ -13,8 +14,10 @@ export const Flower = ({ setVisible, Text, scale, url, name }) => {
   console.log(nodes);
   const bound = useBounds(nodes[name])
   const position2 = [-55, 2, 55]
+  const ObjWorldPos = new Vector3();
 
-  nodes[name].getWorldPosition().toArray(position)
+  nodes[name].getWorldPosition(ObjWorldPos)
+  ObjWorldPos.toArray(position)
 
   const [ref] = useBox(() => ({
     mass: 0,
