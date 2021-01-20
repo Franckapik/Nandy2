@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -18,9 +17,9 @@ Modal.setAppElement('#root')
 export default function ModalBox({startup}){
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(startup);
-  function openModal() {
+/*   function openModal() {
     setIsOpen(true);
-  }
+  } */
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.

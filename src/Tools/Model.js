@@ -3,7 +3,7 @@ import React from 'react'
 import { ObjMesh } from './ObjMesh'
 
 export const Model = ({ url, mass,updateMass, collision, matcaps }) => {
-  const { nodes, materials } = useGLTF(url, '/draco/')
+  const { nodes } = useGLTF(url, '/draco/')
   const first = Object.keys(nodes)
   const noCast = ['LightLampadaire', 'LightPano1', 'LightPano2']
   let castShadow = true

@@ -1,19 +1,19 @@
 import React from 'react'
-import useStore from '../store'
-import useEmpty from '../hooks/useEmpty'
 import { slide as Menu } from 'react-burger-menu'
+import useEmpty from '../hooks/useEmpty'
+import useStore from '../store'
 
 export const Hud = ({ name }) => {
   const changeVehiclePos = useStore((state) => state.changeVehiclePos)
-  const toggleControls = useStore((state) => state.toggleControls)
-  const pos2 = useEmpty('origin2Game')
+/*   const toggleControls = useStore((state) => state.toggleControls)
+ */  const pos2 = useEmpty('origin2Game')
   const pos3 = useEmpty('origin3Cinema')
   const pos4 = useEmpty('origin4Garden')
   const pos5 = useEmpty('origin5Foodtruck')
   const pos6 = useEmpty('origin6Techno')
-  const pos7 = useEmpty('origin7Inconnu')
+/*   const pos7 = useEmpty('origin7Inconnu')
   const pos8 = useEmpty('origin8Idea')
-  const pos9 = useEmpty('origin9Ecology')
+  const pos9 = useEmpty('origin9Ecology') */
   const cameraTarget = useStore((state) => state.cameraTarget)
   const changeTarget = useStore((state) => state.changeTarget)
   const nbFlower = useStore((state) => state.nbFlowers)
@@ -22,13 +22,13 @@ export const Hud = ({ name }) => {
   return (
     <div>
       <Menu>
-        <a id="home" className="menu-item" href="/">
+        <li id="home" className="menu-item" href="/">
           Home
-        </a>
-        <a id="debug" className="menu-item" href="/debug">
+        </li>
+        <li id="debug" className="menu-item" href="/debug">
           Debug
-        </a>
-        <a
+        </li>
+        <li
           onPointerDown={() => {
             changeVehiclePos(pos2)
           }}
@@ -37,8 +37,8 @@ export const Hud = ({ name }) => {
           }}
           className="menu-item--small">
           Zone2
-        </a>
-        <a
+        </li>
+        <li
           onPointerDown={() => {
             changeVehiclePos(pos3)
           }}
@@ -47,8 +47,8 @@ export const Hud = ({ name }) => {
           }}
           className="menu-item--small">
           Zone3
-        </a>
-        <a
+        </li>
+        <li
           onPointerDown={() => {
             changeVehiclePos(pos4)
           }}
@@ -57,8 +57,8 @@ export const Hud = ({ name }) => {
           }}
           className="menu-item--small">
           Zone4
-        </a>
-        <a
+        </li>
+        <li
           onPointerDown={() => {
             changeVehiclePos(pos5)
           }}
@@ -67,8 +67,8 @@ export const Hud = ({ name }) => {
           }}
           className="menu-item--small">
           Zone5
-        </a>
-        <a
+        </li>
+        <li
           onPointerDown={() => {
             changeVehiclePos(pos6)
           }}
@@ -77,10 +77,10 @@ export const Hud = ({ name }) => {
           }}
           className="menu-item--small">
           Zone6
-        </a>
-        {/*       <a onPointerDown={() => { changeVehiclePos(pos7) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone7</a>
-      <a onPointerDown={() => { changeVehiclePos(pos8) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone8</a>
-      <a onPointerDown={() => { changeVehiclePos(pos9) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone9</a>
+        </li>
+        {/*       <li onPointerDown={() => { changeVehiclePos(pos7) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone7</li>
+      <li onPointerDown={() => { changeVehiclePos(pos8) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone8</li>
+      <li onPointerDown={() => { changeVehiclePos(pos9) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone9</li>
  */}
       </Menu>
       <div>
@@ -89,7 +89,7 @@ export const Hud = ({ name }) => {
       <div className="hud_title">
         {cameraTarget.position && (
           <div>
-            <a onClick={() => changeTarget({})}>{cameraTarget.name}</a>
+            <li onClick={() => changeTarget({})}>{cameraTarget.name}</li>
           </div>
         )}
       </div>

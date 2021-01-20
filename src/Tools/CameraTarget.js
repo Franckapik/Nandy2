@@ -1,5 +1,5 @@
 import { PerspectiveCamera } from '@react-three/drei';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useFrame } from 'react-three-fiber';
 import { Vector3 } from "three";
 import useEmpty from '../hooks/useEmpty';
@@ -30,8 +30,8 @@ export default function CameraTarget() {
   const targetVec = new Vector3()
   const lookUp = new Vector3(0,8,0)
   const lookY = new Vector3(0,0,20)
-  const lookX = new Vector3(20,0,0)
-  const scrollOffset = new Vector3(0,0,0)
+/*   const lookX = new Vector3(20,0,0)
+ */  const scrollOffset = new Vector3(0,0,0)
   const lookZup = new Vector3(-30,12,22)
 
   useFrame(() => {

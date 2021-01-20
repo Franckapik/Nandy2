@@ -16,7 +16,6 @@ const Vehicle = () => {
   const [engineForce, setEngineForce] = useState(0)
   const [brakeForce, setBrakeForce] = useState(0)
 
-  let changeTarget = useStore((state) => state.changeTarget)
   let saveVehicle = useStore((state) => state.saveVehicle)
   let setZone = useStore((state) => state.setZone)
   let portal = useStore((state) => state.portal)
@@ -104,6 +103,7 @@ const Vehicle = () => {
     ]
     wheel_info.isFrontWheel = frontWheel[i]
     vehicle.api.wheelInfos.push(wheel_info)
+    return null
   })
 
   const [wheel_1, wheel_2, wheel_3, wheel_4] = [useRef(), useRef(), useRef(), useRef()]
@@ -154,17 +154,17 @@ const Vehicle = () => {
   useEffect(() => {
     api.applyEngineForce(engineForce, 2)
     api.applyEngineForce(engineForce, 3)
-  }, [engineForce])
+  }, [api,engineForce])
   useEffect(() => {
     api.setSteeringValue(steeringValue, 0)
     api.setSteeringValue(steeringValue, 1)
-  }, [steeringValue])
+  }, [api, steeringValue])
   useEffect(() => {
     api.setBrake(brakeForce, 0)
     api.setBrake(brakeForce, 1)
     api.setBrake(brakeForce, 2)
     api.setBrake(brakeForce, 3)
-  }, [brakeForce])
+  }, [api,brakeForce])
 
   useEffect(
     () =>
@@ -179,7 +179,7 @@ const Vehicle = () => {
           saveVehicle(chassisRef.current)
         }
       ),
-    [chassisRef]
+    [saveVehicle, setZone, chassisRef]
   )
 
 

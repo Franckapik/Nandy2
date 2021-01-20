@@ -1,7 +1,6 @@
 import { useBox } from '@react-three/cannon'
 import { HTML, useGLTF } from '@react-three/drei'
-import React, { useEffect, useState } from 'react'
-import { useFrame } from 'react-three-fiber'
+import React from 'react'
 import useBounds from '../hooks/useBounds'
 import useToggle from '../hooks/useToggle'
 import useStore from '../store'
@@ -17,7 +16,7 @@ export const Flower = ({ setVisible, Text, scale, url, name }) => {
 
   nodes[name].getWorldPosition().toArray(position)
 
-  const [ref, api] = useBox(() => ({
+  const [ref] = useBox(() => ({
     mass: 0,
     args: bound,
     position : position2,

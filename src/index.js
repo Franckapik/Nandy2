@@ -1,9 +1,9 @@
 import { Physics } from '@react-three/cannon'
 import { Loader, Stats } from '@react-three/drei'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { createRef, Suspense, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Controls } from 'react-three-gui'
-import { Cube } from './references/Cube'
+import useStore from './store'
 import './styles.css'
 import CameraTarget from './Tools/CameraTarget'
 import { Ground } from './Tools/Ground'
@@ -11,8 +11,6 @@ import { Hud } from './Tools/Hud'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
-import { createRef } from 'react'
-import useStore from './store'
 
 const App = () => {
   const [events, setEvents] = useState()
@@ -27,7 +25,7 @@ const App = () => {
   }
   // no space-bar pageDown
   window.onkeydown=function(e){
-    if(e.keyCode==32){
+    if(e.keyCode===32){
      return false;
     }
   };
@@ -42,7 +40,7 @@ const App = () => {
     if (window.location.pathname === '/debug') {
       setDebug(true)
     }
-  })
+  }, [])
 
   return (
     <>
