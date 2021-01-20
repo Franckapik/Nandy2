@@ -17,6 +17,7 @@ export const Hud = ({ name }) => {
   const cameraTarget = useStore((state) => state.cameraTarget)
   const changeTarget = useStore((state) => state.changeTarget)
   const nbFlower = useStore((state) => state.nbFlowers)
+  const zone = useStore((state) => state.zone)
 
   return (
     <div>
@@ -84,6 +85,7 @@ export const Hud = ({ name }) => {
       </Menu>
       <div>
       <div className="flowerCount">Flower : {nbFlower}</div> 
+      <div className="zoneName">Zone : {zone}</div> 
       <div className="hud_title">
         {cameraTarget.position && (
           <div>

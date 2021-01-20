@@ -32,13 +32,10 @@ const App = () => {
     }
   };
 
-  const onScroll = (e) => (
-    useStore.getState().top = e.target.scrollTop,
-console.log(useStore.getState().top)
-    )
+  const onScroll = (e) => useStore.getState().top = e.target.scrollTop
+  
   useEffect(() => {
     void onScroll({ target: scrollArea.current })
-    console.log(state);
   }, [])
 
   useEffect(() => {
