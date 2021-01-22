@@ -2,16 +2,19 @@ import React, { useRef, useEffect, useState, useContext, createContext } from 'r
 import { useFrame } from 'react-three-fiber'
 import { GameEntity, EntityManager, SeekBehavior, Vector3, Vehicle } from 'yuka'
 import useStore from '../store'
+import { useRandom } from './useRandom'
 import { useRandomFromNavmesh } from './useRandomFromNavmesh'
 
 const context = createContext()
 
 export function Manager({ children, behavior }) {
-  const [navMesh, random] = useRandomFromNavmesh('/navmesh_applied.glb', 10000)
+  const [random, navPos] = useRandom('/navmesh.glb', 'NavMesh', 1)
+  console.log(random);
 
   const [mgr] = useState(() => new EntityManager(), [])
   useStore.setState({ IAManager: mgr })
   const IAManager = useStore((state) => state.IAManager)
+  
   useEffect(() => {
     const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
     const target = IAManager.entities.find((item) => item.name === 'Target')
