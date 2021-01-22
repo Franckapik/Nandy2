@@ -9,13 +9,9 @@ import Video from './Video'
 import { Frame } from './Frame'
 import { useRandom } from '../hooks/useRandom'
 
-
-const MeshOnNavMesh = ({navMeshUrl, nameNavMesh, meshUrl, nameMesh, maxNumber}) => {
-
+const MeshOnNavMesh = ({ navMeshUrl, nameNavMesh, meshUrl, nameMesh, maxNumber }) => {
   const [random, navPos] = useRandom(navMeshUrl, nameNavMesh, maxNumber)
-  return(
-    <InstanciateMesh position={navPos} arrayOfPositions={random} meshUrl={meshUrl} nameMesh={nameMesh} maxNumber={maxNumber} />
-  )
+  return <InstanciateMesh position={navPos} arrayOfPositions={random} meshUrl={meshUrl} nameMesh={nameMesh} maxNumber={maxNumber} />
 }
 export const Models = (props) => {
   /*   const [isVisible, setVisible] = useToggle(true)
@@ -48,7 +44,7 @@ export const Models = (props) => {
       <Trash /> */}
       <Frame />
       <Video url={'/souffle.webm'} rotation={[0, -Math.PI, 0]} position={soufflePos} />
-      <PositionalAudio url={'/lisbon.mp3'} distance={0} loop={true} />
+      <PositionalAudio url={'/lisbon.mp3'} distance={0} loop={true} />{' '}
     </>
   )
 }
