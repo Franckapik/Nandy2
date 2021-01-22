@@ -9,6 +9,7 @@ export const InstanciateMesh = ({ arrayOfPositions, meshUrl, nameMesh, maxNumber
   const geometry = gltf.nodes[nameMesh].geometry;
   const mat = gltf.nodes[nameMesh].material;
   const ref = useRef();
+  
 
   useFrame(() => {
     if (arrayOfPositions.length) {

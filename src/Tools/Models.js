@@ -8,8 +8,16 @@ import { Model } from './Model'
 import Video from './Video'
 import { Frame } from './Frame'
 
+const MeshOnNavMesh = ({navMeshUrl, nameNavMesh, meshUrl, nameMesh, maxNumber}) => {
+  console.log({navMeshUrl, nameNavMesh, meshUrl, nameMesh, maxNumber});
+
+  const [randomPositions, navPosition] = useRandomFromNavmesh(navMeshUrl, nameNavMesh, 50) //warning : no draco!
+  return(
+    <InstanciateMesh position={navPosition} arrayOfPositions={[randomPositions]} meshUrl={meshUrl} nameMesh={nameMesh} maxNumber={maxNumber} />
+  )
+}
+
 export const Models = (props) => {
-  const [randomPositions, navPosition] = useRandomFromNavmesh('/navmesh.glb', 'NavMesh', 50) //warning : no draco!
   /*   const [isVisible, setVisible] = useToggle(true)
    */ const soufflePos = useEmpty('origin2Souffle')
 
@@ -23,7 +31,7 @@ export const Models = (props) => {
       <Model url={'/traversant1.gltf'} mass={0} collision={0} />
       <Model url={'/traversant2.gltf'} mass={0} collision={0} />
       <Model url={'/woodwall.gltf'} mass={0} updateMass={1} />
-      <InstanciateMesh position={navPosition} arrayOfPositions={[randomPositions]} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
+      <MeshOnNavMesh navMeshUrl={'/navmesh.glb'} nameNavMesh={'NavMesh'} meshUrl={'./traversant.glb'} nameMesh={'Herb'} maxNumber={1000} />
       {/*       {isVisible && (
         <Flower
           url={'/onclick1.gltf'}
