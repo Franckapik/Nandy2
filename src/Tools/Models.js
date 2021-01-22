@@ -39,7 +39,7 @@ export const Models = (props) => {
         position={soufflePos}
       />
 
-    <PositionalAudio url={'/lisbon.mp3'} distance={10} loop={true}   />
+    <PositionalAudio url={'/lisbon.mp3'} distance={0} loop={true}   />
     </>
   )
 }
