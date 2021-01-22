@@ -8,22 +8,29 @@ import { useRandomFromNavmesh } from './useRandomFromNavmesh'
 const context = createContext()
 
 export function Manager({ children, behavior }) {
-  const [random, navPos] = useRandom('/navmesh.glb', 'NavMesh', 1)
-  console.log(random);
+/*   setTimeout(() => generateTarget(target), 3000)
+ */
+  const [random] = useRandom('/navmesh.glb', 'NavMesh', 50)
 
   const [mgr] = useState(() => new EntityManager(), [])
   useStore.setState({ IAManager: mgr })
   const IAManager = useStore((state) => state.IAManager)
-  
+
   useEffect(() => {
-    const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
-    const target = IAManager.entities.find((item) => item.name === 'Target')
-    const behavior2 = new SeekBehavior(target.position)
-    if(vehicle) {
-      vehicle.steering.add(behavior2)
+    if(random.length) {
+      const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
+      const target = IAManager.entities.find((item) => item.name === 'Target')
+      const randomArr = random[Math.floor(Math.random() * random.length)];
+      target.position.set(randomArr[0], randomArr[1], randomArr[2])  
+      console.log(randomArr);
+      const behavior2 = new SeekBehavior(target.position)
+      console.log(IAManager);
+      if(vehicle) {
+        console.log('ici');
+        vehicle.steering.add(behavior2)
+      }
     }
-    target.position.set(random.x, random.y, random.z)
-  }) //no dependencies
+  }, [random]) //no dependencies
 
   useFrame((state, delta) => IAManager.update(delta))
 
