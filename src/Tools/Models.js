@@ -1,18 +1,16 @@
-import { useBox } from '@react-three/cannon'
-import { useGLTF } from '@react-three/drei'
-import React, { useEffect, useState } from 'react'
-import useBounds from '../hooks/useBounds'
+import React from 'react'
+import { PositionalAudio } from '@react-three/drei'
 import useEmpty from '../hooks/useEmpty'
 import { useRandomFromNavmesh } from '../hooks/useRandomFromNavmesh'
-import { InstanciateMesh } from './InstanciateMesh'
+/* import useToggle from '../hooks/useToggle'
+ */import { InstanciateMesh } from './InstanciateMesh'
 import { Model } from './Model'
 import Video from './Video'
-import useToggle from '../hooks/useToggle'
 
 export const Models = (props) => {
   const [randomPositions, navPosition] = useRandomFromNavmesh('/navmesh.glb', 'NavMesh', 50) //warning : no draco!
-  const [isVisible, setVisible] = useToggle(true)
-  const soufflePos = useEmpty('origin2Souffle')
+/*   const [isVisible, setVisible] = useToggle(true)
+ */  const soufflePos = useEmpty('origin2Souffle')
 
   return (
     <>
@@ -41,6 +39,7 @@ export const Models = (props) => {
         position={soufflePos}
       />
 
+    <PositionalAudio url={'/lisbon.mp3'} distance={10} loop={true}   />
     </>
   )
 }
