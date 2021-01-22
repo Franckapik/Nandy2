@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo } from 'react'
 import { useUpdate } from 'react-three-fiber'
+import useSound from '../hooks/useSound'
 import useStore from '../store'
 
 const Video = React.memo((props) => {
   // Use memo to create persistent, memoized objects
   // In this case: create a new texture only when the url changes
   const changeTarget = useStore((state) => state.changeTarget)
+  const playFlute = useSound('/flute.mp3')
 
   const video = useMemo(() => {
     const video = document.createElement('video')
@@ -28,7 +30,7 @@ const Video = React.memo((props) => {
   const geom = useUpdate((ref) => ref.scale(-1, 1, 1), [])
 
   return (
-    <mesh {...props} onClick={(e) => { changeTarget(e.eventObject) }}>
+    <mesh {...props} onClick={(e) => { changeTarget(e.eventObject) }} onClick={() => playFlute.play()}>
       <planeBufferGeometry attach="geometry" ref={geom} args={[10, 5]} />
       <meshStandardMaterial attach="material">
         <videoTexture attach="map" args={[video]} />
