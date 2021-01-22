@@ -30,7 +30,7 @@ const Video = React.memo((props) => {
   const geom = useUpdate((ref) => ref.scale(-1, 1, 1), [])
 
   return (
-    <mesh {...props} onClick={(e) => { changeTarget(e.eventObject) }} onClick={() => playFlute.play()}>
+    <mesh {...props} onClick={(e) => { changeTarget(e.eventObject) ; playFlute.play() }} >
       <planeBufferGeometry attach="geometry" ref={geom} args={[10, 5]} />
       <meshStandardMaterial attach="material">
         <videoTexture attach="map" args={[video]} />
