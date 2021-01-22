@@ -1,3 +1,4 @@
+import { PositionalAudio } from '@react-three/drei'
 import React from 'react'
 import { useRandomFromNavmesh } from '../hooks/useRandomFromNavmesh'
 import { InstanciateMesh } from './InstanciateMesh'
@@ -27,6 +28,7 @@ export const Models = (props) => {
         />
       )}
       <Trash /> */}
+    <PositionalAudio url={'/lisbon.mp3'} distance={10} loop={true}   />
     </>
   )
 }
