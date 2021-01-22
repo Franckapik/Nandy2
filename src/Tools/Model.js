@@ -19,7 +19,7 @@ export const Model = ({ url, mass,updateMass, collision, matcaps }) => {
         }
         let objWorldPos = new Vector3()
         obj.getWorldPosition(objWorldPos)
-
+        console.log(obj.name);
         return <ObjMesh updateMass={updateMass} collision={collision} mat={obj.material} mass={mass} display={true} key={name} {...obj} position={objWorldPos} castShadow={castShadow} />
       }
     } else {
