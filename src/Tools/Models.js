@@ -2,11 +2,13 @@ import { useBox } from '@react-three/cannon'
 import { useGLTF } from '@react-three/drei'
 import React, { useEffect, useState } from 'react'
 import useBounds from '../hooks/useBounds'
+import useEmpty from '../hooks/useEmpty'
 import { useRandomFromNavmesh } from '../hooks/useRandomFromNavmesh'
 import useToggle from '../hooks/useToggle'
 import { Flower } from './Flower'
 import { InstanciateMesh } from './InstanciateMesh'
 import { Model } from './Model'
+import Video from './Video'
 
 const Woodwall = ({ url, ...props }) => {
   const { nodes } = useGLTF('/onclick1.gltf', '/draco/')
@@ -60,6 +62,8 @@ const Trash = ({ url, ...props }) => {
 export const Models = (props) => {
   const [randomPositions, navPosition] = useRandomFromNavmesh('/navmesh.glb', 'NavMesh', 50) //warning : no draco!
   const [isVisible, setVisible] = useToggle(true)
+  const soufflePos = useEmpty('origin2Souffle')
+
   return (
     <>
       <Model url={'/passive1.gltf'} mass={0} />
@@ -81,6 +85,12 @@ export const Models = (props) => {
         />
       )}
       <Trash /> */}
+                <Video
+        url={"/souffle.webm"}
+        rotation={[0, -Math.PI, 0]}
+        position={soufflePos}
+      />
+
     </>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import { useUpdate } from 'react-three-fiber'
+import useEmpty from '../hooks/useEmpty'
 import useStore from '../store'
 
 const Video = React.memo((props) => {
@@ -28,8 +29,8 @@ const Video = React.memo((props) => {
   const geom = useUpdate((ref) => ref.scale(-1, 1, 1), [])
 
   return (
-    <mesh {...props} onClick={(e) => { changeTarget(e.eventObject) }} castShadow>
-      <planeBufferGeometry attach="geometry" ref={geom} args={[18, 9]} />
+    <mesh {...props} onClick={(e) => { changeTarget(e.eventObject) }}>
+      <planeBufferGeometry attach="geometry" ref={geom} args={[10, 5]} />
       <meshStandardMaterial attach="material">
         <videoTexture attach="map" args={[video]} />
       </meshStandardMaterial>
