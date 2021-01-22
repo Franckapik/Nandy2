@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
 import { useUpdate } from 'react-three-fiber'
-import useEmpty from '../hooks/useEmpty'
 import useStore from '../store'
 
 const Video = React.memo((props) => {
