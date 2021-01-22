@@ -13,7 +13,7 @@ export const InstanciateMesh = ({ arrayOfPositions, meshUrl, nameMesh, maxNumber
 
   useFrame(() => {
     if (arrayOfPositions.length) {
-      arrayOfPositions[0].map((a, i) => {
+      arrayOfPositions.map((a, i) => {
         tempObject.position.set(...a);
         tempObject.updateMatrix();
         ref.current.setMatrixAt(i, tempObject.matrix);
