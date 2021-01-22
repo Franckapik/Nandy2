@@ -11,7 +11,6 @@ export const Frame = (props) => {
   const tagPos = useEmpty('origin3Frame');
   const scale = 0.015;
   const args = [texture.image.width * scale, texture.image.height * scale];
-  console.log(args);
 
   return (
     <mesh
