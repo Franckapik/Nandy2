@@ -8,7 +8,7 @@ import useStore from '../store';
 export function Cube(props) {
 /*   const positionX = useControl('Cube Position X', { type: 'number', value : -65, min : -66, max : 0 });
  */  
-const [ref] = useYuka({ type: 'Vehicle', name: 'Vehicle' })
+const [ref] = useYuka({ type: 'Vehicle', name: 'Vehicle', ...props })
 
   const setOpacity = useStore((state) => state.setOpacity);
   const toggleVisible = useStore(state => state.toggleVisible);

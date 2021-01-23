@@ -25,12 +25,14 @@ WanderBehavior */
   
 } */
 
+//https://codesandbox.io/embed/yuka-seek-demo-with-react-three-fiber-bys2i?codemirror=1
+
 function TargetMesh(props) {
-  const [ref] = useYuka({ type: 'GameEntity', name: 'Target' })
+  const [ref] = useYuka({ type: 'GameEntity', name: 'Target', position: props.position})
   
   return (
     <mesh ref={ref}>
-      <sphereBufferGeometry attach="geometry" args={[5]} />
+      <sphereBufferGeometry attach="geometry" args={[3]} />
       <meshBasicMaterial color={0xff0000} attach="material" />
     </mesh>
   )
