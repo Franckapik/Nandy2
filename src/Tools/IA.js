@@ -17,15 +17,11 @@ PursuitBehavior
 SeekBehavior
 WanderBehavior */
 
-/* function VehicleMesh(props) {
-  const [ref] = useYuka({ type: 'Vehicle', name: 'Vehicle' })
-  const { nodes, materials } = useGLTF('remorque.gltf', '/draco/')
+//react + yuka
+//https://codesandbox.io/embed/yuka-seek-demo-with-react-three-fiber-bys2i?codemirror=1 
+//react + yuka + pathfinding
+//https://codesandbox.io/s/react-three-fiber-yuka-pathfinding-ic4fg?file=/src/state.js:721-746
 
-  return <mesh ref={ref} geometry={nodes.Remorque.geometry} />
-  
-} */
-
-//https://codesandbox.io/embed/yuka-seek-demo-with-react-three-fiber-bys2i?codemirror=1
 
 function TargetMesh(props) {
   const [ref] = useYuka({ type: 'GameEntity', name: 'Target', position: props.position})
