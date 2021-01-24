@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { NavMeshLoader } from 'yuka'
 
-export const useNavmesh = ({url}) => {
-  const [navMesh, setNavmesh] = useState([])
-  console.log(url);
+const useNavmesh = (url) => {
+  const [navMesh, setNavmesh] = useState(0)
+  
   useEffect(() => {
+    console.log("oui");
     const loader = new NavMeshLoader()
     async function fetchData() {
       const newNav = await loader.load(url) 
@@ -16,3 +17,4 @@ export const useNavmesh = ({url}) => {
   return navMesh
 }
 
+export default useNavmesh

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import { EntityManager, FollowPathBehavior, GameEntity, NavMeshLoader, OnPathBehavior, SeekBehavior, Vehicle } from 'yuka'
 import useStore from '../store'
-import {useNavmesh} from './useNavmesh'
+import useNavmesh from './useNavmesh'
 import { useRandom } from './useRandom'
 
 export const Manager = ({ children, behavior }) => {
@@ -15,13 +15,12 @@ export const Manager = ({ children, behavior }) => {
   const target = IAManager.entities.find((item) => item.name === 'Target')
   const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
 
-  const [navMesh] = useNavmesh('/navmesh.glb')
-  console.log(navMesh);
+  const navMesh = useNavmesh('/navmesh.glb') //no draco!
 
 
   useEffect(() => {
     if (vehicle) {
-      vehicle.maxSpeed = 5;
+      vehicle.maxSpeed = 15;
       const followPathBehavior = new FollowPathBehavior()
       const onPathBehavior = new OnPathBehavior()  
       followPathBehavior.active = false
@@ -32,9 +31,12 @@ export const Manager = ({ children, behavior }) => {
       vehicle.steering.add(followPathBehavior)
       vehicle.steering.add(onPathBehavior)
 
-/*       findPathTo(vehicle, targetPos)
+      if (navMesh) {
+        console.log(navMesh);
+        findPathTo(vehicle, targetPos, navMesh)
+      }
 
-      function findPathTo(vehicle, target) {
+      function findPathTo(vehicle, target, navMesh) {
         const from = vehicle.position
         const to = target
   
@@ -49,13 +51,12 @@ export const Manager = ({ children, behavior }) => {
           followPathBehavior.path.add(point)
           onPathBehavior.path.add(point)
         }
-      } */
-
+      }
     }
   }, [targetPos]) //no dependencies
 
   let elapsed = 0
-  let interval = 3
+  let interval = 8
 
   useFrame((state, delta) => {
     if (elapsed >= interval) {
