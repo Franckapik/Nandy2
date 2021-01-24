@@ -32,7 +32,7 @@ function TargetMesh(props) {
   
   return (
     <mesh ref={ref}>
-      <sphereBufferGeometry attach="geometry" args={[3]} />
+      <sphereBufferGeometry attach="geometry" args={[1]} />
       <meshBasicMaterial color={0xff0000} attach="material" />
     </mesh>
   )
