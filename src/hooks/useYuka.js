@@ -58,11 +58,9 @@ export function Manager({ children, behavior }) {
 
 
   useEffect(() => {
-    if (random.length) {
-      const behavior2 = new SeekBehavior(targetPos)
-      if (vehicle) {
-        vehicle.steering.add(behavior2)
-      }
+    if (vehicle) {
+      const behavior = new SeekBehavior(targetPos)
+      vehicle.steering.add(behavior)
     }
   }, [targetPos]) //no dependencies
 
