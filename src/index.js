@@ -11,6 +11,7 @@ import { Hud } from './Tools/Hud'
 import ModalBox from './Tools/ModalBox'
 import { Models } from './Tools/Models'
 import Vehicle from './Tools/Vehicle'
+import {IA} from './Tools/IA'
 
 const App = () => {
   const [events, setEvents] = useState()
@@ -55,7 +56,7 @@ const App = () => {
           }}>
           <CameraTarget />
           <Physics gravity={[0, -10, 0]}>
-            {/*<IA />*/}
+            <IA />
 
             <Models />
             <Vehicle position={[-5, 5, 5]} />

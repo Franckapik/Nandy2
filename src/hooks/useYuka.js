@@ -1,64 +1,88 @@
-import React, { useRef, useEffect, useState, useContext, createContext } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
-import { GameEntity, EntityManager, SeekBehavior, Vector3, Vehicle } from 'yuka'
+import { EntityManager, FollowPathBehavior, GameEntity, NavMeshLoader, OnPathBehavior, SeekBehavior, Vehicle } from 'yuka'
 import useStore from '../store'
-import { useRandomFromNavmesh } from './useRandomFromNavmesh'
+import useNavmesh from './useNavmesh'
+import { useRandom } from './useRandom'
 
-const context = createContext()
-
-export function Manager({ children, behavior }) {
-  const [navMesh, random] = useRandomFromNavmesh('/navmesh_applied.glb', 10000)
+export const Manager = ({ children, behavior }) => {
+  const [targetPos, setPos] = useState()
+  const [random] = useRandom('/navmesh.glb', 'NavMesh', 50) //origin navmesh to world origin on blender
 
   const [mgr] = useState(() => new EntityManager(), [])
   useStore.setState({ IAManager: mgr })
   const IAManager = useStore((state) => state.IAManager)
-  useEffect(() => {
-    const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
-    const target = IAManager.entities.find((item) => item.name === 'Target')
-    const behavior2 = new SeekBehavior(target.position)
-    if(vehicle) {
-      vehicle.steering.add(behavior2)
-    }
-    target.position.set(random.x, random.y, random.z)
-  }) //no dependencies
+  const target = IAManager.entities.find((item) => item.name === 'Target')
+  const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
 
-  useFrame((state, delta) => IAManager.update(delta))
+  const navMesh = useNavmesh('/navmesh.glb') //no draco!
+
+
+  useEffect(() => {
+    if (vehicle) {
+      vehicle.maxSpeed = 15;
+      const followPathBehavior = new FollowPathBehavior()
+      const onPathBehavior = new OnPathBehavior()  
+      followPathBehavior.active = false
+      onPathBehavior.active = false
+      onPathBehavior.radius = 0.01  
+
+      const behavior = new SeekBehavior(targetPos)
+      vehicle.steering.add(followPathBehavior)
+      vehicle.steering.add(onPathBehavior)
+
+      if (navMesh) {
+        console.log(navMesh);
+        findPathTo(vehicle, targetPos, navMesh)
+      }
+
+      function findPathTo(vehicle, target, navMesh) {
+        const from = vehicle.position
+        const to = target
+  
+        const path = navMesh.findPath(from, to)
+  
+        onPathBehavior.active = true
+        onPathBehavior.path.clear()
+        followPathBehavior.active = true
+        followPathBehavior.path.clear()
+  
+        for (const point of path) {
+          followPathBehavior.path.add(point)
+          onPathBehavior.path.add(point)
+        }
+      }
+    }
+  }, [targetPos]) //no dependencies
+
+  let elapsed = 0
+  let interval = 8
+
+  useFrame((state, delta) => {
+    if (elapsed >= interval) {
+      const randomArr = random[Math.floor(Math.random() * random.length)]
+      target.position.set(randomArr[0], randomArr[1], randomArr[2])
+      setPos(target.position)
+      elapsed = 0
+    } else {
+      elapsed += delta
+    }
+    IAManager.update(delta)
+  })
 
   return children
 }
 
-//le hook useYuka creer un ref qui est juste un obj.current
-//le ref.position et quaternions sont modifiés selon l'entité rendue.
-//pour la target qui change, j'ai constaté l'utilisation du useStore.subscribe pour changer modificer les parametres du comportement selon la nouvelle position (trigerring )
-//possible de tester d'abord dans le manager puis ensuite de l'exporter ailleurs.
-//setInterval function dans un hook avec le navmesh avec le temps en parametre.
-//intéret du GameEntity ? setRenderComponent?
-//le ref permets de controler le component => reflechir pour le vehicle.
-//tte modification du ref se situe dans le hook useYukafinalement.
-//le cycle d'un hook est rendu via le useEffect avec ou sans parametre de rafraichissement.
-
-function generateTarget(target) {
-  const radius = 2
-  const phi = Math.acos(2 * Math.random() - 1)
-  const theta = Math.random() * Math.PI * 2
-
-  if (target) {
-    target.position.fromSpherical(radius, phi, theta)
-  }
-
-  setTimeout(() => generateTarget(target), 3000)
-}
-
-export function useYuka({ type = GameEntity, position = [0, 0, 0], name = 'unnamed' }) {
-  const ref = useRef({position : [0,0,0]})
+export const useYuka = ({ type = GameEntity, position = [0, 0, 0], name = 'unnamed', ...props }) => {
+  const ref = useRef()
   switch (type) {
     case 'Vehicle':
-      type = Vehicle 
-      break;
-  
+      type = Vehicle
+      break
+
     default:
       type = GameEntity
-      break;
+      break
   }
   const mgr = useStore((state) => state.IAManager)
   const [entity] = useState(() => new type())
@@ -71,7 +95,7 @@ export function useYuka({ type = GameEntity, position = [0, 0, 0], name = 'unnam
     })
     mgr.add(entity)
     return () => mgr.remove(entity)
-  }, [])
+  }, [position])
 
   return [ref, entity]
 }
