@@ -36,6 +36,7 @@ export default function CameraTarget() {
 
   useFrame(() => {
     if (cameraTarget.position) {
+      console.log('opui');
       targetVec.copy(cameraTarget.position) //copy new target position
       cameraRef.current.position.lerp(targetVec,0.05) //move to the target position
       cam.current.position.copy(lookY)  //front offset to the new target

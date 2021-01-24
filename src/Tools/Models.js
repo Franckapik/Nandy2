@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { PositionalAudio } from '@react-three/drei'
 import useEmpty from '../hooks/useEmpty'
 import { useRandomFromNavmesh } from '../hooks/useRandomFromNavmesh'
@@ -8,7 +8,50 @@ import { Model } from './Model'
 import Video from './Video'
 import { Frame } from './Frame'
 import { useRandom } from '../hooks/useRandom'
+import { Vector3 } from 'three'
+import { useFrame } from 'react-three-fiber'
+import useStore from '../store'
+import {Cube} from '../references/Cube'
 
+const FlowerGen = (props) => {
+  const [count, setCount] = useState([])
+  const [randomTime, setTime] = useState(5)
+
+  function setFlowerPos(min, max) {
+    let plusOrMinus = Math.random() < 0.5 ? -1 : 1
+    let distance = (Math.random() * (max - min) + min).toFixed(2) * plusOrMinus
+    return distance
+  }
+  const min = 5
+  const max = 20
+  const offset = new Vector3()
+  const flowerPos = new Vector3()
+
+  let elapsed = 0
+  useFrame(( _, delta) => {
+    const vehicle = useStore.getState().vehicleObj
+    if (vehicle) {
+      if (elapsed >= randomTime) {
+        const pos = []
+        setTime(Math.random() * (max - min) + min);
+        offset.set(setFlowerPos(2, 5), 0, setFlowerPos(2, 5))
+        flowerPos.copy(vehicle.position).add(offset).toArray(pos)
+        setCount((oldArr) => [...oldArr, pos])
+        console.log(count);
+       elapsed = 0
+      } else {
+        elapsed += delta
+      }
+    }
+
+  })
+
+   return count.map((a, i) => {
+    return <Cube key={i} position={a} /> 
+  }) 
+
+  return null
+}
 
 const MeshOnNavMesh = ({navMeshUrl, nameNavMesh, meshUrl, nameMesh, maxNumber}) => {
 
@@ -46,6 +89,7 @@ export const Models = (props) => {
         />
       )}
       <Trash /> */}
+      <FlowerGen />
       <Frame />
       <Video url={'/souffle.webm'} rotation={[0, -Math.PI, 0]} position={soufflePos} />
       <PositionalAudio url={'/lisbon.mp3'} distance={0} loop={true} />
