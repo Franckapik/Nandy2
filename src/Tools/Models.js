@@ -16,9 +16,8 @@ import {Cube} from '../references/Cube'
 const FlowerGen = (props) => {
   const [count, setCount] = useState([])
   const [randomTime, setTime] = useState(5)
-  const { nodes } = useGLTF('./active1.gltf', '/draco/');
-  const name = 'burger'
-  console.log(nodes);
+  const { nodes } = useGLTF('./traversant1.gltf', '/draco/'); // no .glb
+  const name = 'Herb1'
 
   function setFlowerPos(min, max) {
     let plusOrMinus = Math.random() < 0.5 ? -1 : 1
@@ -39,6 +38,7 @@ const FlowerGen = (props) => {
         setTime(Math.random() * (max - min) + min);
         offset.set(setFlowerPos(2, 5), 0, setFlowerPos(2, 5))
         vehicle.position.setY(0);
+        console.log(nodes[name].position);
         flowerPos.copy(vehicle.position).add(offset).toArray(pos)
         setCount((oldArr) => [...oldArr, pos])
        elapsed = 0
