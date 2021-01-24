@@ -5,7 +5,6 @@ const useNavmesh = (url) => {
   const [navMesh, setNavmesh] = useState(0)
   
   useEffect(() => {
-    console.log("oui");
     const loader = new NavMeshLoader()
     async function fetchData() {
       const newNav = await loader.load(url) 
