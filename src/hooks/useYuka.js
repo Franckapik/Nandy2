@@ -13,7 +13,6 @@ export const Manager = ({ children, behavior }) => {
   const IAManager = useStore((state) => state.IAManager)
   const target = IAManager.entities.find((item) => item.name === 'Target')
   const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
-  console.log(vehicle);
 
   useEffect(() => {
     if (vehicle) {
