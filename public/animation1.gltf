@@ -1,0 +1,21 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.3.48",
+        "version" : "2.0"
+    },
+    "extensionsUsed" : [
+        "KHR_draco_mesh_compression"
+    ],
+    "extensionsRequired" : [
+        "KHR_draco_mesh_compression"
+    ],
+    "scene" : 1,
+    "scenes" : [
+        {
+            "name" : "Matcaps"
+        },
+        {
+            "name" : "Nandy"
+        }
+    ]
+}

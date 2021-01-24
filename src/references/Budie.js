@@ -6,7 +6,7 @@ import { useYuka } from '../hooks/useYuka'
 
 
 export default function Budie(props) {
-  const [ref] = useYuka({ type: 'Vehicle', name: 'Vehicle' })
+  const [ref] = useYuka({ type: 'Vehicle', name: 'Vehicle', position : props.position })
   const { nodes, materials, animations } = useGLTF('./budie.gltf')
   const actions = useRef()
   const [mixer] = useState(() => new THREE.AnimationMixer())
