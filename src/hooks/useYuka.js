@@ -13,9 +13,11 @@ export const Manager = ({ children, behavior }) => {
   const IAManager = useStore((state) => state.IAManager)
   const target = IAManager.entities.find((item) => item.name === 'Target')
   const vehicle = IAManager.entities.find((item) => item.name === 'Vehicle')
+  console.log(vehicle);
 
   useEffect(() => {
     if (vehicle) {
+      vehicle.maxSpeed = 5;
       const behavior = new SeekBehavior(targetPos)
       vehicle.steering.add(behavior)
     }
@@ -29,8 +31,6 @@ export const Manager = ({ children, behavior }) => {
       const randomArr = random[Math.floor(Math.random() * random.length)]
       target.position.set(randomArr[0], randomArr[1], randomArr[2])
       setPos(target.position)
-      console.log(targetPos)
-
       elapsed = 0
     } else {
       elapsed += delta
