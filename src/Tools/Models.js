@@ -1,17 +1,15 @@
-import React, { useRef, useState } from 'react'
 import { PositionalAudio, useGLTF } from '@react-three/drei'
+import React, { useState } from 'react'
+import { useFrame } from 'react-three-fiber'
+import { Vector3 } from 'three'
 import useEmpty from '../hooks/useEmpty'
-import { useRandomFromNavmesh } from '../hooks/useRandomFromNavmesh'
+import { useRandom } from '../hooks/useRandom'
+import useStore from '../store'
+import { Frame } from './Frame'
 /* import useToggle from '../hooks/useToggle'
  */ import { InstanciateMesh } from './InstanciateMesh'
 import { Model } from './Model'
 import Video from './Video'
-import { Frame } from './Frame'
-import { useRandom } from '../hooks/useRandom'
-import { Vector3 } from 'three'
-import { useFrame } from 'react-three-fiber'
-import useStore from '../store'
-import {Cube} from '../references/Cube'
 
 const FlowerGen = (props) => {
   const [count, setCount] = useState([])
