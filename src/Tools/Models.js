@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { PositionalAudio } from '@react-three/drei'
+import { PositionalAudio, useGLTF } from '@react-three/drei'
 import useEmpty from '../hooks/useEmpty'
 import { useRandomFromNavmesh } from '../hooks/useRandomFromNavmesh'
 /* import useToggle from '../hooks/useToggle'
@@ -16,14 +16,17 @@ import {Cube} from '../references/Cube'
 const FlowerGen = (props) => {
   const [count, setCount] = useState([])
   const [randomTime, setTime] = useState(5)
+  const { nodes } = useGLTF('./active1.gltf', '/draco/');
+  const name = 'burger'
+  console.log(nodes);
 
   function setFlowerPos(min, max) {
     let plusOrMinus = Math.random() < 0.5 ? -1 : 1
     let distance = (Math.random() * (max - min) + min).toFixed(2) * plusOrMinus
     return distance
   }
-  const min = 5
-  const max = 20
+  const min = 1
+  const max = 3
   const offset = new Vector3()
   const flowerPos = new Vector3()
 
@@ -35,9 +38,9 @@ const FlowerGen = (props) => {
         const pos = []
         setTime(Math.random() * (max - min) + min);
         offset.set(setFlowerPos(2, 5), 0, setFlowerPos(2, 5))
+        vehicle.position.setY(0);
         flowerPos.copy(vehicle.position).add(offset).toArray(pos)
         setCount((oldArr) => [...oldArr, pos])
-        console.log(count);
        elapsed = 0
       } else {
         elapsed += delta
@@ -47,10 +50,13 @@ const FlowerGen = (props) => {
   })
 
    return count.map((a, i) => {
-    return <Cube key={i} position={a} /> 
+     console.log(a);
+    return (
+      <mesh material={nodes[name].material} geometry={nodes[name].geometry} position={a} />
+) 
+ 
   }) 
 
-  return null
 }
 
 const MeshOnNavMesh = ({navMeshUrl, nameNavMesh, meshUrl, nameMesh, maxNumber}) => {
