@@ -36,7 +36,6 @@ const FlowerGen = (props) => {
         setTime(Math.random() * (max - min) + min);
         offset.set(setFlowerPos(2, 5), 0, setFlowerPos(2, 5))
         vehicle.position.setY(0);
-        console.log(nodes[name].position);
         flowerPos.copy(vehicle.position).add(offset).toArray(pos)
         setCount((oldArr) => [...oldArr, pos])
        elapsed = 0
@@ -44,16 +43,11 @@ const FlowerGen = (props) => {
         elapsed += delta
       }
     }
-
   })
 
-   return count.map((a, i) => {
-     console.log(a);
-    return (
-      <mesh material={nodes[name].material} geometry={nodes[name].geometry} position={a} />
-) 
- 
-  }) 
+   return count.map(
+     (a, i) => <mesh material={nodes[name].material} geometry={nodes[name].geometry} position={a} />
+   ) 
 
 }
 
