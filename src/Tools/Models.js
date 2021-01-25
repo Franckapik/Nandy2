@@ -18,7 +18,10 @@ const Bird = (props) => {
   const ref = useRef()
   const [mixer] = useState(() => new AnimationMixer())
   const name = 'Oiseau'
-  useFrame((state, delta) => mixer.update(delta))
+  useFrame((state, delta) => {
+    
+    ref.current.position.z += 0.1
+    mixer.update(delta)})
   useEffect(() => {
     console.log(nodes);
      actions.current = {
@@ -28,7 +31,7 @@ const Bird = (props) => {
   }, [])
 
   return (    
-  <group ref={ref} position={[-51,2,55]} rotation={[Math.PI/2,0,0]} {...props} dispose={null}>
+  <group ref={ref} position={[-50,12,10]} rotation={[Math.PI/1.5,0,0]} {...props} dispose={null}>
     {
     Object.entries(nodes).map((obj, name) => {
       console.log(obj);
