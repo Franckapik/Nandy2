@@ -1,7 +1,7 @@
 import { PositionalAudio, useGLTF } from '@react-three/drei'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
-import { Vector3 } from 'three'
+import { AnimationMixer, Vector3 } from 'three'
 import useEmpty from '../hooks/useEmpty'
 import { useRandom } from '../hooks/useRandom'
 import Budie from '../references/Budie'
@@ -11,6 +11,48 @@ import { Frame } from './Frame'
  */ import { InstanciateMesh } from './InstanciateMesh'
 import { Model } from './Model'
 import Video from './Video'
+
+const Bird = (props) => {
+  const { nodes, materials, animations } = useGLTF('./animation1.gltf')
+  const actions = useRef()
+  const ref = useRef()
+  const [mixer] = useState(() => new AnimationMixer())
+  const name = 'Oiseau'
+  useFrame((state, delta) => mixer.update(delta))
+  useEffect(() => {
+    console.log(nodes);
+     actions.current = {
+      Marche: mixer.clipAction(animations[0], ref.current).play()
+    } 
+    return () => animations.forEach((clip) => mixer.uncacheClip(clip))
+  }, [])
+
+  return (    
+  <group ref={ref} position={[-51,2,55]} rotation={[Math.PI/2,0,0]} {...props} dispose={null}>
+    {
+    Object.entries(nodes).map((obj, name) => {
+      console.log(obj);
+      if (obj[1].type === 'Bone' ) {
+        console.log(obj[1].name);
+        return <primitive object={obj[1]} />
+      }
+      if (obj[1].type === 'SkinnedMesh') {
+        console.log(obj[1]);
+        return     <skinnedMesh
+        onClick={() => {
+          console.log('Marche!')
+        }}
+        material={obj[1].material}
+        geometry={obj[1].geometry}
+        skeleton={obj[1].skeleton}
+      />
+      }
+    }
+    )
+  }
+
+  </group>)
+}
 
 const FlowerGen = (props) => {
   const [count, setCount] = useState([])
@@ -88,6 +130,7 @@ export const Models = (props) => {
         />
       )}
       <Trash /> */}
+      <Bird />
       <FlowerGen />
       <Frame />
       <Video url={'/souffle.webm'} rotation={[0, -Math.PI, 0]} position={soufflePos} />
