@@ -137,7 +137,13 @@ export const Models = (props) => {
       <FlowerGen />
       <Frame />
       <Video url={'/souffle.webm'} rotation={[0, -Math.PI, 0]} position={soufflePos} />
-      <PositionalAudio url={'/lisbon.mp3'} distance={0} loop={true} />
+                <Video
+        url={"/souffle.webm"}
+        rotation={[0, -Math.PI, 0]}
+        position={soufflePos}
+      />
+
+    <PositionalAudio url={'/lisbon.mp3'} distance={10} loop={true}   />
     </>
   )
 }
