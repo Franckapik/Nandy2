@@ -1,60 +1,15 @@
-import { PositionalAudio, useGLTF } from '@react-three/drei'
-import React, { useEffect, useRef, useState } from 'react'
-import { useFrame } from 'react-three-fiber'
-import { AnimationMixer } from 'three'
+import { PositionalAudio } from '@react-three/drei'
+import React from 'react'
 import useEmpty from '../hooks/useEmpty'
-import { useRandom } from '../hooks/useRandom'
-import Budie from '../references/Budie'
-import { Frame } from './Frame'
 import useToggle from '../hooks/useToggle'
-import { InstanciateMesh } from './InstanciateMesh'
-import { Model } from './Model'
-import Video from './Video'
+import { Bird } from './Bird'
 import { Flower } from './Flower'
 import { FlowerGen } from './FlowerGen'
-import { Cube } from '../references/Cube'
+import { Frame } from './Frame'
+import { MeshOnNavMesh } from './MeshOnNavMesh'
+import { Model } from './Model'
+import Video from './Video'
 
-const Bird = ({ url }, props) => {
-  const { nodes, materials, animations } = useGLTF(url)
-  const actions = useRef()
-  const ref = useRef()
-  const [mixer] = useState(() => new AnimationMixer())
-  useFrame((state, delta) => {
-    ref.current.position.z += 0.1
-    mixer.update(delta)
-  })
-  useEffect(() => {
-    actions.current = {
-      Marche: mixer.clipAction(animations[0], ref.current).play()
-    }
-    return () => animations.forEach((clip) => mixer.uncacheClip(clip))
-  }, [])
-
-  return (
-    <group ref={ref} {...props} dispose={null}>
-      {Object.entries(nodes).map((obj, name) => {
-        if (obj[1].type === 'Bone') {
-          return <primitive object={obj[1]} />
-        }
-        if (obj[1].type === 'SkinnedMesh') {
-          console.log(obj[1])
-          return (
-            <skinnedMesh
-              material={obj[1].material}
-              geometry={obj[1].geometry}
-              skeleton={obj[1].skeleton}
-            />
-          )
-        }
-      })}
-    </group>
-  )
-}
-
-const MeshOnNavMesh = ({ navMeshUrl, nameNavMesh, meshUrl, nameMesh, maxNumber }) => {
-  const [random, navPos] = useRandom(navMeshUrl, nameNavMesh, maxNumber)
-  return <InstanciateMesh position={navPos} arrayOfPositions={random} meshUrl={meshUrl} nameMesh={nameMesh} maxNumber={maxNumber} />
-}
 export const Models = (props) => {
   const [isVisible, setVisible] = useToggle(true)
   const soufflePos = useEmpty('origin2Souffle')
@@ -89,7 +44,6 @@ export const Models = (props) => {
       <Frame />
       <Video url={'/souffle.webm'} rotation={[0, -Math.PI, 0]} position={soufflePos} />
       <Video url={'/souffle.webm'} rotation={[0, -Math.PI, 0]} position={soufflePos} />
-      <Cube position={[-50, -1, 58]} />
       <PositionalAudio url={'/lisbon.mp3'} distance={10} loop={true} />
     </>
   )

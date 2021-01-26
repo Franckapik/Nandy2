@@ -12,17 +12,12 @@ export default function Budie(props) {
   const [mixer] = useState(() => new THREE.AnimationMixer())
   useFrame((state, delta) => mixer.update(delta))
   useEffect(() => {
-    console.log(nodes);
     actions.current = {
       Marche: mixer.clipAction(animations[0], ref.current).play()
     }
     return () => animations.forEach((clip) => mixer.uncacheClip(clip))
   }, [])
 
-  /*   useEffect(() => {
-    actions.current.Marche.play()
-    return null
-  }, []) */
 
   return (
     <group ref={ref} {...props} dispose={null}>

@@ -54,8 +54,7 @@ export const FlowerGen = (props) => {
   });
 
 
-
   return count.map(
-    (a, i) => <Flower material={nodes[name].material} geometry={nodes[name].geometry} position={a} />);
+    (a, i) => <Flower key={'flower' + i} material={nodes[name].material} geometry={nodes[name].geometry} position={a} />);
 
 };

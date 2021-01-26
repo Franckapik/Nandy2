@@ -32,7 +32,6 @@ export const Manager = ({ children, behavior }) => {
       vehicle.steering.add(onPathBehavior)
 
       if (navMesh) {
-        console.log(navMesh);
         findPathTo(vehicle, targetPos, navMesh)
       }
 
