@@ -71,9 +71,6 @@ export default function CameraTarget() {
         cam.current.position.copy(lookZup)
         cam.current.lookAt(vehicleVec)
         cameraRef.current.position.copy(vehicleVec)
-        spotlight.current.position.copy(offset) 
-        spotlight.current.target = cubeRef.current;
-        spotlight.current.angle = 0.4
 
     }
     }
@@ -82,11 +79,6 @@ export default function CameraTarget() {
   return (
   <group ref={cameraRef}>
     <PerspectiveCamera ref={cam} makeDefault fov={35}/>
-    <spotLight ref={spotlight} angle={0.4} penumbra={0.3} intensity={0.5} distance={100} color="white" castShadow />
-    <mesh visible={false} ref={cubeRef} position={[-5,-5,5]}>
-        <boxBufferGeometry />
-        <meshLambertMaterial color="hotpink" />
-      </mesh>
   );
   </group>
   )
