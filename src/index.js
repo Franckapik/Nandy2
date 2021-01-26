@@ -57,7 +57,6 @@ const App = () => {
           <CameraTarget />
           <Physics gravity={[0, -10, 0]}>
             <IA />
-
             <Models />
             <Vehicle position={[-5, 5, 5]} />
             <Ground mode="basic" scale={1} parallaxFactor={-0.2} minLayers={8} maxLayers={30} />

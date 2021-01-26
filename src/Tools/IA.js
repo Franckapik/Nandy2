@@ -36,9 +36,10 @@ function TargetMesh(props) {
 
 export const IA = () => {
   return (
-    <Manager>
+    null
+/*     <Manager>
             <Budie position={[-55,0,77]} />
       <TargetMesh />
-    </Manager>
+    </Manager> */
   )
 }
