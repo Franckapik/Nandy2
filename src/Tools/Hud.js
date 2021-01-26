@@ -83,7 +83,7 @@ export const Hud = ({ name }) => {
       <li onPointerDown={() => { changeVehiclePos(pos9) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone9</li>
  */}
       </Menu>
-      <div>
+      <div className="hud">
       <div className="flowerCount">Flower : {nbFlower}</div> 
       <div className="zoneName">Zone : {zone}</div> 
       <div className="hud_title">
