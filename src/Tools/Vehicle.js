@@ -255,7 +255,7 @@ const Chassis = forwardRef(({ geo, mat, position, scale, mass, chassisHelper }, 
 
   return (
 <mesh name="Chassis" ref={ref} api={api} geometry={geo} material={mat} castShadow>
-       <spotLight ref={spotLight} position={[0, 0, 0]} angle={0.8} penumbra={1} intensity={0.4} color="#FDEFD3" />
+       <spotLight ref={spotLight} position={[0, 0, 0]} angle={0.6} penumbra={0} intensity={0.8} distance={30} color="#FDEFD3"  />
       <mesh visible={false} ref={cubeRef} position={[0, 0, -5]}>
         <boxBufferGeometry />
         <meshLambertMaterial color="hotpink" />
