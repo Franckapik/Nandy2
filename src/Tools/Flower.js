@@ -24,7 +24,9 @@ export const Flower = ({ setVisible, Text, scale, url, name }) => {
   const flowerRef = useRef()
 
   useFrame((state, delta) => {
-    flowerRef.current.rotation.set(0, state.clock.getElapsedTime()* 2, 0)
+    if (flowerRef.current) {
+      flowerRef.current.rotation.set(0, state.clock.getElapsedTime()* 2, 0)
+    }
   })
 
   return (
