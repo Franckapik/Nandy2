@@ -182,6 +182,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  background: radial-gradient(circle, rgba(0,0,0,0) 30%, rgba(0,0,0,1) 70%);
+  
 }
 .flowerCount {
   color: #fff;

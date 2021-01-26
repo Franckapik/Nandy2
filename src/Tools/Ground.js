@@ -15,7 +15,7 @@ export function Ground({ minLayers, maxLayers, parallaxFactor, mode, scale }) {
   return (
     <mesh ref={ref} receiveShadow>
       <planeBufferGeometry attach="geometry" args={[1000,1000]} />
-      <meshStandardMaterial color={'grey'} />
+      <meshStandardMaterial color={'black'} />
     </mesh>
   );
 }

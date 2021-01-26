@@ -45,9 +45,6 @@ export default function CameraTarget() {
       cam.current.position.lerp(lookY, 0.05) 
       cameraRef.current.position.lerp(targetVec,0.05)
       cam.current.lookAt(cameraTarget.position)
-      spotlight.current.position.copy(lookY)   
-      spotlight.current.target = cameraTarget;
-      spotlight.current.angle = 1
 
     } else {
       const vehicle = useStore.getState().vehicleObj
@@ -71,7 +68,6 @@ export default function CameraTarget() {
         cam.current.position.copy(lookZup)
         cam.current.lookAt(vehicleVec)
         cameraRef.current.position.copy(vehicleVec)
-
     }
     }
   })
