@@ -83,13 +83,13 @@ export const Hud = ({ name }) => {
       <li onPointerDown={() => { changeVehiclePos(pos9) }} onPointerUp={() => { changeVehiclePos(0) }} className="menu-item--small">Zone9</li>
  */}
       </Menu>
-      <div className="hud">
+      <div>
       <div className="flowerCount">Flower : {nbFlower}</div> 
       <div className="zoneName">Zone : {zone}</div> 
       <div className="hud_title">
         {cameraTarget.position && (
-          <div>
-            <li onClick={() => changeTarget({})}>{cameraTarget.name}</li>
+          <div className="hud" onClick={() => changeTarget({})}>{cameraTarget.name}>
+            <li> Titre </li>
           </div>
         )}
       </div>
