@@ -83,7 +83,7 @@ export default function CameraTarget() {
   <group ref={cameraRef}>
     <PerspectiveCamera ref={cam} makeDefault fov={35}/>
     <spotLight ref={spotlight} angle={0.4} penumbra={0.3} intensity={0.5} distance={100} color="white" castShadow />
-    <mesh visible={true} ref={cubeRef} position={[-5,-5,5]}>
+    <mesh visible={false} ref={cubeRef} position={[-5,-5,5]}>
         <boxBufferGeometry />
         <meshLambertMaterial color="hotpink" />
       </mesh>
