@@ -12,6 +12,7 @@ import { Model } from './Model'
 import Video from './Video'
 import { Flower } from './Flower'
 import { FlowerGen } from './FlowerGen'
+import { Cube } from '../references/Cube'
 
 const Bird = ({ url }, props) => {
   const { nodes, materials, animations } = useGLTF(url)
@@ -88,7 +89,7 @@ export const Models = (props) => {
       <Frame />
       <Video url={'/souffle.webm'} rotation={[0, -Math.PI, 0]} position={soufflePos} />
       <Video url={'/souffle.webm'} rotation={[0, -Math.PI, 0]} position={soufflePos} />
-
+      <Cube position={[-50, -1, 58]} />
       <PositionalAudio url={'/lisbon.mp3'} distance={10} loop={true} />
     </>
   )

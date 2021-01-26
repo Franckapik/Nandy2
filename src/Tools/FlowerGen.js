@@ -2,7 +2,22 @@ import { useGLTF } from '@react-three/drei';
 import React, { useState } from 'react';
 import { useFrame } from 'react-three-fiber';
 import { Vector3 } from 'three';
+import { useAnim } from '../hooks/useAnim';
 import useStore from '../store';
+
+const Flower = (props) => {
+  const [ref, play] = useAnim({
+    max : 1,
+    axis : 'y',
+    direction: 1,
+    speed : 0.05,
+    initial : true
+  })
+
+  return (
+<mesh ref={ref} {...props} />
+  )
+}
 
 export const FlowerGen = (props) => {
   const [count, setCount] = useState([]);
@@ -38,8 +53,9 @@ export const FlowerGen = (props) => {
     }
   });
 
+
+
   return count.map(
-    (a, i) => <mesh material={nodes[name].material} geometry={nodes[name].geometry} position={a} />
-  );
+    (a, i) => <Flower material={nodes[name].material} geometry={nodes[name].geometry} position={a} />);
 
 };

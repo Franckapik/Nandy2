@@ -1,20 +1,20 @@
-import { useBox } from '@react-three/cannon';
 import React from 'react';
-import { useFrame } from 'react-three-fiber';
-import { Controls, useControl } from 'react-three-gui';
 import { useYuka } from '../hooks/useYuka';
 import useStore from '../store';
+import { useAnim } from '../hooks/useAnim';
 
 export function Cube(props) {
-/*   const positionX = useControl('Cube Position X', { type: 'number', value : -65, min : -66, max : 0 });
- */  
-const [ref] = useYuka({ type: 'Vehicle', name: 'Vehicle', ...props })
 
-  const setOpacity = useStore((state) => state.setOpacity);
-  const toggleVisible = useStore(state => state.toggleVisible);
-  
+  const [ref, play] = useAnim({
+    max : 1,
+    axis : 'y',
+    direction: 1,
+    speed : 0.05,
+    initial : true
+  })
+
   return (
-    <mesh name={props.name} receiveShadow castShadow ref={ref} onClick={() => toggleVisible()}>
+    <mesh name={props.name} receiveShadow castShadow ref={ref} {...props} onClick={() => play()}>
       <boxBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="yellow" />
     </mesh>
