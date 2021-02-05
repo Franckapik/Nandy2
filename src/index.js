@@ -55,7 +55,7 @@ const App = () => {
             setEvents(events)
           }}>
           <CameraTarget />
-          <ambientLight intensity={0.2}  />
+          <ambientLight intensity={0.8}  />
           <Physics gravity={[0, -10, 0]}>
             <IA />
             <Models />
