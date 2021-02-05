@@ -20,6 +20,7 @@ export const Models = (props) => {
       <Model url={'/passive3.gltf'} mass={0} />
       <Model url={'/active1.gltf'} mass={10} />
       <Model url={'/active2.gltf'} mass={10} />
+      <Model url={'/active3.gltf'} mass={10} />
       <Model url={'/traversant1.gltf'} mass={0} collision={0} />
       <Model url={'/traversant2.gltf'} mass={0} collision={0} />
       <Model url={'/woodwall.gltf'} mass={0} updateMass={1} />
